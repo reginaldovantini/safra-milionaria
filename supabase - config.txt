@@ -1,0 +1,9 @@
+API URL
+endpoint RESTful para consultar e gerenciar seu banco de dados
+
+https://gehxrxgmgqgilweibiec.supabase.co/rest/v1/
+
+
+
+Chave publicável
+sb_publishable_wIjW7HcJKOe8IBdS8wdw-g_G9XgsaQ6
