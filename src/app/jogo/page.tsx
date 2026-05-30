@@ -2332,250 +2332,349 @@ async function confirmarPuloQuestao() {
     overflow-visible
   "
 >
+  
 
-        {/* TOPO */}
+        {/* TOPO MOBILE PREMIUM */}
 <div
   className="
     w-full
     max-w-[1400px]
+    mx-auto
+
     flex
     flex-col
+
     gap-2
-    mx-auto
+
+    mb-2
   "
 >
 
+  {/* LINHA SUPERIOR */}
   <div
     className="
-      bg-white/5
+      relative
+
+      rounded-[24px]
+
       border
       border-green-900/40
+
+      bg-black/25
       backdrop-blur-md
-      rounded-3xl
-      px-3 md:px-5
-      py-2 md:py-3
-      shadow-2xl
+
+      px-3
+      py-2
+
+      overflow-hidden
     "
   >
 
-    {/* GRID PRINCIPAL */}
-    <div className="grid
-      grid-cols-2
-      lg:grid-cols-[1.1fr_1fr_1fr_190px]
-      gap-2
-      md:gap-4 gap-3 md:gap-6 items-center">
+    {/* GLOW */}
+    <div
+      className="
+        absolute
+        inset-0
 
-      {/* COLUNA 1 */}
-      <div className="space-y-3">
+        bg-[radial-gradient(circle_at_top,rgba(0,255,140,0.08),transparent_70%)]
+      "
+    />
 
-        {/* JOGADOR */}
-        <div>
-          <p className="text-[11px] uppercase tracking-wider text-gray-400 mb-1">
-            Jogador
-          </p>
+    <div
+      className="
+        relative
+        z-10
 
-          <h2 className="text-lg font-black text-yellow-400 truncate">
-            {nome}
-          </h2>
-        </div>
+        flex
+        items-center
+        justify-between
+
+        gap-2
+      "
+    >
+
+      {/* PERFIL */}
+      <button
+        className="
+          w-[42px]
+          h-[42px]
+
+          rounded-full
+
+          bg-green-500/10
+
+          border
+          border-green-400/20
+
+          flex
+          items-center
+          justify-center
+
+          text-xl
+
+          shrink-0
+        "
+      >
+
+        👤
+
+      </button>
+
+      {/* CENTRO */}
+      <div
+        className="
+          flex-1
+
+          min-w-0
+
+          flex
+          flex-col
+
+          items-center
+          justify-center
+        "
+      >
 
         {/* QUESTÃO */}
-        <div>
-          <p className="text-[11px] uppercase tracking-wider text-gray-400">
-            Questão
-          </p>
-
-          <h2 className="text-lg font-black text-yellow-400">
-            {indiceQuestao + 1} / {perguntasFiltradas.length}
-          </h2>
-        </div>
-
-      </div>
-
-      {/* COLUNA 2 */}
-      <div className="space-y-1 md:space-y-3">
-
-        {/* POLO */}
-        <div>
-          <p className="text-[11px] uppercase tracking-wider text-gray-400 mb-1">
-            Polo
-          </p>
-
-          <h2 className="text-lg font-semibold truncate">
-            {polo}
-          </h2>
-        </div>
-
-        {/* PONTUAÇÃO */}
-        <div>
-          <p className="text-[11px] uppercase tracking-wider text-gray-400">
-            Pontuação
-          </p>
-
-          <h2 className="text-lg font-black text-green-400">
-            R$ {pontuacao}
-          </h2>
-        </div>
-
-      </div>
-
-      {/* COLUNA 3 */}
-      <div className="space-y-1 md:space-y-3">
-
-        {/* CURSO */}
-        <div>
-          <p className="text-[11px] uppercase tracking-wider text-gray-400 mb-1">
-            Curso
-          </p>
-
-          <h2 className="text-lg font-semibold truncate">
-            {curso}
-          </h2>
-        </div>
-
-        {/* FASE */}
-        <div>
-          <p className="text-[11px] uppercase tracking-wider text-gray-400">
-            Fase Atual
-          </p>
-
-          <h2 className={`text-sm font-black ${corFase}`}>
-            {faseAtual}
-          </h2>
-        </div>
-
-      </div>
-{/* COLUNA 4 — CONTROLES */}
-<div
-  className="
-    flex
-    flex-col
-    items-end
-    justify-center
-    gap-2
-  "
->
-
-  {/* FULLSCREEN */}
-  <button
-    onClick={toggleTelaCheia}
-
-    className="
-      flex
-      items-center
-      justify-center
-      gap-2
-
-      min-w-[150px]
-
-      px-4
-      py-2
-
-      rounded-2xl
-
-      bg-black/25
-      border
-      border-green-400/20
-
-      text-white
-      text-sm
-      font-bold
-
-      hover:scale-[1.02]
-      hover:bg-green-500/15
-
-      transition-all
-      duration-300
-
-      shadow-[0_0_15px_rgba(0,255,140,0.08)]
-    "
-  >
-
-    <span className="text-lg">
-
-      {telaCheia ? "🗗" : "🗖"}
-
-    </span>
-
-    <span>
-
-      Tela Cheia
-
-    </span>
-
-  </button>
-
-  {/* ÁUDIO */}
-  <button
-    onClick={toggleAudio}
-
-    className="
-      flex
-      items-center
-      justify-center
-      gap-2
-
-      min-w-[150px]
-
-      px-4
-      py-2
-
-      rounded-2xl
-
-      bg-black/25
-      border
-      border-green-400/20
-
-      text-white
-      text-sm
-      font-bold
-
-      hover:scale-[1.02]
-      hover:bg-green-500/15
-
-      transition-all
-      duration-300
-
-      shadow-[0_0_15px_rgba(0,255,140,0.08)]
-    "
-  >
-
-    <span className="text-lg">
-
-      {audioLigado ? "🔊" : "🔇"}
-
-    </span>
-
-    <span>
-
-      Áudio
-
-    </span>
-
-  </button>
-
-</div>
-
-    </div>
-
-    {/* PREMIAÇÃO */}
-    <div className="mt-3">
-
-          
-
-    </div>
-
-    {/* PROGRESSO */}
-    <div className="mt-3">
-
-      <div className="w-full h-2 bg-black/40 rounded-full overflow-hidden">
-
         <div
-          className="h-full bg-yellow-400 transition-all duration-500"
-          style={{
-            width: `${progresso}%`,
-          }}
-        />
+          className="
+            flex
+            items-center
+            gap-2
+          "
+        >
+
+          <span
+            className="
+              text-[11px]
+
+              uppercase
+
+              tracking-[0.22em]
+
+              text-green-300/70
+
+              font-black
+            "
+          >
+            QUESTÃO
+          </span>
+
+          <span
+            className="
+              text-sm
+
+              font-black
+
+              text-yellow-300
+            "
+          >
+            {indiceQuestao + 1}/{perguntasFiltradas.length}
+          </span>
+
+        </div>
+
+        {/* BARRA */}
+        <div
+          className="
+            mt-1
+
+            w-full
+            max-w-[220px]
+
+            h-[6px]
+
+            rounded-full
+
+            overflow-hidden
+
+            bg-black/40
+          "
+        >
+
+          <div
+            className="
+              h-full
+
+              rounded-full
+
+              bg-gradient-to-r
+              from-yellow-400
+              to-yellow-300
+
+              transition-all
+              duration-500
+            "
+            style={{
+              width: `${progresso}%`,
+            }}
+          />
+
+        </div>
+
+      </div>
+
+      {/* CONTROLES */}
+      <div
+        className="
+          flex
+          items-center
+          gap-2
+
+          shrink-0
+        "
+      >
+
+        {/* AUDIO */}
+        <button
+          onClick={toggleAudio}
+
+          className="
+            w-[42px]
+            h-[42px]
+
+            rounded-full
+
+            bg-black/30
+
+            border
+            border-green-400/20
+
+            flex
+            items-center
+            justify-center
+
+            text-lg
+
+            transition-all
+            duration-300
+
+            active:scale-95
+          "
+        >
+
+          {audioLigado ? "🔊" : "🔇"}
+
+        </button>
+
+        {/* FULLSCREEN */}
+        <button
+          onClick={toggleTelaCheia}
+
+          className="
+            w-[42px]
+            h-[42px]
+
+            rounded-full
+
+            bg-black/30
+
+            border
+            border-green-400/20
+
+            flex
+            items-center
+            justify-center
+
+            text-lg
+
+            transition-all
+            duration-300
+
+            active:scale-95
+          "
+        >
+
+          {telaCheia ? "🗗" : "🗖"}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  {/* LINHA FASE */}
+  <div
+    className="
+      relative
+
+      rounded-[20px]
+
+      border
+      border-green-900/30
+
+      bg-black/20
+      backdrop-blur-md
+
+      px-3
+      py-2
+
+      overflow-hidden
+    "
+  >
+
+    {/* GLOW */}
+    <div
+      className="
+        absolute
+        inset-0
+
+        bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.06),transparent_70%)]
+      "
+    />
+
+    <div
+      className="
+        relative
+        z-10
+
+        flex
+        items-center
+        justify-center
+      "
+    >
+
+      <div
+        className="
+          flex
+          items-center
+          gap-2
+
+          min-w-0
+        "
+      >
+
+        <span
+          className="
+            text-[10px]
+
+            uppercase
+
+            tracking-[0.22em]
+
+            text-gray-400
+
+            font-black
+          "
+        >
+          FASE
+        </span>
+
+        <span
+          className={`
+            text-sm
+
+            font-black
+
+            truncate
+
+            ${corFase}
+          `}
+        >
+          {faseAtual}
+        </span>
 
       </div>
 
