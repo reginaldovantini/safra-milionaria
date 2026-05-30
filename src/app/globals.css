@@ -210,3 +210,164 @@ POPUP
     filter: blur(0);
   }
 }
+
+/* =========================================
+MOBILE GAME ENGINE
+========================================= */
+
+html,
+body {
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  overscroll-behavior: none;
+
+  touch-action: manipulation;
+}
+
+body {
+
+  position: fixed;
+
+  inset: 0;
+
+  -webkit-font-smoothing: antialiased;
+
+  text-rendering: optimizeLegibility;
+}
+
+/* =========================================
+ROOT NEXT
+========================================= */
+
+#__next {
+
+  width: 100%;
+  height: 100%;
+}
+
+/* =========================================
+SAFE AREA MOBILE
+========================================= */
+
+.safe-top {
+  padding-top:
+    env(safe-area-inset-top);
+}
+
+.safe-bottom {
+  padding-bottom:
+    env(safe-area-inset-bottom);
+}
+
+/* =========================================
+NO SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================================
+TEXT BALANCE
+========================================= */
+
+.text-balanced {
+  text-wrap: balance;
+}
+
+/* =========================================
+QUESTION JUSTIFY
+========================================= */
+
+.question-justify {
+
+  text-align: justify;
+
+  text-justify: inter-word;
+}
+
+/* =========================================
+MOBILE LOCKED VIEWPORT
+========================================= */
+
+.mobile-game-layout {
+
+  width: 100%;
+  height: 100dvh;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================
+MOBILE CONTENT
+========================================= */
+
+.mobile-game-content {
+
+  flex: 1;
+
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================
+PREVENT SELECT
+========================================= */
+
+.no-select {
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* =========================================
+POPUP MOBILE PREMIUM
+========================================= */
+
+.mobile-popup {
+
+  width: min(92vw, 420px);
+
+  max-height: 88dvh;
+
+  overflow: hidden;
+
+  border-radius: 28px;
+}
+
+/* =========================================
+SMALL MOBILE
+========================================= */
+
+@media (max-height: 740px) {
+
+  .mobile-compact {
+
+    transform: scale(.94);
+
+    transform-origin: top center;
+  }
+}
+
+/* =========================================
+ULTRA SMALL MOBILE
+========================================= */
+
+@media (max-height: 670px) {
+
+  .mobile-compact {
+
+    transform: scale(.88);
+
+    transform-origin: top center;
+  }
+}
