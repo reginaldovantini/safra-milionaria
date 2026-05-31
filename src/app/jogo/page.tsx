@@ -983,7 +983,7 @@ const historico =
 // TIMER CIRCULAR SVG
 // =========================
 
-const raioTimer = 48;
+const raioTimer = 18;
 
 const circunferenciaTimer =
   2 * Math.PI * raioTimer;
@@ -1040,7 +1040,7 @@ useEffect(() => {
   // =========================
 
   let faseAtual =
-    "🌱 Produção Inicial";
+    "🌱Produção Inicial";
 
   let corFase =
     "text-green-400";
@@ -1048,7 +1048,7 @@ useEffect(() => {
   if (indiceQuestao >= 5) {
 
     faseAtual =
-      "🚜 Expansão Rural";
+      "🚜Expansão Rural";
 
     corFase =
       "text-yellow-400";
@@ -1057,7 +1057,7 @@ useEffect(() => {
   if (indiceQuestao >= 10) {
 
     faseAtual =
-      "🏭 Império Agro";
+      "🏭Império Agro";
 
     corFase =
       "text-orange-400";
@@ -1066,7 +1066,7 @@ useEffect(() => {
   if (indiceQuestao >= 15) {
 
     faseAtual =
-      "👑 Final do Milhão";
+      "👑Final do Milhão";
 
     corFase =
       "text-purple-400 animate-pulse";
@@ -2318,16 +2318,14 @@ async function confirmarPuloQuestao() {
 
     w-full
 
-    px-3
-    md:px-4
+    px-[2px]
+    md:px-3
 
-    pt-2
-    pb-3
+    pt-[4px]
+    pb-[4px]
 
     flex
     flex-col
-
-    items-center
 
     overflow-visible
   "
@@ -2355,7 +2353,7 @@ async function confirmarPuloQuestao() {
     className="
       relative
 
-      rounded-[24px]
+      rounded-[18px]
 
       border
       border-green-900/40
@@ -2363,8 +2361,8 @@ async function confirmarPuloQuestao() {
       bg-black/25
       backdrop-blur-md
 
-      px-3
-      py-2
+      px-[8px]
+      py-[4px]
 
       overflow-hidden
     "
@@ -2382,156 +2380,271 @@ async function confirmarPuloQuestao() {
 
     <div
       className="
-        relative
-        z-10
+  relative
+  z-10
+
+  grid
+  grid-cols-[1fr_auto_1fr]
+
+  items-center
+
+  gap-[10px]
+
+  min-w-0
+"
+    >
+
+      
+
+      {/* ESQUERDA */}
+<div
+  className="
+    min-w-0
+
+    flex
+    flex-col
+
+    justify-center
+
+    justify-self-start
+  "
+>
+
+        {/* QUESTÃO + FASE */}
+<div
+  className="
+    flex
+    flex-col
+
+    justify-center
+
+    leading-none
+
+    min-w-0
+  "
+>
+
+  {/* QUESTÃO */}
+  <div
+    className="
+      flex
+      items-center
+      gap-[6px]
+
+      whitespace-nowrap
+    "
+  >
+
+    <span
+      className="
+        text-[8px]
+        uppercase
+        tracking-[0.18em]
+        text-green-300/65
+        font-black
+      "
+    >
+      QUESTÃO
+    </span>
+
+    <span
+      className="
+        text-[12px]
+        font-black
+        text-yellow-300
+      "
+    >
+      {indiceQuestao + 1}/{perguntasFiltradas.length}
+    </span>
+
+  </div>
+
+  {/* FASE */}
+  <span
+    className={`
+      text-[12px]
+
+      mt-[2px]
+
+      font-semibold
+
+      truncate
+
+      ${corFase}
+    `}
+  >
+    {faseAtual}
+  </span>
+
+</div>
+
+        
+      </div>
+
+      {/* TIMER HEADER */}
+<div
+  className="
+    shrink-0
+
+    justify-self-center
+  "
+>
+
+  <div className="relative w-[42px] h-[42px]">
+
+    {/* GLOW */}
+    <div
+      className={`
+        absolute
+        inset-0
+        rounded-full
+        blur-[8px]
+        transition-all
+        duration-500
+
+        ${
+          tempoRestante <= 10
+            ? "bg-red-500/25"
+            : tempoRestante <= 20
+            ? "bg-yellow-400/20"
+            : "bg-green-400/20"
+        }
+      `}
+    />
+
+    {/* SVG */}
+    <svg
+  className="
+    absolute
+    inset-0
+    -rotate-90
+  "
+  viewBox="0 0 54 54"
+>
+
+  {/* ANEL BASE */}
+  <circle
+    cx="27"
+    cy="27"
+    r="18"
+
+    fill="none"
+
+    stroke="rgba(255,255,255,0.07)"
+
+    strokeWidth="3.5"
+  />
+
+  {/* ANEL ANIMADO */}
+  <circle
+    cx="27"
+    cy="27"
+    r="22"
+
+    fill="none"
+
+    strokeWidth="3.5"
+
+    strokeLinecap="round"
+
+    stroke={
+      tempoRestante <= 10
+        ? "#ef4444"
+        : tempoRestante <= 20
+        ? "#facc15"
+        : "#22c55e"
+    }
+
+    strokeDasharray={circunferenciaTimer}
+
+    strokeDashoffset={
+      circunferenciaTimer *
+      (1 - tempoRestante / TEMPO_LIMITE)
+    }
+
+    style={{
+      transition:
+        "stroke-dashoffset 1s linear, stroke 0.4s ease",
+      transformOrigin: "50% 50%",
+    }}
+
+    className="
+      drop-shadow-[0_0_3px_rgba(0,255,120,0.22)]
+    "
+  />
+
+</svg>
+
+    {/* CENTRO */}
+    <div
+      className="
+        absolute
+        inset-[7px]
+
+        rounded-full
+
+        bg-[radial-gradient(circle_at_top,#145236,#081710)]
+
+        border
+        border-white/10
 
         flex
         items-center
-        justify-between
+        justify-center
 
-        gap-2
+        shadow-[0_0_8px_rgba(0,255,140,0.12)]
       "
     >
 
-      {/* PERFIL */}
-      <button
-        className="
-          w-[42px]
-          h-[42px]
+      <span
+        className={`
+          text-[16px]
 
-          rounded-full
+          font-extrabold
 
-          bg-green-500/10
+          transition-all
+          duration-300
 
-          border
-          border-green-400/20
-
-          flex
-          items-center
-          justify-center
-
-          text-xl
-
-          shrink-0
-        "
+          ${
+            tempoRestante <= 10
+              ? "text-red-400 animate-pulse"
+              : tempoRestante <= 20
+              ? "text-yellow-300"
+              : "text-white"
+          }
+        `}
       >
+        {tempoRestante}
+      </span>
 
-        👤
+    </div>
 
-      </button>
+  </div>
 
-      {/* CENTRO */}
-      <div
-        className="
-          flex-1
+</div>
 
-          min-w-0
+     {/* CONTROLES */}
+<div
+  className="
+    flex
+    items-center
+    justify-end
 
-          flex
-          flex-col
+    justify-self-end
 
-          items-center
-          justify-center
-        "
-      >
+    gap-1
 
-        {/* QUESTÃO */}
-        <div
-          className="
-            flex
-            items-center
-            gap-2
-          "
-        >
-
-          <span
-            className="
-              text-[11px]
-
-              uppercase
-
-              tracking-[0.22em]
-
-              text-green-300/70
-
-              font-black
-            "
-          >
-            QUESTÃO
-          </span>
-
-          <span
-            className="
-              text-sm
-
-              font-black
-
-              text-yellow-300
-            "
-          >
-            {indiceQuestao + 1}/{perguntasFiltradas.length}
-          </span>
-
-        </div>
-
-        {/* BARRA */}
-        <div
-          className="
-            mt-1
-
-            w-full
-            max-w-[220px]
-
-            h-[6px]
-
-            rounded-full
-
-            overflow-hidden
-
-            bg-black/40
-          "
-        >
-
-          <div
-            className="
-              h-full
-
-              rounded-full
-
-              bg-gradient-to-r
-              from-yellow-400
-              to-yellow-300
-
-              transition-all
-              duration-500
-            "
-            style={{
-              width: `${progresso}%`,
-            }}
-          />
-
-        </div>
-
-      </div>
-
-      {/* CONTROLES */}
-      <div
-        className="
-          flex
-          items-center
-          gap-2
-
-          shrink-0
-        "
-      >
+    shrink-0
+  "
+>
 
         {/* AUDIO */}
         <button
           onClick={toggleAudio}
 
           className="
-            w-[42px]
-            h-[42px]
+            w-[36px]
+            h-[36px]
 
             rounded-full
 
@@ -2557,265 +2670,17 @@ async function confirmarPuloQuestao() {
 
         </button>
 
-        {/* FULLSCREEN */}
-        <button
-          onClick={toggleTelaCheia}
-
-          className="
-            w-[42px]
-            h-[42px]
-
-            rounded-full
-
-            bg-black/30
-
-            border
-            border-green-400/20
-
-            flex
-            items-center
-            justify-center
-
-            text-lg
-
-            transition-all
-            duration-300
-
-            active:scale-95
-          "
-        >
-
-          {telaCheia ? "🗗" : "🗖"}
-
-        </button>
-
+        
       </div>
 
     </div>
 
   </div>
 
-  {/* LINHA FASE */}
-  <div
-    className="
-      relative
-
-      rounded-[20px]
-
-      border
-      border-green-900/30
-
-      bg-black/20
-      backdrop-blur-md
-
-      px-3
-      py-2
-
-      overflow-hidden
-    "
-  >
-
-    {/* GLOW */}
-    <div
-      className="
-        absolute
-        inset-0
-
-        bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.06),transparent_70%)]
-      "
-    />
-
-    <div
-      className="
-        relative
-        z-10
-
-        flex
-        items-center
-        justify-center
-      "
-    >
-
-      <div
-        className="
-          flex
-          items-center
-          gap-2
-
-          min-w-0
-        "
-      >
-
-        <span
-          className="
-            text-[10px]
-
-            uppercase
-
-            tracking-[0.22em]
-
-            text-gray-400
-
-            font-black
-          "
-        >
-          FASE
-        </span>
-
-        <span
-          className={`
-            text-sm
-
-            font-black
-
-            truncate
-
-            ${corFase}
-          `}
-        >
-          {faseAtual}
-        </span>
-
-      </div>
-
-    </div>
-
-  </div>
-
+  
 </div>
 
-{/* TIMER FLUTUANTE GLOBAL */}
-<div className="absolute left-1/2 top-[78px] md:top-[92px] -translate-x-1/2 z-50 pointer-events-none">
 
-  <div className="relative w-[92px] h-[92px] md:w-[118px] md:h-[118px]">
-
-    {/* GLOW */}
-    <div
-      className={`
-        absolute
-        inset-0
-        rounded-full
-        blur-2xl
-        transition-all
-        duration-500
-
-        ${
-          tempoRestante <= 10
-            ? "bg-red-500/25"
-            : tempoRestante <= 20
-            ? "bg-yellow-400/20"
-            : "bg-green-400/20"
-        }
-      `}
-    />
-
-    {/* SVG */}
-    <svg
-      className="absolute inset-0 -rotate-90"
-      viewBox="0 0 120 120"
-    >
-
-      {/* FUNDO */}
-      <circle
-        cx="60"
-        cy="60"
-        r="52"
-        stroke="rgba(255,255,255,0.08)"
-        strokeWidth="7"
-        fill="transparent"
-      />
-
-      {/* PROGRESSO */}
-      <circle
-        cx="60"
-        cy="60"
-        r="52"
-
-        fill="transparent"
-
-        strokeWidth="7"
-
-        strokeLinecap="round"
-
-        stroke={
-          tempoRestante <= 10
-            ? "#ef4444"
-            : tempoRestante <= 20
-            ? "#facc15"
-            : "#22c55e"
-        }
-
-        strokeDasharray={2 * Math.PI * 52}
-
-        strokeDashoffset={
-          (2 * Math.PI * 52) -
-          (
-            (tempoRestante / TEMPO_LIMITE)
-            *
-            (2 * Math.PI * 52)
-          )
-        }
-
-        style={{
-          transition:
-            "stroke-dashoffset 1s linear, stroke 0.4s ease"
-        }}
-
-        className="
-          drop-shadow-[0_0_4px_rgba(0,255,120,0.25)]
-        "
-      />
-
-    </svg>
-
-    {/* CENTRO */}
-    <div
-      className="
-        absolute
-        inset-[10px]
-
-        rounded-full
-
-        bg-[radial-gradient(circle_at_top,#114d33,#071b12)]
-
-        border
-        border-white/10
-
-        flex
-        items-center
-        justify-center
-
-        shadow-[0_0_25px_rgba(0,255,140,0.18)]
-      "
-    >
-
-      <span
-        className={`
-          text-[34px]
-          md:text-[42px]
-
-          font-black
-
-          transition-all
-          duration-300
-
-          ${
-            tempoRestante <= 10
-              ? "text-red-400 animate-pulse"
-              : tempoRestante <= 20
-              ? "text-yellow-300"
-              : "text-white"
-          }
-        `}
-      >
-        {tempoRestante}
-      </span>
-
-    </div>
-
-  </div>
-
-</div>
 
 {carregandoPergunta && (
 
@@ -2876,29 +2741,37 @@ async function confirmarPuloQuestao() {
   `}
 >
 
-          <div className="bg-white/5 border border-green-900/40 backdrop-blur-md rounded-3xl p-2 md:p-3 shadow-2xl">
+         <div className="mt0">
 
            {/* NÍVEL + ENUNCIADO CINEMATOGRÁFICO */}
 <div
   className="
     relative
+
     bg-gradient-to-br
     from-[#0d2e21]
     to-[#071b12]
+
     border
-    border-green-500/20
-    rounded-[32px]
-    px-4
-md:px-6
+    border-green-500/15
 
-pt-5
-md:pt-8
+    rounded-[24px]
 
-pb-4
-md:pb-7
-    mb-5
-    shadow-2xl
+    px-[10px]
+    md:px-[18px]
+
+    pt-[14px]
+    md:pt-[18px]
+
+    pb-[10px]
+    md:pb-[16px]
+
+    mb-3
+
+    shadow-[0_0_18px_rgba(0,255,140,0.05)]
+
     overflow-hidden
+
     animate-[questionFade_1.2s_ease]
   "
 >
@@ -2911,13 +2784,14 @@ md:pb-7
 
   
 
+
   {/* CONTEÚDO */}
   <div className="relative z-10">
 
     {/* LABEL */}
     <p
       className="
-        text-[11px]
+        text-[10px]
         uppercase
         tracking-[0.25em]
         text-green-300/70
@@ -2927,46 +2801,37 @@ md:pb-7
       "
     >
 
-      Pergunta da Rodada ID: {questaoAtual?.id}
-</p>
+      Pergunta ID: {questaoAtual?.id}
+
 {questaoAtual?.nivel
-  ?.toLowerCase() === "ouro" && (
+  ?.toLowerCase() === "ouro"
+    ? " ⭐"
+    : ""}
+</p>
 
-  <div
-    className="
-      inline-flex
-      items-center
-      gap-2
-      mb-4
-      px-4
-      py-2
-      rounded-full
-      bg-yellow-400/15
-      border
-      border-yellow-400/30
-      text-yellow-300
-      font-black
-      text-sm
-      shadow-[0_0_20px_rgba(255,215,0,0.15)]
-    "
-  >
-
-    ⭐ QUESTÃO OURO
-
-  </div>
-
-)}
     
     {/* ENUNCIADO */}
     <h1
       className="
-        text-[22px]
-        md:text-[26px]
-        font-black
-        leading-[1.35]
-        text-white
-        drop-shadow-[0_0_10px_rgba(255,255,255,0.08)]
-      "
+  question-clamp
+
+  text-[clamp(0.94rem,2vw,1.34rem)]
+  md:text-[clamp(1rem,1.6vw,1.6rem)]
+
+  font-semibold
+
+  leading-[1.18]
+
+  tracking-[0em]
+
+  text-white
+
+  text-left
+
+  antialiased
+
+  drop-shadow-[0_0_4px_rgba(255,255,255,0.03)]
+"
     >
 
       {questaoAtual?.pergunta}
@@ -2980,7 +2845,7 @@ md:pb-7
 </div>
 
           {/* ALTERNATIVAS */}
-<div className="grid gap-3">
+<div className="grid gap-[10px] mt-[2px]">
 
   {questaoAtual?.alternativas.map(
     (alternativa: string, index: number) => {
@@ -3020,18 +2885,28 @@ md:pb-7
 
           
           className={`
-            ${
-  alternativasVisiveis.includes(index)
-    ? "opacity-100"
-    : "opacity-0 pointer-events-none"
+  ${
+alternativasVisiveis.includes(index)
+  ? "opacity-100"
+  : "opacity-0 pointer-events-none"
 }
-            rounded-2xl
-            px-4
-            py-2.5
-            text-left
-            transition-opacity duration-700
-            duration-300
-            border
+
+  rounded-[16px]
+
+px-[12px]
+py-[5px]
+
+min-h-[42px]
+
+text-left
+
+flex
+items-center
+
+  transition-all
+  duration-300
+
+  border
 
             ${
               eliminada
@@ -3054,11 +2929,37 @@ md:pb-7
           `}
         >
 
-          <span className="font-black mr-3">
+          <span
+  className="
+    font-bold
+
+    text-[clamp(1rem,2vw,1.08rem)]
+
+    text-white/95
+
+    mr-2
+
+    shrink-0
+  "
+>
             {String.fromCharCode(65 + index)})
           </span>
 
-          {alternativa}
+          <span
+  className="
+    text-[clamp(0.88rem,1.8vw,0.97rem)]
+
+    leading-[1.08]
+
+    font-normal
+
+    tracking-[0em]
+
+    text-white/92
+  "
+>
+  {alternativa}
+</span>
 
         </button>
       );
@@ -3066,107 +2967,44 @@ md:pb-7
   )}
 
 </div>
+</div>
 
-{/* =========================================
-PAINEL AJUDAS PREMIUM
-========================================= */}
-
-<div
-  className="
-    mt-3
-    rounded-3xl
-    border
-    border-green-900/40
-    bg-black/20
-    backdrop-blur-md
-    p-2
-  "
->
-
-  {/* TOPO */}
-  <div className="flex items-center justify-between p0 mb-2">
- 
-  </div>
-
+  
   
 {/* =========================
     HUD ESTRATÉGICA PREMIUM
 ========================= */}
 
+<div className="mt-1">
+
+  
+ {/* ÁREA ESTRATÉGICA */}
+
 <div
   className="
-    relative
+    flex
+    flex-col
 
-    border
-    border-green-500/20
+    gap-2
 
-    rounded-[28px]
-
-    bg-gradient-to-br
-    from-[#071b12]
-    to-[#04110b]
-
-    px-3
-    pt-7
-    pb-3
-
-    mt-2
-
-    shadow-[0_0_35px_rgba(0,255,140,0.06)]
+    w-full
   "
 >
 
-  {/* TÍTULO SUPERIOR */}
-
-  <div
-    className="
-      absolute
-      top-2
-      left-4
-
-      text-[11px]
-      uppercase
-      tracking-[0.25em]
-
-      text-green-300/70
-      font-bold
-    "
-
-    
-  >
-    Recursos Estratégicos
-  </div>
-
-  {/* GRID MASTER */}
-
-  <div
-    className="
-      grid
-      lg:grid-cols-[auto_1px_minmax(0,1fr)]
-
-      items-center
-
-      gap-x-3
-
-      w-full
-    "
-  >
-
     {/* =========================
-        COLUNA ESQUERDA
-        AJUDAS
+                AJUDAS
     ========================= */}
 
     <div
       className="
-        grid
-        grid-cols-5
+  grid
 
-        gap-3
+  grid-cols-5
 
-        items-center
-        justify-start
-      "
+  gap-2
+
+  w-full
+"
     >
 
       {/* CONSULTORIA */}
@@ -3177,8 +3015,10 @@ PAINEL AJUDAS PREMIUM
           relative
           overflow-hidden
 
-          h-[88px]
-          w-[78px]
+          h-[74px]
+          sm:h-[88px]
+          w-full
+          min-w-0
 
           rounded-2xl
           border
@@ -3204,7 +3044,7 @@ PAINEL AJUDAS PREMIUM
             👨‍🌾
           </div>
 
-          <p className="font-black text-[11px] text-center tracking-wide text-green-100">
+          <p className="font-black text-[7px] text-center tracking-wide text-green-100">
             Consultoria
           </p>
 
@@ -3220,8 +3060,10 @@ PAINEL AJUDAS PREMIUM
           relative
           overflow-hidden
 
-          h-[88px]
-          w-[78px]
+          h-[74px]
+          sm:h-[88px]
+          w-full
+          min-w-0
 
           rounded-2xl
           border
@@ -3247,8 +3089,8 @@ PAINEL AJUDAS PREMIUM
             🚜
           </div>
 
-          <p className="font-black text-[11px] text-center tracking-wide text-green-100">
-            Cartas da Fazenda
+          <p className="font-black text-[8px] text-center tracking-wide text-green-100">
+            Cartas
           </p>
 
         </div>
@@ -3266,8 +3108,10 @@ PAINEL AJUDAS PREMIUM
     relative
     overflow-hidden
 
-    h-[88px]
-    w-[78px]
+    h-[74px]
+    sm:h-[88px]
+    w-full
+    min-w-0
 
     rounded-2xl
     border
@@ -3295,7 +3139,7 @@ PAINEL AJUDAS PREMIUM
       🤖
     </div>
 
-    <p className="font-black text-[11px] text-center tracking-wide text-cyan-100">
+    <p className="font-black text-[8px] text-center tracking-wide text-cyan-100">
       IA Agro
     </p>
 
@@ -3312,8 +3156,10 @@ PAINEL AJUDAS PREMIUM
           relative
           overflow-hidden
 
-          h-[88px]
-          w-[78px]
+          h-[74px]
+          sm:h-[88px]
+          w-full
+          min-w-0
 
           rounded-2xl
           border
@@ -3339,8 +3185,8 @@ PAINEL AJUDAS PREMIUM
             🌱
           </div>
 
-          <p className="font-black text-[11px] text-center tracking-wide text-green-100">
-            Pular Questão
+          <p className="font-black text-[8px] text-center tracking-wide text-green-100">
+            Pular
           </p>
 
         </div>
@@ -3360,8 +3206,10 @@ PAINEL AJUDAS PREMIUM
           relative
           overflow-hidden
 
-          h-[88px]
-          w-[78px]
+          h-[74px]
+          sm:h-[88px]
+          w-full
+          min-w-0
 
           rounded-2xl
           border
@@ -3388,7 +3236,7 @@ PAINEL AJUDAS PREMIUM
             🛑
           </div>
 
-          <p className="font-black text-[11px] text-red-200 text-center tracking-wide">
+          <p className="font-black text-[8px] text-red-200 text-center tracking-wide">
             Parar
           </p>
 
@@ -3398,29 +3246,31 @@ PAINEL AJUDAS PREMIUM
 
     </div>
 
-    {/* DIVISÓRIA */}
+</div>
+</div>
 
-    <div className="hidden lg:flex justify-center">
 
-      <div className="w-px h-[88px] bg-green-500/20 rounded-full"></div>
+{/* =========================================
+HUD FINANCEIRO PREMIUM
+========================================= */}
 
-    </div>
+<div className="mt-2">
 
+    
     {/* =========================
-        COLUNA DIREITA
-        STATUS FINANCEIRO
+          STATUS FINANCEIRO
     ========================= */}
 
     <div
       className="
-        grid
-        grid-cols-3
+  grid
 
-        gap-3
+  grid-cols-3
 
-        w-full
-        items-center
-      "
+  gap-2
+
+  w-full
+"
     >
 
       {/* ERRAR */}
@@ -3429,7 +3279,8 @@ PAINEL AJUDAS PREMIUM
           relative
           overflow-hidden
 
-          h-[88px]
+          h-[52px]
+          sm:h-[70px]
 
           rounded-2xl
           border
@@ -3456,7 +3307,7 @@ PAINEL AJUDAS PREMIUM
 
         </p>
 
-        <h2 className="text-[22px] font-black text-red-300 mt-1 leading-none">
+        <h2 className="text-[12px] font-black text-red-300 mt-1 leading-none">
 
           R$ {valorErrar.toLocaleString("pt-BR")}
 
@@ -3470,7 +3321,8 @@ PAINEL AJUDAS PREMIUM
           relative
           overflow-hidden
 
-          h-[88px]
+          h-[52px]
+          sm:h-[70px]
 
           rounded-2xl
           border
@@ -3497,7 +3349,7 @@ PAINEL AJUDAS PREMIUM
 
         </p>
 
-        <h2 className="text-[22px] font-black text-yellow-300 mt-1 leading-none">
+        <h2 className="text-[12px] font-black text-yellow-300 mt-1 leading-none">
 
           R$ {valorParar.toLocaleString("pt-BR")}
 
@@ -3511,7 +3363,8 @@ PAINEL AJUDAS PREMIUM
           relative
           overflow-hidden
 
-          h-[88px]
+          h-[52px]
+          sm:h-[70px]
 
           rounded-2xl
           border
@@ -3542,7 +3395,7 @@ PAINEL AJUDAS PREMIUM
 
           </p>
 
-          <h2 className="text-[22px] font-black text-green-300 mt-1 leading-none">
+          <h2 className="text-[12px] font-black text-green-300 mt-1 leading-none">
 
             R$ {valorAtual.toLocaleString("pt-BR")}
 
@@ -6373,35 +6226,11 @@ POPUP PARAR JOGO
 
 )}
 
-          </div>
+                
 
-        </div>
+      
 
-      </div>
-
-      {/* RODAPÉ PREMIUM */}
-      <footer className="relative z-10 border-t border-green-900/50 bg-black/20 backdrop-blur-md py-2">
-
-        <div className="text-center">
-
-          <p className="text-sm text-gray-400 tracking-wide">
-
-            Safra Milionária © 2026 . Plataforma Educacional Interativa . Created & Developed by Instrutor
-
-            <span className="text-yellow-400 font-semibold">
-              {" "}Reginaldo V. Vantini
-            </span>
-
-            <span className="text-gray-500">
-              {" "}— professorvantini@gmail.com
-            </span>
-
-          </p>
-
-        </div>
-
-      </footer>
-
+      
     </main>
     </LayoutMobile>
   );
