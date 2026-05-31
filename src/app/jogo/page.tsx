@@ -2303,7 +2303,7 @@ async function confirmarPuloQuestao() {
 
   return (
 
-    <div className="mobile-game-layout no-select">
+    <LayoutMobile>
 
     <main className="min-h-[100dvh] bg-[#061b11] text-white flex flex-col relative overflow-hidden">
 
@@ -6403,6 +6403,6 @@ POPUP PARAR JOGO
       </footer>
 
     </main>
-    </div>
+    </LayoutMobile>
   );
 }
