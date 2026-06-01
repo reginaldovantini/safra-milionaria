@@ -2362,7 +2362,8 @@ async function confirmarPuloQuestao() {
       backdrop-blur-md
 
       px-[8px]
-      py-[4px]
+      pt-[4px]
+      pb-[18px]
 
       overflow-hidden
     "
@@ -2410,17 +2411,21 @@ async function confirmarPuloQuestao() {
   "
 >
 
-        {/* QUESTÃO + FASE */}
+        {/* BLOCO ESQUERDO CABEÇALHO */}
 <div
   className="
     flex
     flex-col
 
-    justify-center
+    justify-start
+
+    pt-[2px]
 
     leading-none
 
     min-w-0
+
+    h-[0px]
   "
 >
 
@@ -2429,7 +2434,7 @@ async function confirmarPuloQuestao() {
     className="
       flex
       items-center
-      gap-[6px]
+      gap-[5px]
 
       whitespace-nowrap
     "
@@ -2437,7 +2442,7 @@ async function confirmarPuloQuestao() {
 
     <span
       className="
-        text-[8px]
+        text-[10px]
         uppercase
         tracking-[0.18em]
         text-green-300/65
@@ -2457,18 +2462,92 @@ async function confirmarPuloQuestao() {
       {indiceQuestao + 1}/{perguntasFiltradas.length}
     </span>
 
-  </div>
+{/* BARRA PROGRESSO PREMIUM */}
+<div
+  className="
+    absolute
 
-  {/* FASE */}
+    left-[0px]
+    right-[0px]
+
+    bottom-[1px]
+
+    h-[5px]
+
+    rounded-full
+
+    bg-black/35
+
+    overflow-hidden
+  "
+>
+
+  <div
+    className="
+      h-full
+
+      rounded-full
+
+      bg-gradient-to-r
+      from-yellow-300
+      via-green-400
+      to-green-300
+
+      transition-all
+      duration-500
+
+      shadow-[0_0_12px_rgba(0,255,120,0.35)]
+    "
+    style={{
+      width: `${progresso}%`,
+    }}
+  />
+
+</div>
+
+{/* FASE CENTRAL */}
+<div
+  className="
+    absolute
+
+    left-1/2
+    -translate-x-1/2
+
+    bottom-[-16px]
+
+    px-3
+
+    flex
+    items-center
+    justify-center
+
+    whitespace-nowrap
+  "
+>
+
+  <span
+    className="
+      text-[10px]
+
+      uppercase
+
+      tracking-[0.18em]
+
+      text-green-300/45
+
+      font-bold
+
+      mr-[4px]
+    "
+  >
+    FASE:
+  </span>
+
   <span
     className={`
       text-[12px]
 
-      mt-[2px]
-
       font-semibold
-
-      truncate
 
       ${corFase}
     `}
@@ -2476,6 +2555,11 @@ async function confirmarPuloQuestao() {
     {faseAtual}
   </span>
 
+</div>
+
+  </div>
+
+ 
 </div>
 
         
@@ -2490,7 +2574,7 @@ async function confirmarPuloQuestao() {
   "
 >
 
-  <div className="relative w-[42px] h-[42px]">
+  <div className="relative w-[54px] h-[54px]">
 
     {/* GLOW */}
     <div
@@ -2519,14 +2603,14 @@ async function confirmarPuloQuestao() {
     inset-0
     -rotate-90
   "
-  viewBox="0 0 54 54"
+  viewBox="0 0 64 64"
 >
 
   {/* ANEL BASE */}
   <circle
-    cx="27"
-    cy="27"
-    r="18"
+    cx="32"
+    cy="32"
+    r="22"
 
     fill="none"
 
@@ -2537,9 +2621,9 @@ async function confirmarPuloQuestao() {
 
   {/* ANEL ANIMADO */}
   <circle
-    cx="27"
-    cy="27"
-    r="22"
+    cx="32"
+    cy="32"
+    r="26"
 
     fill="none"
 
@@ -2579,7 +2663,7 @@ async function confirmarPuloQuestao() {
     <div
       className="
         absolute
-        inset-[7px]
+        inset-[8px]
 
         rounded-full
 
@@ -2598,7 +2682,7 @@ async function confirmarPuloQuestao() {
 
       <span
         className={`
-          text-[16px]
+          text-[21px]
 
           font-extrabold
 
@@ -2627,51 +2711,52 @@ async function confirmarPuloQuestao() {
 <div
   className="
     flex
-    items-center
-    justify-end
+    flex-col
+
+    items-end
+    justify-center
 
     justify-self-end
-
-    gap-1
 
     shrink-0
   "
 >
 
-        {/* AUDIO */}
-        <button
-          onClick={toggleAudio}
+  {/* AUDIO */}
+  <button
+    onClick={toggleAudio}
 
-          className="
-            w-[36px]
-            h-[36px]
+    className="
+      w-[38px]
+      h-[38px]
 
-            rounded-full
+      rounded-full
 
-            bg-black/30
+      bg-black/30
 
-            border
-            border-green-400/20
+      border
+      border-green-400/20
 
-            flex
-            items-center
-            justify-center
+      flex
+      items-center
+      justify-center
 
-            text-lg
+      text-lg
 
-            transition-all
-            duration-300
+      transition-all
+      duration-300
 
-            active:scale-95
-          "
-        >
+      active:scale-95
+    "
+  >
 
-          {audioLigado ? "🔊" : "🔇"}
+    {audioLigado ? "🔊" : "🔇"}
 
-        </button>
+  </button>
 
-        
-      </div>
+  
+
+</div>
 
     </div>
 
@@ -2815,7 +2900,7 @@ async function confirmarPuloQuestao() {
       className="
   question-clamp
 
-  text-[clamp(0.94rem,2vw,1.34rem)]
+  text-[clamp(1rem,2.1vw,1.4rem)]
   md:text-[clamp(1rem,1.6vw,1.6rem)]
 
   font-semibold
@@ -2947,7 +3032,7 @@ items-center
 
           <span
   className="
-    text-[clamp(0.88rem,1.8vw,0.97rem)]
+    text-[clamp(0.93rem,1.9vw,1.02rem)]
 
     leading-[1.08]
 
@@ -3044,7 +3129,23 @@ items-center
             👨‍🌾
           </div>
 
-          <p className="font-black text-[7px] text-center tracking-wide text-green-100">
+          <p
+  className="
+    font-semibold
+
+    text-[10px]
+
+    leading-[1]
+
+    tracking-[-0.01em]
+
+    text-[#f3fff8]
+
+    text-center
+
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]
+  "
+>
             Consultoria
           </p>
 
@@ -3089,7 +3190,23 @@ items-center
             🚜
           </div>
 
-          <p className="font-black text-[8px] text-center tracking-wide text-green-100">
+          <p
+  className="
+    font-semibold
+
+    text-[10px]
+
+    leading-[1]
+
+    tracking-[-0.01em]
+
+    text-[#f3fff8]
+
+    text-center
+
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]
+  "
+>
             Cartas
           </p>
 
@@ -3139,7 +3256,23 @@ items-center
       🤖
     </div>
 
-    <p className="font-black text-[8px] text-center tracking-wide text-cyan-100">
+    <p
+  className="
+    font-semibold
+
+    text-[10px]
+
+    leading-[1]
+
+    tracking-[-0.01em]
+
+    text-[#f3fff8]
+
+    text-center
+
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]
+  "
+>
       IA Agro
     </p>
 
@@ -3185,7 +3318,23 @@ items-center
             🌱
           </div>
 
-          <p className="font-black text-[8px] text-center tracking-wide text-green-100">
+          <p
+  className="
+    font-semibold
+
+    text-[10px]
+
+    leading-[1]
+
+    tracking-[-0.01em]
+
+    text-[#f3fff8]
+
+    text-center
+
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]
+  "
+>
             Pular
           </p>
 
@@ -3236,7 +3385,23 @@ items-center
             🛑
           </div>
 
-          <p className="font-black text-[8px] text-red-200 text-center tracking-wide">
+          <p
+  className="
+    font-semibold
+
+    text-[10px]
+
+    leading-[1]
+
+    tracking-[-0.01em]
+
+    text-[#f3fff8]
+
+    text-center
+
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]
+  "
+>
             Parar
           </p>
 
