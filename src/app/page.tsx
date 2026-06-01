@@ -7,11 +7,50 @@ export default function Home() {
 
     <main className="relative h-screen overflow-hidden bg-[#061b11] text-white">
 
-      {/* FUNDO */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#0d3b26_0%,#061b11_55%,#020303_100%)]" />
+      {/* FUNDO AGRO CINEMATOGRÁFICO */}
+<div
+  className="
+    absolute
+    inset-0
+    bg-cover
+    bg-center
+    bg-no-repeat
+    scale-105
+  "
+  style={{
+    backgroundImage: "url('/bg-agro.png')"
+  }}
+/>
 
-      {/* GRID SUTIL */}
-      <div className="absolute inset-0 opacity-[0.025] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:90px_90px]" />
+{/* OVERLAY ESCURO */}
+<div className="
+  absolute
+  inset-0
+  bg-black/55
+" />
+
+{/* GRID SUTIL */}
+<div className="
+  absolute
+  inset-0
+  opacity-[0.035]
+  bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)]
+  bg-[size:90px_90px]
+" />
+
+{/* GLOW CENTRAL */}
+<div className="
+  absolute
+  top-1/2
+  left-1/2
+  w-[900px]
+  h-[900px]
+  -translate-x-1/2
+  -translate-y-1/2
+  bg-yellow-500/10
+  blur-[170px]
+  rounded-full
+" />
 
       {/* GLOW CENTRAL */}
       <div className="absolute top-1/2 left-1/2 w-[900px] h-[900px] -translate-x-1/2 -translate-y-1/2 bg-green-500/10 blur-[170px] rounded-full" />
@@ -215,7 +254,7 @@ export default function Home() {
               tracking-wide
             ">
 
-              Desenvolvido pelo Tutor
+              Desenvolvido pelo Instrutor
 
               <span className="text-yellow-400 font-semibold">
 

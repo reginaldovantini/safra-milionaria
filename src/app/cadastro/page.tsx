@@ -173,10 +173,7 @@ export default function CadastroPage() {
                 "
               >
                 <option value="">Selecione um polo</option>
-                <option>Campo Grande</option>
-                <option>Dourados</option>
-                <option>Três Lagoas</option>
-                <option>Corumbá</option>
+                <option>Anastácio</option> <option>Aparecida do Taboado</option> <option>Bataguassu</option> <option>Camapuã</option> <option>Campo Grande</option> <option>Chapadão do Sul</option> <option>Coxim</option> <option>Dourados</option> <option>Inocência</option> <option>Ivinhema</option> <option>Maracaju</option> <option>Sidrolândia</option> <option>Três Lagoas</option>
               </select>
 
             </div>
@@ -210,10 +207,7 @@ export default function CadastroPage() {
                 "
               >
                 <option value="">Selecione um curso</option>
-                <option>Técnico em Agropecuária</option>
-                <option>Técnico em Florestas</option>
-                <option>Logística</option>
-                <option>Administração</option>
+                <option>Especialização Técnica em Sistemas de Produção de Animais Ruminantes</option> <option>Técnico em Agronegócio</option> <option>Técnico em Agricultura</option> <option>Técnico em Agropecuária</option> <option>Técnico em Florestas</option> <option>Técnico em Fruticultura</option> <option>Técnico em Segurança do Trabalho no Agro</option> <option>Técnico em Zootecnia</option>
               </select>
 
             </div>

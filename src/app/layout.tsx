@@ -13,11 +13,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Safra Milionária",
-  description: "O Game Show do Agro",
+  description: "O Game Show do Agro.",
+  icons: {
+    icon: "/icon.png",
+  },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
