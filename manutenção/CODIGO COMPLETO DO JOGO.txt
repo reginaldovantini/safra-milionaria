@@ -2411,17 +2411,21 @@ async function confirmarPuloQuestao() {
   "
 >
 
-        {/* QUESTÃO + FASE */}
+        {/* BLOCO ESQUERDO CABEÇALHO */}
 <div
   className="
     flex
     flex-col
 
-    justify-center
+    justify-start
+
+    pt-[2px]
 
     leading-none
 
     min-w-0
+
+    h-[0px]
   "
 >
 
@@ -2430,7 +2434,7 @@ async function confirmarPuloQuestao() {
     className="
       flex
       items-center
-      gap-[6px]
+      gap-[5px]
 
       whitespace-nowrap
     "
@@ -2463,10 +2467,10 @@ async function confirmarPuloQuestao() {
   className="
     absolute
 
-    left-[8px]
-    right-[6px]
+    left-[0px]
+    right-[0px]
 
-    bottom-[2px]
+    bottom-[1px]
 
     h-[5px]
 
@@ -2541,7 +2545,7 @@ async function confirmarPuloQuestao() {
 
   <span
     className={`
-      text-[11px]
+      text-[12px]
 
       font-semibold
 
@@ -2896,7 +2900,7 @@ async function confirmarPuloQuestao() {
       className="
   question-clamp
 
-  text-[clamp(0.94rem,2vw,1.34rem)]
+  text-[clamp(1rem,2.1vw,1.4rem)]
   md:text-[clamp(1rem,1.6vw,1.6rem)]
 
   font-semibold
@@ -3028,7 +3032,7 @@ items-center
 
           <span
   className="
-    text-[clamp(0.88rem,1.8vw,0.97rem)]
+    text-[clamp(0.93rem,1.9vw,1.02rem)]
 
     leading-[1.08]
 
@@ -3125,7 +3129,23 @@ items-center
             👨‍🌾
           </div>
 
-          <p className="font-black text-[7px] text-center tracking-wide text-green-100">
+          <p
+  className="
+    font-semibold
+
+    text-[10px]
+
+    leading-[1]
+
+    tracking-[-0.01em]
+
+    text-[#f3fff8]
+
+    text-center
+
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]
+  "
+>
             Consultoria
           </p>
 
@@ -3170,7 +3190,23 @@ items-center
             🚜
           </div>
 
-          <p className="font-black text-[8px] text-center tracking-wide text-green-100">
+          <p
+  className="
+    font-semibold
+
+    text-[10px]
+
+    leading-[1]
+
+    tracking-[-0.01em]
+
+    text-[#f3fff8]
+
+    text-center
+
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]
+  "
+>
             Cartas
           </p>
 
@@ -3220,7 +3256,23 @@ items-center
       🤖
     </div>
 
-    <p className="font-black text-[8px] text-center tracking-wide text-cyan-100">
+    <p
+  className="
+    font-semibold
+
+    text-[10px]
+
+    leading-[1]
+
+    tracking-[-0.01em]
+
+    text-[#f3fff8]
+
+    text-center
+
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]
+  "
+>
       IA Agro
     </p>
 
@@ -3266,7 +3318,23 @@ items-center
             🌱
           </div>
 
-          <p className="font-black text-[8px] text-center tracking-wide text-green-100">
+          <p
+  className="
+    font-semibold
+
+    text-[10px]
+
+    leading-[1]
+
+    tracking-[-0.01em]
+
+    text-[#f3fff8]
+
+    text-center
+
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]
+  "
+>
             Pular
           </p>
 
@@ -3317,7 +3385,23 @@ items-center
             🛑
           </div>
 
-          <p className="font-black text-[8px] text-red-200 text-center tracking-wide">
+          <p
+  className="
+    font-semibold
+
+    text-[10px]
+
+    leading-[1]
+
+    tracking-[-0.01em]
+
+    text-[#f3fff8]
+
+    text-center
+
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]
+  "
+>
             Parar
           </p>
 
