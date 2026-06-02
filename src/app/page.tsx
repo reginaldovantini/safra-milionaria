@@ -344,21 +344,11 @@ export default function Home() {
 
 </button>
 
+
 )}
 
-<p className="
-  mt-3
-  text-xs
-  md:text-sm
-  text-gray-400
-  tracking-wide
-">
-
-  Jogue em tela cheia no celular
-
-</p>
           </div>
-          
+         
 
         </div>
 
