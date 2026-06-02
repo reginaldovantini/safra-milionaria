@@ -1,7 +1,62 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
+
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+
+    const userAgent = window.navigator.userAgent.toLowerCase();
+
+    const ios =
+      /iphone|ipad|ipod/.test(userAgent);
+
+    setIsIOS(ios);
+
+    const handler = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener(
+      "beforeinstallprompt",
+      handler
+    );
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handler
+      );
+    };
+
+  }, []);
+
+  const handleInstall = async () => {
+
+    if (isIOS) {
+
+      alert(
+        "No iPhone:\n\n1. Toque em Compartilhar\n2. Adicionar à Tela de Início"
+      );
+
+      return;
+    }
+
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+
+    await deferredPrompt.userChoice;
+
+    setDeferredPrompt(null);
+
+  };
 
   return (
 
@@ -55,22 +110,7 @@ export default function Home() {
       {/* GLOW CENTRAL */}
       <div className="absolute top-1/2 left-1/2 w-[900px] h-[900px] -translate-x-1/2 -translate-y-1/2 bg-green-500/10 blur-[170px] rounded-full" />
 
-      {/* LOGO SENAR */}
-      <div className="absolute top-6 right-8 z-20 opacity-90">
-
-        <Image
-          src="/logo-senar.png"
-          alt="Logo SENAR"
-          width={170}
-          height={60}
-          priority
-          className="
-            object-contain
-            drop-shadow-[0_0_20px_rgba(0,255,120,0.10)]
-          "
-        />
-
-      </div>
+     
 
       {/* CONTEÚDO */}
       <div className="relative z-10 h-full flex flex-col">
@@ -79,6 +119,24 @@ export default function Home() {
         <div className="flex-1 flex items-center justify-center px-6">
 
           <div className="w-full max-w-5xl flex flex-col items-center text-center -mt-6">
+
+{/* LOGO SENAR CENTRAL */}
+<div className="mb-5 opacity-90">
+
+  <Image
+    src="/logo-senar.png"
+    alt="Logo SENAR"
+    width={190}
+    height={70}
+    priority
+    className="
+      object-contain
+      mx-auto
+      drop-shadow-[0_0_25px_rgba(0,255,120,0.10)]
+    "
+  />
+
+</div>
 
             {/* BADGE */}
             <div className="
@@ -230,7 +288,69 @@ export default function Home() {
 
             </Link>
 
-           
+           {/* BOTÃO INSTALAR APP */}
+<button
+  onClick={handleInstall}
+  className="
+    mt-5
+    group
+    relative
+    overflow-hidden
+    border
+    border-yellow-400/20
+    bg-black/35
+    hover:bg-black/50
+    text-yellow-300
+    font-bold
+    text-sm
+    md:text-base
+    px-8
+    py-4
+    rounded-2xl
+    backdrop-blur-md
+    transition-all
+    duration-300
+    hover:scale-105
+    shadow-[0_0_25px_rgba(255,215,0,0.10)]
+  "
+>
+
+  <div className="
+    absolute
+    inset-0
+    opacity-0
+    group-hover:opacity-100
+    transition
+    duration-500
+    bg-white/5
+  " />
+
+  <span className="
+    relative
+    z-10
+    flex
+    items-center
+    gap-3
+    tracking-wide
+  ">
+
+    📲 INSTALAR APP
+
+  </span>
+
+</button>
+
+<p className="
+  mt-3
+  text-xs
+  md:text-sm
+  text-gray-400
+  tracking-wide
+">
+
+  Jogue em tela cheia no celular
+
+</p>
           </div>
 
         </div>
