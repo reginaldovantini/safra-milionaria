@@ -289,6 +289,10 @@ export default function Home() {
             </Link>
 
            {/* BOTÃO INSTALAR APP */}
+
+
+{(deferredPrompt || isIOS) && (
+
 <button
   onClick={handleInstall}
   className="
@@ -340,6 +344,8 @@ export default function Home() {
 
 </button>
 
+)}
+
 <p className="
   mt-3
   text-xs
@@ -352,6 +358,7 @@ export default function Home() {
 
 </p>
           </div>
+          
 
         </div>
 
