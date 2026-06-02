@@ -156,7 +156,7 @@ export default function Home() {
               backdrop-blur-sm
             ">
 
-              SENAR • EXPERIÊNCIA GAMIFICADA
+              EXPERIÊNCIA GAMIFICADA
 
             </div>
 
