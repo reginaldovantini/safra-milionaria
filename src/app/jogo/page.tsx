@@ -5,6 +5,7 @@ import * as XLSX from "xlsx";
 import { supabase } from "@/lib/supabase";
 import LayoutDesktop from "@/components/game/LayoutDesktop";
 import LayoutMobile from "@/components/game/LayoutMobile";
+import GameModal from "@/components/ui/GameModal";
 
 // EMBARALHAR ARRAY
 function shuffleArray(array: any[]) {
@@ -6101,27 +6102,27 @@ POPUP PARAR JOGO
 {/* POPUP CONFIRMAÇÃO */}
 {mostrarConfirmacao && (
 
-  <div className="fixed inset-0 z-[998] flex items-center justify-center px-4">
+  <GameModal
+  maxWidth="max-w-[560px]"
+  zIndex="z-[998]"
+>
 
-    {/* BACKDROP */}
-    <div className="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
-
+    
     {/* MODAL */}
     <div
       className="
-        relative
-        z-10
-        w-full
-        max-w-xl
-        rounded-[32px]
-        border
-        border-green-400/30
-        bg-[#082b1d]/95
-        shadow-[0_0_25px_rgba(0,255,150,0.2)]
-        backdrop-blur-2xl
-        p-8
-        animate-[popup_.3s_ease]
-      "
+  relative
+
+  border
+  border-green-400/30
+
+  bg-[#082b1d]/95
+
+  backdrop-blur-2xl
+
+  p-5
+  md:p-8
+"
     >
 
       {/* GLOW */}
@@ -6253,7 +6254,7 @@ POPUP PARAR JOGO
 
     </div>
 
-  </div>
+  </GameModal>
 
 )}
             
