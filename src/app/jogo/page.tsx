@@ -6443,6 +6443,7 @@ FEEDBACK AAA PREMIUM COMPACT
           >
 
             GABARITO
+
           </p>
 
           <div
@@ -6540,10 +6541,13 @@ FEEDBACK AAA PREMIUM COMPACT
           >
 
             ANÁLISE
+
           </p>
 
+          {/* WRAPPER */}
           <div className="relative">
 
+            {/* ÁREA SCROLL */}
             <div
               className="
                 max-h-[115px]
@@ -6551,6 +6555,7 @@ FEEDBACK AAA PREMIUM COMPACT
                 overflow-y-auto
 
                 pr-1
+                pb-4
 
                 custom-scroll
               "
@@ -6575,52 +6580,60 @@ FEEDBACK AAA PREMIUM COMPACT
 
             </div>
 
-            {/* FADE INFERIOR */}
-            <div
-              className="
-                pointer-events-none
+            {/* INDICADOR INTELIGENTE */}
+            {questaoAtual?.feedback?.length > 240 && (
 
-                absolute
-                bottom-0
-                left-0
-                right-0
+              <>
 
-                h-8
+                {/* FADE */}
+                <div
+                  className="
+                    pointer-events-none
 
-                bg-gradient-to-t
-                from-[#0b1511]
-                to-transparent
-              "
-            />
+                    absolute
+                    bottom-0
+                    left-0
+                    right-0
 
-            {/* TEXTO VISUAL */}
-            <div
-              className="
-                pointer-events-none
+                    h-10
 
-                absolute
-                bottom-1
-                left-1/2
+                    bg-gradient-to-t
+                    from-[#0b1511]
+                    via-[#0b1511]/70
+                    to-transparent
+                  "
+                />
 
-                -translate-x-1/2
+                {/* HINT */}
+                <div
+                  className="
+                    pointer-events-none
 
-                text-[9px]
+                    absolute
+                    bottom-0.5
+                    right-1
 
-                uppercase
+                    text-[8px]
 
-                tracking-[0.16em]
+                    uppercase
 
-                text-green-300/65
+                    tracking-[0.12em]
 
-                font-bold
+                    text-green-300/50
 
-                animate-pulse
-              "
-            >
+                    font-bold
 
-              Arraste para ler
+                    animate-pulse
+                  "
+                >
 
-            </div>
+                  Arraste ↑
+
+                </div>
+
+              </>
+
+            )}
 
           </div>
 
@@ -6718,8 +6731,7 @@ FEEDBACK AAA PREMIUM COMPACT
 
   </GameModal>
 
-)}
-                
+)}         
 
       
 
