@@ -4,7 +4,7 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Safra Milionária",
-    short_name: "Safra",
+    short_name: "Safra Milionária",
     description: "O Game Show do Agro",
     start_url: "/",
     display: "standalone",
