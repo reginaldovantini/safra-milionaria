@@ -2443,7 +2443,7 @@ async function confirmarPuloQuestao() {
 
     <span
       className="
-        text-[14px]
+        text-[13px]
         uppercase
         tracking-[0.18em]
         text-green-300/65
@@ -2455,7 +2455,7 @@ async function confirmarPuloQuestao() {
 
     <span
       className="
-        text-[15px]
+        text-[14px]
         font-black
         text-yellow-300
       "
@@ -6258,83 +6258,314 @@ POPUP PARAR JOGO
 
 )}
             
-            {/* POPUP FEEDBACK */}
+{/* =========================================
+FEEDBACK AAA PREMIUM
+========================================= */}
+
 {respostaConfirmada && (
 
-  <div className="fixed inset-0 z-[999] flex items-center justify-center px-4">
+  <GameModal
+    maxWidth="max-w-[680px]"
+    zIndex="z-[999]"
+  >
 
-    {/* FUNDO ESCURO */}
-    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-
-    {/* MODAL */}
     <div
       className={`
         relative
-        z-10
-        w-full
-        max-w-3xl
-        rounded-3xl
+
+        overflow-hidden
+
         border
-        shadow-2xl
-        backdrop-blur-md
-        p-6
-        animate-[popup_.25s_ease]
+
+        backdrop-blur-2xl
+
+        p-5
+        md:p-7
+
         ${
           acertou
-            ? "bg-green-500/10 border-green-400/40"
-            : "bg-red-500/10 border-red-400/40"
+            ? `
+              border-green-400/30
+              bg-[#08261b]/96
+            `
+            : `
+              border-red-400/25
+              bg-[#260808]/96
+            `
         }
       `}
     >
 
-      {/* TÍTULO */}
-      <h2
+      {/* GLOW */}
+      <div
         className={`
-          text-3xl
-          font-black
-          mb-5
+          absolute
+          inset-0
+
           ${
             acertou
-              ? "text-green-300"
-              : "text-red-300"
+              ? "bg-[radial-gradient(circle_at_top,rgba(0,255,140,0.14),transparent_70%)]"
+              : "bg-[radial-gradient(circle_at_top,rgba(255,0,0,0.14),transparent_70%)]"
           }
         `}
-      >
+      />
 
-        {tempoEsgotado
-          ? "⏳ Tempo Esgotado!"
-          : acertou
-          ? "✅ Certa Resposta!"
-          : "❌ Resposta Incorreta!"}
+      <div className="relative z-10">
 
-      </h2>
+        {/* HEADER */}
+        <div className="text-center mb-5">
 
-      {/* TEXTO */}
-      <div className="space-y-4">
+          <div className="text-5xl mb-3">
 
-        <p className="text-lg leading-relaxed text-white">
+            {tempoEsgotado
+              ? "⏳"
+              : acertou
+              ? "🏆"
+              : "💥"}
 
-          <strong className="text-yellow-400">
-            Gabarito:
-            {" "}
-            {String.fromCharCode(
-              65 + questaoAtual?.correta
-            )}.
-          </strong>
+          </div>
 
-          {" "}
+          <h2
+            className={`
+              text-[30px]
+              md:text-[38px]
 
-          {tempoEsgotado
-            ? "O tempo terminou antes da resposta. "
-            : ""}
+              leading-none
 
-          {questaoAtual?.feedback}
+              font-black
 
-        </p>
+              mb-3
 
-        <p className="text-sm text-gray-300 leading-relaxed">
+              ${
+                acertou
+                  ? "text-green-300"
+                  : "text-red-300"
+              }
+            `}
+          >
 
-          <span className="font-semibold text-gray-200">
+            {tempoEsgotado
+              ? "TEMPO ESGOTADO"
+              : acertou
+              ? "RESPOSTA CORRETA"
+              : "RESPOSTA INCORRETA"}
+
+          </h2>
+
+          <div
+            className={`
+              inline-flex
+
+              items-center
+              justify-center
+
+              rounded-2xl
+
+              px-5
+              py-3
+
+              border
+
+              ${
+                acertou
+                  ? `
+                    border-yellow-400/20
+                    bg-yellow-400/10
+                  `
+                  : `
+                    border-red-400/20
+                    bg-red-500/10
+                  `
+              }
+            `}
+          >
+
+            <span
+              className={`
+                text-[24px]
+                md:text-[32px]
+
+                font-black
+
+                ${
+                  acertou
+                    ? "text-yellow-300"
+                    : "text-red-300"
+                }
+              `}
+            >
+
+              {acertou
+                ? `+ R$ ${valorAtual.toLocaleString("pt-BR")}`
+                : `R$ ${valorErrar.toLocaleString("pt-BR")}`}
+
+            </span>
+
+          </div>
+
+        </div>
+
+        {/* RESPOSTA */}
+        <div
+          className="
+            rounded-[24px]
+
+            border
+            border-white/10
+
+            bg-black/25
+
+            p-4
+
+            mb-4
+          "
+        >
+
+          <p
+            className="
+              text-[11px]
+
+              uppercase
+
+              tracking-[0.22em]
+
+              text-gray-400
+
+              font-black
+
+              mb-2
+            "
+          >
+
+            GABARITO OFICIAL
+          </p>
+
+          <div
+            className="
+              flex
+              items-start
+
+              gap-3
+            "
+          >
+
+            <div
+              className="
+                shrink-0
+
+                w-11
+                h-11
+
+                rounded-2xl
+
+                bg-yellow-400
+
+                text-black
+
+                flex
+                items-center
+                justify-center
+
+                text-xl
+                font-black
+              "
+            >
+
+              {String.fromCharCode(
+                65 + questaoAtual?.correta
+              )}
+
+            </div>
+
+            <div
+              className="
+                text-white/90
+
+                leading-relaxed
+
+                text-[15px]
+                md:text-[16px]
+              "
+            >
+
+              {
+                questaoAtual?.alternativas[
+                  questaoAtual?.correta
+                ]
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* FEEDBACK */}
+        <div
+          className="
+            rounded-[24px]
+
+            border
+            border-white/10
+
+            bg-black/20
+
+            p-4
+
+            mb-4
+          "
+        >
+
+          <p
+            className="
+              text-[11px]
+
+              uppercase
+
+              tracking-[0.22em]
+
+              text-gray-400
+
+              font-black
+
+              mb-3
+            "
+          >
+
+            ANÁLISE TÉCNICA
+          </p>
+
+          <p
+            className="
+              text-white/85
+
+              text-[15px]
+              md:text-[16px]
+
+              leading-relaxed
+            "
+          >
+
+            {questaoAtual?.feedback}
+
+          </p>
+
+        </div>
+
+        {/* FONTE */}
+        <div
+          className="
+            text-[12px]
+
+            text-gray-400
+
+            leading-relaxed
+
+            mb-6
+          "
+        >
+
+          <span className="font-bold text-gray-300">
             Fonte:
           </span>
 
@@ -6342,56 +6573,78 @@ POPUP PARAR JOGO
 
           {questaoAtual?.fonte}
 
-        </p>
+        </div>
+
+        {/* BOTÃO */}
+        <button
+          onClick={() => {
+
+            if (acertou) {
+
+              proximaQuestao();
+
+            } else {
+
+              sairDoJogo();
+
+            }
+
+          }}
+
+          className={`
+            w-full
+
+            rounded-[22px]
+
+            py-4
+
+            text-[16px]
+            md:text-[18px]
+
+            font-black
+
+            transition-all
+            duration-300
+
+            ${
+              acertou
+                ? `
+                  bg-gradient-to-r
+                  from-yellow-400
+                  to-yellow-300
+
+                  text-black
+
+                  shadow-[0_0_25px_rgba(255,215,0,0.30)]
+                `
+                : `
+                  bg-gradient-to-r
+                  from-red-500
+                  to-red-400
+
+                  text-white
+
+                  shadow-[0_0_25px_rgba(255,0,0,0.30)]
+                `
+            }
+
+            hover:scale-[1.01]
+          `}
+        >
+
+          {acertou
+            ? "CONTINUAR SAFRA"
+            : "ENCERRAR PARTIDA"}
+
+        </button>
 
       </div>
 
-     {/* BOTÃO */}
-<button
-  onClick={() => {
-
-    if (acertou) {
-
-      proximaQuestao();
-
-    } else {
-
-      sairDoJogo();
-
-    }
-
-  }}
-  className={`
-    w-full
-    mt-8
-    text-black
-    font-black
-    text-lg
-    py-4
-    rounded-2xl
-    shadow-[0_0_25px_rgba(255,215,0,0.35)]
-    transition-all
-    duration-300
-    hover:scale-[1.01]
-
-    ${
-      acertou
-        ? "bg-yellow-400 hover:bg-yellow-300"
-        : "bg-red-500 hover:bg-red-400 text-white shadow-[0_0_25px_rgba(255,0,0,0.35)]"
-    }
-  `}
->
-  {acertou
-    ? "PRÓXIMA PERGUNTA"
-    : "SAIR"}
-</button>
-
     </div>
 
-  </div>
+  </GameModal>
 
 )}
-
                 
 
       
