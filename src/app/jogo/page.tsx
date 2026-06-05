@@ -2546,7 +2546,7 @@ async function confirmarPuloQuestao() {
 
   <span
     className={`
-      text-[13px]
+      text-[15px]
 
       font-semibold
 
