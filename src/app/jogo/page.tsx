@@ -2443,7 +2443,7 @@ async function confirmarPuloQuestao() {
 
     <span
       className="
-        text-[10px]
+        text-[12px]
         uppercase
         tracking-[0.18em]
         text-green-300/65
@@ -2455,7 +2455,7 @@ async function confirmarPuloQuestao() {
 
     <span
       className="
-        text-[12px]
+        text-[13px]
         font-black
         text-yellow-300
       "
@@ -2528,7 +2528,7 @@ async function confirmarPuloQuestao() {
 
   <span
     className="
-      text-[10px]
+      text-[12px]
 
       uppercase
 
@@ -2546,7 +2546,7 @@ async function confirmarPuloQuestao() {
 
   <span
     className={`
-      text-[12px]
+      text-[13px]
 
       font-semibold
 
@@ -3071,7 +3071,7 @@ items-center
     flex
     flex-col
 
-    gap-4
+    gap-3
 
     w-full
   "
