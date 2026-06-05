@@ -6259,13 +6259,13 @@ POPUP PARAR JOGO
 )}
             
 {/* =========================================
-FEEDBACK AAA PREMIUM
+FEEDBACK AAA PREMIUM COMPACT
 ========================================= */}
 
 {respostaConfirmada && (
 
   <GameModal
-    maxWidth="max-w-[680px]"
+    maxWidth="max-w-[620px]"
     zIndex="z-[999]"
   >
 
@@ -6279,17 +6279,22 @@ FEEDBACK AAA PREMIUM
 
         backdrop-blur-2xl
 
-        p-5
-        md:p-7
+        px-4
+        pt-4
+        pb-4
+
+        md:px-5
+        md:pt-5
+        md:pb-5
 
         ${
           acertou
             ? `
-              border-green-400/30
+              border-green-400/25
               bg-[#08261b]/96
             `
             : `
-              border-red-400/25
+              border-red-400/20
               bg-[#260808]/96
             `
         }
@@ -6304,8 +6309,8 @@ FEEDBACK AAA PREMIUM
 
           ${
             acertou
-              ? "bg-[radial-gradient(circle_at_top,rgba(0,255,140,0.14),transparent_70%)]"
-              : "bg-[radial-gradient(circle_at_top,rgba(255,0,0,0.14),transparent_70%)]"
+              ? "bg-[radial-gradient(circle_at_top,rgba(0,255,140,0.10),transparent_72%)]"
+              : "bg-[radial-gradient(circle_at_top,rgba(255,0,0,0.10),transparent_72%)]"
           }
         `}
       />
@@ -6313,9 +6318,9 @@ FEEDBACK AAA PREMIUM
       <div className="relative z-10">
 
         {/* HEADER */}
-        <div className="text-center mb-5">
+        <div className="text-center mb-3">
 
-          <div className="text-5xl mb-3">
+          <div className="text-[38px] mb-1.5">
 
             {tempoEsgotado
               ? "⏳"
@@ -6327,14 +6332,14 @@ FEEDBACK AAA PREMIUM
 
           <h2
             className={`
-              text-[30px]
-              md:text-[38px]
+              text-[22px]
+              md:text-[30px]
 
               leading-none
 
-              font-black
+              font-extrabold
 
-              mb-3
+              mb-2
 
               ${
                 acertou
@@ -6359,21 +6364,21 @@ FEEDBACK AAA PREMIUM
               items-center
               justify-center
 
-              rounded-2xl
+              rounded-[16px]
 
-              px-5
-              py-3
+              px-4
+              py-2
 
               border
 
               ${
                 acertou
                   ? `
-                    border-yellow-400/20
+                    border-yellow-400/15
                     bg-yellow-400/10
                   `
                   : `
-                    border-red-400/20
+                    border-red-400/15
                     bg-red-500/10
                   `
               }
@@ -6382,10 +6387,10 @@ FEEDBACK AAA PREMIUM
 
             <span
               className={`
-                text-[24px]
-                md:text-[32px]
+                text-[20px]
+                md:text-[26px]
 
-                font-black
+                font-extrabold
 
                 ${
                   acertou
@@ -6405,39 +6410,39 @@ FEEDBACK AAA PREMIUM
 
         </div>
 
-        {/* RESPOSTA */}
+        {/* GABARITO */}
         <div
           className="
-            rounded-[24px]
+            rounded-[18px]
 
             border
-            border-white/10
+            border-white/8
 
-            bg-black/25
+            bg-black/20
 
-            p-4
+            p-3
 
-            mb-4
+            mb-3
           "
         >
 
           <p
             className="
-              text-[11px]
+              text-[10px]
 
               uppercase
 
-              tracking-[0.22em]
+              tracking-[0.18em]
 
               text-gray-400
 
-              font-black
+              font-extrabold
 
               mb-2
             "
           >
 
-            GABARITO OFICIAL
+            GABARITO
           </p>
 
           <div
@@ -6445,7 +6450,7 @@ FEEDBACK AAA PREMIUM
               flex
               items-start
 
-              gap-3
+              gap-2.5
             "
           >
 
@@ -6453,10 +6458,10 @@ FEEDBACK AAA PREMIUM
               className="
                 shrink-0
 
-                w-11
-                h-11
+                w-9
+                h-9
 
-                rounded-2xl
+                rounded-[12px]
 
                 bg-yellow-400
 
@@ -6466,7 +6471,7 @@ FEEDBACK AAA PREMIUM
                 items-center
                 justify-center
 
-                text-xl
+                text-[18px]
                 font-black
               "
             >
@@ -6479,12 +6484,14 @@ FEEDBACK AAA PREMIUM
 
             <div
               className="
-                text-white/90
+                text-white/88
 
-                leading-relaxed
+                leading-[1.4]
 
-                text-[15px]
-                md:text-[16px]
+                text-[13px]
+                md:text-[14px]
+
+                font-medium
               "
             >
 
@@ -6503,69 +6510,85 @@ FEEDBACK AAA PREMIUM
         {/* FEEDBACK */}
         <div
           className="
-            rounded-[24px]
+            rounded-[18px]
 
             border
-            border-white/10
+            border-white/8
 
-            bg-black/20
+            bg-black/15
 
-            p-4
+            p-3
 
-            mb-4
+            mb-3
           "
         >
 
           <p
             className="
-              text-[11px]
+              text-[10px]
 
               uppercase
 
-              tracking-[0.22em]
+              tracking-[0.18em]
 
               text-gray-400
 
-              font-black
+              font-extrabold
 
-              mb-3
+              mb-2
             "
           >
 
-            ANÁLISE TÉCNICA
+            ANÁLISE
           </p>
 
-          <p
+          <div
             className="
-              text-white/85
+              max-h-[115px]
 
-              text-[15px]
-              md:text-[16px]
+              overflow-y-auto
 
-              leading-relaxed
+              pr-1
+
+              custom-scroll
             "
           >
 
-            {questaoAtual?.feedback}
+            <p
+              className="
+                text-white/84
 
-          </p>
+                text-[13px]
+                md:text-[14px]
+
+                leading-[1.45]
+
+                font-normal
+              "
+            >
+
+              {questaoAtual?.feedback}
+
+            </p>
+
+          </div>
 
         </div>
 
         {/* FONTE */}
         <div
           className="
-            text-[12px]
+            text-[11px]
 
             text-gray-400
 
-            leading-relaxed
+            leading-[1.35]
 
-            mb-6
+            mb-4
           "
         >
 
-          <span className="font-bold text-gray-300">
+          <span className="font-semibold text-gray-300">
             Fonte:
           </span>
 
@@ -6594,14 +6617,14 @@ FEEDBACK AAA PREMIUM
           className={`
             w-full
 
-            rounded-[22px]
+            rounded-[18px]
 
-            py-4
+            py-3
 
-            text-[16px]
-            md:text-[18px]
+            text-[15px]
+            md:text-[17px]
 
-            font-black
+            font-extrabold
 
             transition-all
             duration-300
@@ -6615,7 +6638,7 @@ FEEDBACK AAA PREMIUM
 
                   text-black
 
-                  shadow-[0_0_25px_rgba(255,215,0,0.30)]
+                  shadow-[0_0_20px_rgba(255,215,0,0.22)]
                 `
                 : `
                   bg-gradient-to-r
@@ -6624,7 +6647,7 @@ FEEDBACK AAA PREMIUM
 
                   text-white
 
-                  shadow-[0_0_25px_rgba(255,0,0,0.30)]
+                  shadow-[0_0_20px_rgba(255,0,0,0.22)]
                 `
             }
 
