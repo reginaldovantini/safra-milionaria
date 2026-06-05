@@ -3071,7 +3071,7 @@ items-center
     flex
     flex-col
 
-    gap-2
+    gap-4
 
     w-full
   "
