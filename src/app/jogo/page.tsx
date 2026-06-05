@@ -6542,34 +6542,85 @@ FEEDBACK AAA PREMIUM COMPACT
             ANÁLISE
           </p>
 
-          <div
-            className="
-              max-h-[115px]
+          <div className="relative">
 
-              overflow-y-auto
-
-              pr-1
-
-              custom-scroll
-            "
-          >
-
-            <p
+            <div
               className="
-                text-white/84
+                max-h-[115px]
 
-                text-[13px]
-                md:text-[14px]
+                overflow-y-auto
 
-                leading-[1.45]
+                pr-1
 
-                font-normal
+                custom-scroll
               "
             >
 
-              {questaoAtual?.feedback}
+              <p
+                className="
+                  text-white/84
 
-            </p>
+                  text-[13px]
+                  md:text-[14px]
+
+                  leading-[1.45]
+
+                  font-normal
+                "
+              >
+
+                {questaoAtual?.feedback}
+
+              </p>
+
+            </div>
+
+            {/* FADE INFERIOR */}
+            <div
+              className="
+                pointer-events-none
+
+                absolute
+                bottom-0
+                left-0
+                right-0
+
+                h-8
+
+                bg-gradient-to-t
+                from-[#0b1511]
+                to-transparent
+              "
+            />
+
+            {/* TEXTO VISUAL */}
+            <div
+              className="
+                pointer-events-none
+
+                absolute
+                bottom-1
+                left-1/2
+
+                -translate-x-1/2
+
+                text-[9px]
+
+                uppercase
+
+                tracking-[0.16em]
+
+                text-green-300/65
+
+                font-bold
+
+                animate-pulse
+              "
+            >
+
+              Arraste para ler
+
+            </div>
 
           </div>
 
