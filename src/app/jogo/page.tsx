@@ -6509,136 +6509,139 @@ FEEDBACK AAA PREMIUM COMPACT
         </div>
 
         {/* FEEDBACK */}
-        <div
-          className="
-            rounded-[18px]
+<div
+  className="
+    rounded-[18px]
 
-            border
-            border-white/8
+    border
+    border-white/8
 
-            bg-black/15
+    bg-black/15
 
-            p-3
+    p-3
 
-            mb-3
-          "
-        >
+    mb-3
+  "
+>
 
-          <p
-            className="
-              text-[10px]
+  <p
+    className="
+      text-[10px]
 
-              uppercase
+      uppercase
 
-              tracking-[0.18em]
+      tracking-[0.18em]
 
-              text-gray-400
+      text-gray-400
 
-              font-extrabold
+      font-extrabold
 
-              mb-2
-            "
-          >
+      mb-2
+    "
+  >
 
-            ANÁLISE
+    ANÁLISE
 
-          </p>
+  </p>
 
-          {/* WRAPPER */}
-          <div className="relative">
+  {/* WRAPPER */}
+  <div className="relative">
 
-            {/* ÁREA SCROLL */}
-            <div
-              className="
-                max-h-[115px]
+    {/* ÁREA SCROLL */}
+    <div
+      className="
+        max-h-[115px]
 
-                overflow-y-auto
+        overflow-y-auto
 
-                pr-1
-                pb-4
+        pr-1
 
-                custom-scroll
-              "
-            >
+        custom-scroll
+      "
+    >
 
-              <p
-                className="
-                  text-white/84
+      <p
+        className="
+          text-white/84
 
-                  text-[13px]
-                  md:text-[14px]
+          text-[13px]
+          md:text-[14px]
 
-                  leading-[1.45]
+          leading-[1.45]
 
-                  font-normal
-                "
-              >
+          font-normal
+        "
+      >
 
-                {questaoAtual?.feedback}
+        {questaoAtual?.feedback}
 
-              </p>
+      </p>
 
-            </div>
+    </div>
 
-            {/* INDICADOR INTELIGENTE */}
-            {questaoAtual?.feedback?.length > 240 && (
+    {/* FADE SUAVE */}
+    {questaoAtual?.feedback?.length > 240 && (
 
-              <>
+      <div
+        className="
+          pointer-events-none
 
-                {/* FADE */}
-                <div
-                  className="
-                    pointer-events-none
+          absolute
+          bottom-0
+          left-0
+          right-0
 
-                    absolute
-                    bottom-0
-                    left-0
-                    right-0
+          h-6
 
-                    h-10
+          bg-gradient-to-t
+          from-[#0b1511]/90
+          to-transparent
+        "
+      />
 
-                    bg-gradient-to-t
-                    from-[#0b1511]
-                    via-[#0b1511]/70
-                    to-transparent
-                  "
-                />
+    )}
 
-                {/* HINT */}
-                <div
-                  className="
-                    pointer-events-none
+  </div>
 
-                    absolute
-                    bottom-0.5
-                    right-1
+  {/* HINT FORA DA CAIXA */}
+  {questaoAtual?.feedback?.length > 240 && (
 
-                    text-[8px]
+    <div
+      className="
+        flex
+        justify-end
 
-                    uppercase
+        mt-1
+      "
+    >
 
-                    tracking-[0.12em]
+      <span
+        className="
+          text-[8px]
 
-                    text-green-300/50
+          uppercase
 
-                    font-bold
+          tracking-[0.14em]
 
-                    animate-pulse
-                  "
-                >
+          text-green-300/55
 
-                  Arraste ↑
+          font-bold
 
-                </div>
+          animate-pulse
 
-              </>
+          whitespace-nowrap
+        "
+      >
 
-            )}
+        Arraste ↑
 
-          </div>
+      </span>
 
-        </div>
+    </div>
 
+  )}
+
+</div>
         {/* FONTE */}
         <div
           className="
