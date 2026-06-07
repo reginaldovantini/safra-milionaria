@@ -1933,7 +1933,7 @@ async function confirmarPuloQuestao() {
   );
 }
 
- // FINAL AAA CINEMATOGRÁFICO
+ // FINAL AAA CINEMATOGRÁFICO.
 if (
   perguntasFiltradas.length > 0 &&
   indiceQuestao >= perguntasFiltradas.length
