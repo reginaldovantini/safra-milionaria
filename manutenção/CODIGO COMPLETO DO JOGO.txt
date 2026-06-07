@@ -6258,83 +6258,404 @@ POPUP PARAR JOGO
 
 )}
             
-            {/* POPUP FEEDBACK */}
+{/* =========================================
+FEEDBACK AAA PREMIUM COMPACT
+========================================= */}
+
 {respostaConfirmada && (
 
-  <div className="fixed inset-0 z-[999] flex items-center justify-center px-4">
+  <GameModal
+    maxWidth="max-w-[620px]"
+    zIndex="z-[999]"
+  >
 
-    {/* FUNDO ESCURO */}
-    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-
-    {/* MODAL */}
     <div
       className={`
         relative
-        z-10
-        w-full
-        max-w-3xl
-        rounded-3xl
+
+        overflow-hidden
+
         border
-        shadow-2xl
-        backdrop-blur-md
-        p-6
-        animate-[popup_.25s_ease]
+
+        backdrop-blur-2xl
+
+        px-4
+        pt-4
+        pb-4
+
+        md:px-5
+        md:pt-5
+        md:pb-5
+
         ${
           acertou
-            ? "bg-green-500/10 border-green-400/40"
-            : "bg-red-500/10 border-red-400/40"
+            ? `
+              border-green-400/25
+              bg-[#08261b]/96
+            `
+            : `
+              border-red-400/20
+              bg-[#260808]/96
+            `
         }
       `}
     >
 
-      {/* TÍTULO */}
-      <h2
+      {/* GLOW */}
+      <div
         className={`
-          text-3xl
-          font-black
-          mb-5
+          absolute
+          inset-0
+
           ${
             acertou
-              ? "text-green-300"
-              : "text-red-300"
+              ? "bg-[radial-gradient(circle_at_top,rgba(0,255,140,0.10),transparent_72%)]"
+              : "bg-[radial-gradient(circle_at_top,rgba(255,0,0,0.10),transparent_72%)]"
           }
         `}
+      />
+
+      <div className="relative z-10">
+
+        {/* HEADER */}
+        <div className="text-center mb-3">
+
+          <div className="text-[38px] mb-1.5">
+
+            {tempoEsgotado
+              ? "⏳"
+              : acertou
+              ? "🏆"
+              : "💥"}
+
+          </div>
+
+          <h2
+            className={`
+              text-[22px]
+              md:text-[30px]
+
+              leading-none
+
+              font-extrabold
+
+              mb-2
+
+              ${
+                acertou
+                  ? "text-green-300"
+                  : "text-red-300"
+              }
+            `}
+          >
+
+            {tempoEsgotado
+              ? "TEMPO ESGOTADO"
+              : acertou
+              ? "RESPOSTA CORRETA"
+              : "RESPOSTA INCORRETA"}
+
+          </h2>
+
+          <div
+            className={`
+              inline-flex
+
+              items-center
+              justify-center
+
+              rounded-[16px]
+
+              px-4
+              py-2
+
+              border
+
+              ${
+                acertou
+                  ? `
+                    border-yellow-400/15
+                    bg-yellow-400/10
+                  `
+                  : `
+                    border-red-400/15
+                    bg-red-500/10
+                  `
+              }
+            `}
+          >
+
+            <span
+              className={`
+                text-[20px]
+                md:text-[26px]
+
+                font-extrabold
+
+                ${
+                  acertou
+                    ? "text-yellow-300"
+                    : "text-red-300"
+                }
+              `}
+            >
+
+              {acertou
+                ? `+ R$ ${valorAtual.toLocaleString("pt-BR")}`
+                : `R$ ${valorErrar.toLocaleString("pt-BR")}`}
+
+            </span>
+
+          </div>
+
+        </div>
+
+        {/* GABARITO */}
+        <div
+          className="
+            rounded-[18px]
+
+            border
+            border-white/8
+
+            bg-black/20
+
+            p-3
+
+            mb-3
+          "
+        >
+
+          <p
+            className="
+              text-[10px]
+
+              uppercase
+
+              tracking-[0.18em]
+
+              text-gray-400
+
+              font-extrabold
+
+              mb-2
+            "
+          >
+
+            GABARITO
+
+          </p>
+
+          <div
+            className="
+              flex
+              items-start
+
+              gap-2.5
+            "
+          >
+
+            <div
+              className="
+                shrink-0
+
+                w-9
+                h-9
+
+                rounded-[12px]
+
+                bg-yellow-400
+
+                text-black
+
+                flex
+                items-center
+                justify-center
+
+                text-[18px]
+                font-black
+              "
+            >
+
+              {String.fromCharCode(
+                65 + questaoAtual?.correta
+              )}
+
+            </div>
+
+            <div
+              className="
+                text-white/88
+
+                leading-[1.4]
+
+                text-[13px]
+                md:text-[14px]
+
+                font-medium
+              "
+            >
+
+              {
+                questaoAtual?.alternativas[
+                  questaoAtual?.correta
+                ]
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* FEEDBACK */}
+<div
+  className="
+    rounded-[18px]
+
+    border
+    border-white/8
+
+    bg-black/15
+
+    p-3
+
+    mb-3
+  "
+>
+
+  <p
+    className="
+      text-[10px]
+
+      uppercase
+
+      tracking-[0.18em]
+
+      text-gray-400
+
+      font-extrabold
+
+      mb-2
+    "
+  >
+
+    ANÁLISE
+
+  </p>
+
+  {/* WRAPPER */}
+  <div className="relative">
+
+    {/* ÁREA SCROLL */}
+    <div
+      className="
+        max-h-[115px]
+
+        overflow-y-auto
+
+        pr-1
+
+        custom-scroll
+      "
+    >
+
+      <p
+        className="
+          text-white/84
+
+          text-[13px]
+          md:text-[14px]
+
+          leading-[1.45]
+
+          font-normal
+        "
       >
 
-        {tempoEsgotado
-          ? "⏳ Tempo Esgotado!"
-          : acertou
-          ? "✅ Certa Resposta!"
-          : "❌ Resposta Incorreta!"}
+        {questaoAtual?.feedback}
 
-      </h2>
+      </p>
 
-      {/* TEXTO */}
-      <div className="space-y-4">
+    </div>
 
-        <p className="text-lg leading-relaxed text-white">
+    {/* FADE SUAVE */}
+    {questaoAtual?.feedback?.length > 240 && (
 
-          <strong className="text-yellow-400">
-            Gabarito:
-            {" "}
-            {String.fromCharCode(
-              65 + questaoAtual?.correta
-            )}.
-          </strong>
+      <div
+        className="
+          pointer-events-none
 
-          {" "}
+          absolute
+          bottom-0
+          left-0
+          right-0
 
-          {tempoEsgotado
-            ? "O tempo terminou antes da resposta. "
-            : ""}
+          h-6
 
-          {questaoAtual?.feedback}
+          bg-gradient-to-t
+          from-[#0b1511]/90
+          to-transparent
+        "
+      />
 
-        </p>
+    )}
 
-        <p className="text-sm text-gray-300 leading-relaxed">
+  </div>
 
-          <span className="font-semibold text-gray-200">
+  {/* HINT FORA DA CAIXA */}
+  {questaoAtual?.feedback?.length > 240 && (
+
+    <div
+      className="
+        flex
+        justify-end
+
+        mt-1
+      "
+    >
+
+      <span
+        className="
+          text-[8px]
+
+          uppercase
+
+          tracking-[0.14em]
+
+          text-green-300/55
+
+          font-bold
+
+          animate-pulse
+
+          whitespace-nowrap
+        "
+      >
+
+        Arraste ↑
+
+      </span>
+
+    </div>
+
+  )}
+
+</div>
+        {/* FONTE */}
+        <div
+          className="
+            text-[11px]
+
+            text-gray-400
+
+            leading-[1.35]
+
+            mb-4
+          "
+        >
+
+          <span className="font-semibold text-gray-300">
             Fonte:
           </span>
 
@@ -6342,57 +6663,78 @@ POPUP PARAR JOGO
 
           {questaoAtual?.fonte}
 
-        </p>
+        </div>
+
+        {/* BOTÃO */}
+        <button
+          onClick={() => {
+
+            if (acertou) {
+
+              proximaQuestao();
+
+            } else {
+
+              sairDoJogo();
+
+            }
+
+          }}
+
+          className={`
+            w-full
+
+            rounded-[18px]
+
+            py-3
+
+            text-[15px]
+            md:text-[17px]
+
+            font-extrabold
+
+            transition-all
+            duration-300
+
+            ${
+              acertou
+                ? `
+                  bg-gradient-to-r
+                  from-yellow-400
+                  to-yellow-300
+
+                  text-black
+
+                  shadow-[0_0_20px_rgba(255,215,0,0.22)]
+                `
+                : `
+                  bg-gradient-to-r
+                  from-red-500
+                  to-red-400
+
+                  text-white
+
+                  shadow-[0_0_20px_rgba(255,0,0,0.22)]
+                `
+            }
+
+            hover:scale-[1.01]
+          `}
+        >
+
+          {acertou
+            ? "CONTINUAR SAFRA"
+            : "ENCERRAR PARTIDA"}
+
+        </button>
 
       </div>
 
-     {/* BOTÃO */}
-<button
-  onClick={() => {
-
-    if (acertou) {
-
-      proximaQuestao();
-
-    } else {
-
-      sairDoJogo();
-
-    }
-
-  }}
-  className={`
-    w-full
-    mt-8
-    text-black
-    font-black
-    text-lg
-    py-4
-    rounded-2xl
-    shadow-[0_0_25px_rgba(255,215,0,0.35)]
-    transition-all
-    duration-300
-    hover:scale-[1.01]
-
-    ${
-      acertou
-        ? "bg-yellow-400 hover:bg-yellow-300"
-        : "bg-red-500 hover:bg-red-400 text-white shadow-[0_0_25px_rgba(255,0,0,0.35)]"
-    }
-  `}
->
-  {acertou
-    ? "PRÓXIMA PERGUNTA"
-    : "SAIR"}
-</button>
-
     </div>
 
-  </div>
+  </GameModal>
 
-)}
-
-                
+)}         
 
       
 
