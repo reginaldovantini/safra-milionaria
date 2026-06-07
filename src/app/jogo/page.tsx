@@ -1694,17 +1694,17 @@ async function confirmarPuloQuestao() {
   }, [indiceQuestao]);
 
   
- // FINAL AAA CINEMATOGRÁFICO.
+ // FINAL AAA CINEMATOGRÁFICO PREMIUM
 if (
   perguntasFiltradas.length > 0 &&
   indiceQuestao >= perguntasFiltradas.length
 ) {
 
   const totalPerguntas =
-    perguntasFiltradas.length;
+    perguntasFiltradas.length || 1;
 
   const acertos =
-    quantidadeAcertos;
+    quantidadeAcertos || 0;
 
   const percentual =
     Math.round(
@@ -1714,13 +1714,34 @@ if (
   let medalha = "🥉 Bronze";
 
   if (percentual >= 90)
-    medalha = "👑 LENDA DO AGRO";
+    medalha = "👑 LENDA";
 
   else if (percentual >= 70)
     medalha = "🥇 Ouro";
 
   else if (percentual >= 50)
     medalha = "🥈 Prata";
+
+  const nomesTemas: Record<string, string> = {
+
+    "Tema 1":
+      "Introdução à Economia",
+
+    "Tema 2":
+      "Mercado e Concorrência",
+
+    "Tema 3":
+      "Cooperativismo",
+
+    "Tema 4":
+      "Gestão Rural",
+
+    "Tema 5":
+      "Empreendedorismo",
+
+    "Tema 6":
+      "Sustentabilidade",
+  };
 
   return (
 
@@ -1744,7 +1765,7 @@ if (
           absolute
           inset-0
 
-          bg-[radial-gradient(circle_at_top,#0f5132_0%,#061b11_45%,#020303_100%)]
+          bg-[radial-gradient(circle_at_top,#0d4029_0%,#05140f_55%,#020303_100%)]
         "
       />
 
@@ -1752,19 +1773,19 @@ if (
       <div
         className="
           absolute
-          top-[-120px]
+          top-[-180px]
           left-1/2
 
           -translate-x-1/2
 
-          w-[700px]
-          h-[700px]
+          w-[480px]
+          h-[480px]
 
           rounded-full
 
           bg-green-400/10
 
-          blur-[140px]
+          blur-[120px]
         "
       />
 
@@ -1773,15 +1794,15 @@ if (
           relative
           z-10
 
-          max-w-6xl
+          max-w-5xl
 
           mx-auto
 
-          px-4
-          md:px-6
+          px-3
+          md:px-5
 
-          py-8
-          md:py-12
+          py-4
+          md:py-6
         "
       >
 
@@ -1792,21 +1813,21 @@ if (
 
             overflow-hidden
 
-            rounded-[34px]
+            rounded-[26px]
 
             border
-            border-yellow-400/15
+            border-yellow-400/10
 
             bg-gradient-to-br
-            from-[#0d2f22]
-            to-[#06150f]
+            from-[#0c2b20]
+            to-[#06140f]
 
-            p-6
-            md:p-10
+            p-4
+            md:p-5
 
-            mb-6
+            mb-4
 
-            shadow-[0_0_60px_rgba(0,255,140,0.08)]
+            shadow-[0_0_30px_rgba(0,255,140,0.05)]
           "
         >
 
@@ -1816,23 +1837,46 @@ if (
               absolute
               inset-0
 
-              bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.10),transparent_70%)]
+              bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.06),transparent_70%)]
             "
           />
 
           <div className="relative z-10">
 
-            {/* MEDALHA */}
-            <div className="text-center mb-6">
+            {/* TOPO */}
+            <div
+              className="
+                flex
+                items-center
 
+                gap-3
+
+                mb-4
+              "
+            >
+
+              {/* ÍCONE */}
               <div
                 className="
-                  text-[72px]
-                  md:text-[110px]
+                  shrink-0
 
-                  leading-none
+                  w-[68px]
+                  h-[68px]
 
-                  mb-4
+                  rounded-[20px]
+
+                  border
+                  border-yellow-300/10
+
+                  bg-gradient-to-br
+                  from-yellow-400/12
+                  to-green-400/8
+
+                  flex
+                  items-center
+                  justify-center
+
+                  text-[34px]
                 "
               >
 
@@ -1848,220 +1892,156 @@ if (
 
               </div>
 
-              <h1
-                className="
-                  text-[clamp(2rem,5vw,4.5rem)]
-
-                  leading-[0.95]
-
-                  font-black
-
-                  text-yellow-300
-
-                  mb-4
-                "
-              >
-
-                {
-                  pontuacao >= 1000000
-                    ? "LENDA DO AGRONEGÓCIO"
-                    : "SAFRA CONCLUÍDA"
-                }
-
-              </h1>
-
-              <p
-                className="
-                  max-w-3xl
-
-                  mx-auto
-
-                  text-[15px]
-                  md:text-[20px]
-
-                  leading-[1.5]
-
-                  text-white/80
-                "
-              >
-
-                {
-                  pontuacao >= 1000000
-                    ? "Você dominou completamente o desafio e construiu o maior império do agronegócio."
-                    : pontuacao >= 500000
-                    ? "Sua estratégia transformou a fazenda em um verdadeiro império rural."
-                    : pontuacao >= 100000
-                    ? "Excelente desempenho. Sua produção cresceu acima da média."
-                    : "Continue evoluindo sua gestão para alcançar novos patamares."
-                }
-
-              </p>
-
-            </div>
-
-            {/* SCORE */}
-            <div
-              className="
-                grid
-                md:grid-cols-3
-
-                gap-4
-              "
-            >
-
-              {/* PATRIMÔNIO */}
-              <div
-                className="
-                  rounded-[26px]
-
-                  border
-                  border-green-400/10
-
-                  bg-black/20
-
-                  p-5
-
-                  text-center
-                "
-              >
+              {/* TEXTO */}
+              <div className="min-w-0">
 
                 <p
                   className="
-                    text-[11px]
+                    text-[9px]
 
                     uppercase
 
-                    tracking-[0.18em]
+                    tracking-[0.22em]
 
                     text-green-300/55
 
                     font-black
 
-                    mb-3
+                    mb-1
                   "
                 >
 
-                  Patrimônio Final
+                  Resultado Final
 
                 </p>
 
-                <h2
+                <h1
                   className="
-                    text-[clamp(1.8rem,4vw,3rem)]
+                    text-[clamp(1.7rem,5vw,3rem)]
 
-                    font-black
-
-                    text-green-300
-                  "
-                >
-
-                  R$ {pontuacao.toLocaleString("pt-BR")}
-
-                </h2>
-
-              </div>
-
-              {/* DESEMPENHO */}
-              <div
-                className="
-                  rounded-[26px]
-
-                  border
-                  border-yellow-400/10
-
-                  bg-black/20
-
-                  p-5
-
-                  text-center
-                "
-              >
-
-                <p
-                  className="
-                    text-[11px]
-
-                    uppercase
-
-                    tracking-[0.18em]
-
-                    text-yellow-300/55
-
-                    font-black
-
-                    mb-3
-                  "
-                >
-
-                  Desempenho
-
-                </p>
-
-                <h2
-                  className="
-                    text-[clamp(1.8rem,4vw,3rem)]
+                    leading-[0.95]
 
                     font-black
 
                     text-yellow-300
+
+                    mb-1
                   "
                 >
 
-                  {percentual}%
+                  {
+                    pontuacao >= 1000000
+                      ? "LENDA DO AGRO"
+                      : "SAFRA CONCLUÍDA"
+                  }
 
-                </h2>
-
-              </div>
-
-              {/* MEDALHA */}
-              <div
-                className="
-                  rounded-[26px]
-
-                  border
-                  border-white/10
-
-                  bg-black/20
-
-                  p-5
-
-                  text-center
-                "
-              >
+                </h1>
 
                 <p
                   className="
-                    text-[11px]
+                    text-[12px]
+                    md:text-[14px]
 
-                    uppercase
+                    leading-[1.45]
 
-                    tracking-[0.18em]
-
-                    text-white/45
-
-                    font-black
-
-                    mb-3
+                    text-white/70
                   "
                 >
 
-                  Classificação
+                  Continue evoluindo sua gestão estratégica.
 
                 </p>
 
-                <h2
-                  className="
-                    text-[clamp(1.2rem,3vw,2rem)]
+              </div>
 
-                    font-black
+            </div>
+
+            {/* DASHBOARD */}
+            <div
+              className="
+                grid
+                grid-cols-3
+
+                gap-2
+              "
+            >
+
+              {[
+                {
+                  label: "Patrimônio",
+                  value: `R$ ${pontuacao.toLocaleString("pt-BR")}`,
+                  color: "text-green-300",
+                },
+
+                {
+                  label: "Desempenho",
+                  value: `${percentual}%`,
+                  color: "text-yellow-300",
+                },
+
+                {
+                  label: "Classificação",
+                  value: medalha,
+                  color: "text-white",
+                },
+
+              ].map((item) => (
+
+                <div
+                  key={item.label}
+
+                  className="
+                    rounded-[18px]
+
+                    border
+                    border-white/5
+
+                    bg-black/20
+
+                    p-3
                   "
                 >
 
-                  {medalha}
+                  <p
+                    className="
+                      text-[8px]
 
-                </h2>
+                      uppercase
 
-              </div>
+                      tracking-[0.18em]
+
+                      text-white/40
+
+                      font-black
+
+                      mb-2
+                    "
+                  >
+
+                    {item.label}
+
+                  </p>
+
+                  <h2
+                    className={`
+                      text-[15px]
+                      md:text-[24px]
+
+                      leading-none
+
+                      font-black
+
+                      ${item.color}
+                    `}
+                  >
+
+                    {item.value}
+
+                  </h2>
+
+                </div>
+
+              ))}
 
             </div>
 
@@ -2069,77 +2049,347 @@ if (
 
         </div>
 
-        {/* TEMAS */}
+        {/* DOMÍNIO DOS TEMAS */}
         <div
           className="
-            rounded-[30px]
+            rounded-[26px]
 
             border
-            border-green-900/30
+            border-green-900/25
 
             bg-black/20
 
-            p-5
-            md:p-7
+            p-4
 
-            mb-6
+            mb-4
           "
         >
 
-          <div
+          <h2
             className="
-              flex
-              flex-col
-              md:flex-row
+              text-[22px]
+              md:text-[28px]
 
-              md:items-center
-              md:justify-between
+              font-black
 
-              gap-3
+              text-yellow-300
 
-              mb-5
+              mb-1
             "
           >
 
-            <div>
+            📊 Domínio dos Temas
 
-              <h2
-                className="
-                  text-2xl
-                  md:text-3xl
+          </h2>
 
-                  font-black
+          <p
+            className="
+              text-[12px]
 
-                  text-yellow-300
-                "
-              >
+              text-white/55
 
-                🎯 Seleção Estratégica
+              mb-4
+            "
+          >
 
-              </h2>
+            Acompanhe sua evolução estratégica.
 
-              <p
-                className="
-                  text-white/65
+          </p>
 
-                  mt-1
-                "
-              >
+          <div className="space-y-3">
 
-                Escolha até 3 temas simultaneamente.
+            {estatisticasTemas.map((tema) => {
 
-              </p>
+              const progressoTema =
+                tema.total > 0
+                  ? (tema.jogadas / tema.total) * 100
+                  : 0;
 
-            </div>
+              return (
+
+                <div
+                  key={tema.tema}
+
+                  className="
+                    rounded-[20px]
+
+                    border
+                    border-white/5
+
+                    bg-black/25
+
+                    p-4
+                  "
+                >
+
+                  {/* TOPO */}
+                  <div
+                    className="
+                      flex
+                      items-start
+                      justify-between
+
+                      gap-3
+
+                      mb-3
+                    "
+                  >
+
+                    <div>
+
+                      <h3
+                        className="
+                          text-[16px]
+                          md:text-[18px]
+
+                          font-black
+
+                          text-green-300
+
+                          mb-1
+                        "
+                      >
+
+                        {tema.tema}
+
+                      </h3>
+
+                      <p
+                        className="
+                          text-[12px]
+
+                          text-white/65
+                        "
+                      >
+
+                        {
+                          nomesTemas[
+                            tema.tema
+                          ]
+                        }
+
+                      </p>
+
+                    </div>
+
+                    <button
+                      onClick={() => {
+
+                        localStorage.setItem(
+                          "temaSelecionado",
+                          tema.tema
+                        );
+
+                        iniciarNovaPartida();
+
+                      }}
+
+                      className="
+                        h-[40px]
+
+                        px-4
+
+                        rounded-[14px]
+
+                        bg-gradient-to-r
+                        from-yellow-400
+                        to-yellow-300
+
+                        text-black
+
+                        text-[12px]
+
+                        font-black
+                      "
+                    >
+
+                      JOGAR
+
+                    </button>
+
+                  </div>
+
+                  {/* BARRA */}
+                  <div
+                    className="
+                      h-[9px]
+
+                      rounded-full
+
+                      bg-black/40
+
+                      overflow-hidden
+
+                      mb-3
+                    "
+                  >
+
+                    <div
+                      className="
+                        h-full
+
+                        rounded-full
+
+                        bg-gradient-to-r
+                        from-green-400
+                        via-lime-300
+                        to-yellow-300
+                      "
+                      style={{
+                        width: `${progressoTema}%`,
+                      }}
+                    />
+
+                  </div>
+
+                  {/* STATS */}
+                  <div
+                    className="
+                      flex
+                      gap-2
+
+                      flex-wrap
+                    "
+                  >
+
+                    {[
+                      {
+                        label: "TOTAL",
+                        value: tema.total,
+                        color: "text-white",
+                      },
+
+                      {
+                        label: "DOMINADAS",
+                        value: tema.jogadas,
+                        color: "text-yellow-300",
+                      },
+
+                      {
+                        label: "RESTANTES",
+                        value: tema.restantes,
+                        color: "text-green-300",
+                      },
+
+                    ].map((stat) => (
+
+                      <div
+                        key={stat.label}
+
+                        className="
+                          px-3
+                          py-2
+
+                          rounded-[14px]
+
+                          bg-black/30
+
+                          border
+                          border-white/5
+                        "
+                      >
+
+                        <p
+                          className="
+                            text-[8px]
+
+                            uppercase
+
+                            text-gray-400
+
+                            font-black
+
+                            mb-1
+                          "
+                        >
+
+                          {stat.label}
+
+                        </p>
+
+                        <h2
+                          className={`
+                            text-[17px]
+
+                            font-black
+
+                            ${stat.color}
+                          `}
+                        >
+
+                          {stat.value}
+
+                        </h2>
+
+                      </div>
+
+                    ))}
+
+                  </div>
+
+                </div>
+
+              );
+
+            })}
 
           </div>
+
+        </div>
+
+        {/* SELEÇÃO ESTRATÉGICA */}
+        <div
+          className="
+            rounded-[26px]
+
+            border
+            border-green-900/25
+
+            bg-black/20
+
+            p-4
+
+            mb-4
+          "
+        >
+
+          <h2
+            className="
+              text-[20px]
+              md:text-[24px]
+
+              font-black
+
+              text-yellow-300
+
+              mb-1
+            "
+          >
+
+            🎯 Seleção Estratégica
+
+          </h2>
+
+          <p
+            className="
+              text-[12px]
+
+              text-white/55
+
+              mb-4
+            "
+          >
+
+            Escolha até 3 temas.
+
+          </p>
 
           <div
             className="
               flex
               flex-wrap
 
-              gap-3
+              gap-2
             "
           >
 
@@ -2184,24 +2434,36 @@ if (
                   }}
 
                   className={`
-                    px-5
-                    py-3
+                    h-[40px]
 
-                    rounded-2xl
+                    px-4
+
+                    rounded-[14px]
+
+                    border
+
+                    text-[11px]
+                    md:text-[12px]
 
                     font-black
 
                     transition-all
                     duration-300
 
-                    border
-
                     ${
                       ativo
 
-                        ? "bg-yellow-400 text-black border-yellow-300"
+                        ? `
+                          bg-yellow-400
+                          text-black
+                          border-yellow-300
+                        `
 
-                        : "bg-black/25 text-white border-green-900/40 hover:bg-green-500/10"
+                        : `
+                          bg-black/30
+                          text-white
+                          border-green-900/35
+                        `
                     }
                   `}
                 >
@@ -2211,250 +2473,8 @@ if (
                 </button>
 
               );
+
             })}
-
-          </div>
-
-        </div>
-
-        {/* PROGRESSO */}
-        <div
-          className="
-            rounded-[30px]
-
-            border
-            border-green-900/30
-
-            bg-black/20
-
-            p-5
-            md:p-7
-
-            mb-6
-          "
-        >
-
-          <h2
-            className="
-              text-2xl
-              md:text-3xl
-
-              font-black
-
-              text-yellow-300
-
-              mb-5
-            "
-          >
-
-            📊 Domínio dos Temas
-
-          </h2>
-
-          <div className="space-y-4">
-
-            {estatisticasTemas.map((tema) => (
-
-              <div
-                key={tema.tema}
-
-                className="
-                  rounded-[24px]
-
-                  border
-                  border-white/5
-
-                  bg-black/25
-
-                  p-5
-                "
-              >
-
-                <div
-                  className="
-                    flex
-                    flex-col
-                    md:flex-row
-
-                    md:items-center
-                    md:justify-between
-
-                    gap-4
-
-                    mb-4
-                  "
-                >
-
-                  <h3
-                    className="
-                      text-xl
-
-                      font-black
-
-                      text-green-300
-                    "
-                  >
-
-                    {tema.tema}
-
-                  </h3>
-
-                  <button
-                    onClick={() => {
-
-                      localStorage.setItem(
-                        "temaSelecionado",
-                        tema.tema
-                      );
-
-                      iniciarNovaPartida();
-
-                    }}
-
-                    className="
-                      px-5
-                      py-2.5
-
-                      rounded-2xl
-
-                      bg-yellow-400
-
-                      text-black
-
-                      font-black
-
-                      transition-all
-                      duration-300
-
-                      hover:bg-yellow-300
-                    "
-                  >
-
-                    JOGAR TEMA
-
-                  </button>
-
-                </div>
-
-                {/* BARRA */}
-                <div
-                  className="
-                    h-4
-
-                    rounded-full
-
-                    bg-black/35
-
-                    overflow-hidden
-
-                    mb-5
-                  "
-                >
-
-                  <div
-                    className="
-                      h-full
-
-                      rounded-full
-
-                      bg-gradient-to-r
-                      from-green-400
-                      to-yellow-300
-                    "
-                    style={{
-                      width: `${(tema.jogadas / tema.total) * 100}%`
-                    }}
-                  />
-
-                </div>
-
-                {/* GRID */}
-                <div
-                  className="
-                    grid
-                    grid-cols-3
-
-                    gap-3
-                  "
-                >
-
-                  <div
-                    className="
-                      rounded-2xl
-
-                      bg-black/30
-
-                      p-3
-
-                      text-center
-                    "
-                  >
-
-                    <p className="text-xs text-gray-400 mb-1">
-                      TOTAL
-                    </p>
-
-                    <h2 className="text-2xl font-black">
-
-                      {tema.total}
-
-                    </h2>
-
-                  </div>
-
-                  <div
-                    className="
-                      rounded-2xl
-
-                      bg-black/30
-
-                      p-3
-
-                      text-center
-                    "
-                  >
-
-                    <p className="text-xs text-gray-400 mb-1">
-                      DOMINADAS
-                    </p>
-
-                    <h2 className="text-2xl font-black text-yellow-300">
-
-                      {tema.jogadas}
-
-                    </h2>
-
-                  </div>
-
-                  <div
-                    className="
-                      rounded-2xl
-
-                      bg-black/30
-
-                      p-3
-
-                      text-center
-                    "
-                  >
-
-                    <p className="text-xs text-gray-400 mb-1">
-                      RESTANTES
-                    </p>
-
-                    <h2 className="text-2xl font-black text-green-300">
-
-                      {tema.restantes}
-
-                    </h2>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            ))}
 
           </div>
 
@@ -2467,13 +2487,12 @@ if (
           className="
             w-full
 
-            rounded-[30px]
+            h-[60px]
 
-            py-5
-            md:py-6
+            rounded-[22px]
 
-            text-[18px]
-            md:text-[24px]
+            text-[17px]
+            md:text-[19px]
 
             font-black
 
@@ -2484,12 +2503,7 @@ if (
             via-yellow-300
             to-yellow-400
 
-            shadow-[0_0_35px_rgba(255,215,0,0.25)]
-
-            transition-all
-            duration-300
-
-            hover:scale-[1.01]
+            shadow-[0_0_24px_rgba(255,215,0,0.16)]
           "
         >
 
@@ -2505,27 +2519,30 @@ if (
           relative
           z-10
 
-          mt-8
+          mt-4
 
           border-t
-          border-green-900/30
+          border-green-900/25
 
           py-3
 
           text-center
 
-          text-[11px]
-          md:text-sm
+          text-[10px]
+          md:text-[11px]
 
           text-gray-400
 
-          bg-black/20
+          bg-black/15
         "
       >
 
         Desenvolvido pelo Tutor
+
         <span className="text-yellow-400 font-bold">
+
           {" "}Reginaldo V. Vantini
+
         </span>
 
         — professorvantini@gmail.com
