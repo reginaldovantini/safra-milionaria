@@ -1933,374 +1933,848 @@ async function confirmarPuloQuestao() {
   );
 }
 
-  // FINAL
-  if (
-    perguntasFiltradas.length > 0 &&
-    indiceQuestao >= perguntasFiltradas.length
-  ) {
+ // FINAL AAA CINEMATOGRÁFICO
+if (
+  perguntasFiltradas.length > 0 &&
+  indiceQuestao >= perguntasFiltradas.length
+) {
 
-    const totalPerguntas =
-      perguntasFiltradas.length;
+  const totalPerguntas =
+    perguntasFiltradas.length;
 
-    const acertos =
-  quantidadeAcertos;
+  const acertos =
+    quantidadeAcertos;
 
-    const percentual =
-      Math.round(
-        (acertos / totalPerguntas) * 100
-      );
+  const percentual =
+    Math.round(
+      (acertos / totalPerguntas) * 100
+    );
 
-    let medalha = "🥉 Bronze";
+  let medalha = "🥉 Bronze";
 
-    if (percentual >= 90)
-      medalha = "🏆 Lenda do Agro";
+  if (percentual >= 90)
+    medalha = "👑 LENDA DO AGRO";
 
-    else if (percentual >= 70)
-      medalha = "🥇 Ouro";
+  else if (percentual >= 70)
+    medalha = "🥇 Ouro";
 
-    else if (percentual >= 50)
-      medalha = "🥈 Prata";
+  else if (percentual >= 50)
+    medalha = "🥈 Prata";
 
-    return (
-      <main className="min-h-screen bg-[#061b11] text-white flex flex-col justify-between relative overflow-hidden">
+  return (
 
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#0f5132_0%,#061b11_55%,#020303_100%)]"></div>
+    <main
+      className="
+        min-h-[100dvh]
 
-        <div className="relative z-10 flex-1 flex items-center justify-center px-6">
+        bg-[#04140f]
 
-          <div className="max-w-4xl w-full bg-white/5 border border-green-900/40 backdrop-blur-md rounded-3xl p-12 shadow-2xl text-center">
+        text-white
 
-            <h1 className="text-6xl font-black text-yellow-400 mb-8">
+        relative
 
-  {
-    pontuacao >= 1000000
-      ? "👑 LENDA DO AGRONEGÓCIO"
-      : "🌾 SAFRA CONCLUÍDA"
-  }
+        overflow-x-hidden
+      "
+    >
 
-</h1>
+      {/* FUNDO */}
+      <div
+        className="
+          absolute
+          inset-0
 
-           <p className="text-lg mb-6">
+          bg-[radial-gradient(circle_at_top,#0f5132_0%,#061b11_45%,#020303_100%)]
+        "
+      />
 
-  {
-    pontuacao >= 1000000
-      ? "Você conquistou o topo do agronegócio, "
-      : pontuacao >= 500000
-      ? "Você construiu um verdadeiro império rural, "
-      : pontuacao >= 50000
-      ? "Excelente crescimento no agronegócio, "
-      : pontuacao >= 10000
-      ? "Sua fazenda está evoluindo, "
-      : "Continue expandindo sua produção, "
-  }
+      {/* GLOW */}
+      <div
+        className="
+          absolute
+          top-[-120px]
+          left-1/2
 
-  <span className="text-yellow-400 font-bold">
-    {nome}
-  </span>
+          -translate-x-1/2
 
-</p>
+          w-[700px]
+          h-[700px]
 
-            <div className="grid md:grid-cols-3 gap-3 md:gap-6 my-10">
+          rounded-full
 
-              <div className="bg-black/20 rounded-2xl p-6">
-                <p className="text-gray-400 mb-2">
-                  Patrimônio
-                </p>
+          bg-green-400/10
 
-                <h2 className="text-2xl md:text-4xl font-black text-green-400">
-                  R$ {pontuacao}
-                </h2>
+          blur-[140px]
+        "
+      />
+
+      <div
+        className="
+          relative
+          z-10
+
+          max-w-6xl
+
+          mx-auto
+
+          px-4
+          md:px-6
+
+          py-8
+          md:py-12
+        "
+      >
+
+        {/* HERO */}
+        <div
+          className="
+            relative
+
+            overflow-hidden
+
+            rounded-[34px]
+
+            border
+            border-yellow-400/15
+
+            bg-gradient-to-br
+            from-[#0d2f22]
+            to-[#06150f]
+
+            p-6
+            md:p-10
+
+            mb-6
+
+            shadow-[0_0_60px_rgba(0,255,140,0.08)]
+          "
+        >
+
+          {/* GLOW */}
+          <div
+            className="
+              absolute
+              inset-0
+
+              bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.10),transparent_70%)]
+            "
+          />
+
+          <div className="relative z-10">
+
+            {/* MEDALHA */}
+            <div className="text-center mb-6">
+
+              <div
+                className="
+                  text-[72px]
+                  md:text-[110px]
+
+                  leading-none
+
+                  mb-4
+                "
+              >
+
+                {
+                  pontuacao >= 1000000
+                    ? "👑"
+                    : pontuacao >= 500000
+                    ? "🏆"
+                    : pontuacao >= 100000
+                    ? "🥇"
+                    : "🌾"
+                }
+
               </div>
 
-              <div className="bg-black/20 rounded-2xl p-6">
-                <p className="text-gray-400 mb-2">
+              <h1
+                className="
+                  text-[clamp(2rem,5vw,4.5rem)]
+
+                  leading-[0.95]
+
+                  font-black
+
+                  text-yellow-300
+
+                  mb-4
+                "
+              >
+
+                {
+                  pontuacao >= 1000000
+                    ? "LENDA DO AGRONEGÓCIO"
+                    : "SAFRA CONCLUÍDA"
+                }
+
+              </h1>
+
+              <p
+                className="
+                  max-w-3xl
+
+                  mx-auto
+
+                  text-[15px]
+                  md:text-[20px]
+
+                  leading-[1.5]
+
+                  text-white/80
+                "
+              >
+
+                {
+                  pontuacao >= 1000000
+                    ? "Você dominou completamente o desafio e construiu o maior império do agronegócio."
+                    : pontuacao >= 500000
+                    ? "Sua estratégia transformou a fazenda em um verdadeiro império rural."
+                    : pontuacao >= 100000
+                    ? "Excelente desempenho. Sua produção cresceu acima da média."
+                    : "Continue evoluindo sua gestão para alcançar novos patamares."
+                }
+
+              </p>
+
+            </div>
+
+            {/* SCORE */}
+            <div
+              className="
+                grid
+                md:grid-cols-3
+
+                gap-4
+              "
+            >
+
+              {/* PATRIMÔNIO */}
+              <div
+                className="
+                  rounded-[26px]
+
+                  border
+                  border-green-400/10
+
+                  bg-black/20
+
+                  p-5
+
+                  text-center
+                "
+              >
+
+                <p
+                  className="
+                    text-[11px]
+
+                    uppercase
+
+                    tracking-[0.18em]
+
+                    text-green-300/55
+
+                    font-black
+
+                    mb-3
+                  "
+                >
+
+                  Patrimônio Final
+
+                </p>
+
+                <h2
+                  className="
+                    text-[clamp(1.8rem,4vw,3rem)]
+
+                    font-black
+
+                    text-green-300
+                  "
+                >
+
+                  R$ {pontuacao.toLocaleString("pt-BR")}
+
+                </h2>
+
+              </div>
+
+              {/* DESEMPENHO */}
+              <div
+                className="
+                  rounded-[26px]
+
+                  border
+                  border-yellow-400/10
+
+                  bg-black/20
+
+                  p-5
+
+                  text-center
+                "
+              >
+
+                <p
+                  className="
+                    text-[11px]
+
+                    uppercase
+
+                    tracking-[0.18em]
+
+                    text-yellow-300/55
+
+                    font-black
+
+                    mb-3
+                  "
+                >
+
                   Desempenho
+
                 </p>
 
-                <h2 className="text-2xl md:text-4xl font-black text-yellow-400">
+                <h2
+                  className="
+                    text-[clamp(1.8rem,4vw,3rem)]
+
+                    font-black
+
+                    text-yellow-300
+                  "
+                >
+
                   {percentual}%
+
                 </h2>
+
               </div>
 
-              <div className="bg-black/20 rounded-2xl p-6">
-                <p className="text-gray-400 mb-2">
-                  Medalha
+              {/* MEDALHA */}
+              <div
+                className="
+                  rounded-[26px]
+
+                  border
+                  border-white/10
+
+                  bg-black/20
+
+                  p-5
+
+                  text-center
+                "
+              >
+
+                <p
+                  className="
+                    text-[11px]
+
+                    uppercase
+
+                    tracking-[0.18em]
+
+                    text-white/45
+
+                    font-black
+
+                    mb-3
+                  "
+                >
+
+                  Classificação
+
                 </p>
 
-                <h2 className="text-3xl font-black">
+                <h2
+                  className="
+                    text-[clamp(1.2rem,3vw,2rem)]
+
+                    font-black
+                  "
+                >
+
                   {medalha}
+
                 </h2>
+
               </div>
 
             </div>
 
-{/* TEMAS */}
-<div className="mb-8">
+          </div>
 
-  <h3 className="text-2xl font-black text-yellow-400 mb-4">
+        </div>
 
-    🎯 Escolha os Temas
+        {/* TEMAS */}
+        <div
+          className="
+            rounded-[30px]
 
-  </h3>
-
-  <div className="flex flex-wrap gap-3 justify-center">
-
-    {[
-      "Tema 1",
-      "Tema 2",
-      "Tema 3",
-      "Tema 4",
-      "Tema 5",
-      "Tema 6",
-    ].map((tema) => {
-
-      const ativo =
-        temasSelecionados.includes(tema);
-
-      return (
-
-        <button
-          key={tema}
-
-          onClick={() => {
-
-            if (ativo) {
-
-              setTemasSelecionados(
-                temasSelecionados.filter(
-                  (t) => t !== tema
-                )
-              );
-
-            } else {
-
-              if (
-                temasSelecionados.length >= 3
-              ) return;
-
-              setTemasSelecionados([
-                ...temasSelecionados,
-                tema,
-              ]);
-            }
-          }}
-
-          className={`
-            px-5
-            py-3
-            rounded-2xl
-            font-black
-            transition-all
-            duration-300
             border
+            border-green-900/30
 
-            ${
-              ativo
+            bg-black/20
 
-                ? "bg-yellow-400 text-black border-yellow-300"
+            p-5
+            md:p-7
 
-                : "bg-black/20 text-white border-green-900/40 hover:bg-green-500/10"
-            }
-          `}
+            mb-6
+          "
         >
 
-          {tema}
-
-        </button>
-      );
-    })}
-
-  </div>
-
-  <p className="text-sm text-gray-400 mt-3">
-
-    Máximo de 3 temas simultâneos
-
-  </p>
-
-</div>
-
-            {/* ESTATÍSTICAS */}
-<div className="mt-10">
-
-  <h3 className="text-2xl font-black text-yellow-400 mb-5">
-
-    📊 Progresso dos Temas
-
-  </h3>
-
-  <div className="space-y-4">
-
-    {estatisticasTemas.map((tema) => (
-
-      <div
-        key={tema.tema}
-        className="
-          rounded-2xl
-          border
-          border-green-900/40
-          bg-black/20
-          p-5
-          text-left
-        "
-      >
-
-        {/* TOPO */}
-        <div className="flex items-center justify-between mb-4">
-
-          <h4 className="text-xl font-black text-green-300">
-
-            {tema.tema}
-
-          </h4>
-
-          <button
-            onClick={() => {
-
-              localStorage.setItem(
-                "temaSelecionado",
-                tema.tema
-              );
-
-              iniciarNovaPartida();
-
-            }}
+          <div
             className="
-              bg-yellow-400
-              hover:bg-yellow-300
-              text-black
-              font-black
-              px-5
-              py-2
-              rounded-xl
-              transition-all
-              duration-300
+              flex
+              flex-col
+              md:flex-row
+
+              md:items-center
+              md:justify-between
+
+              gap-3
+
+              mb-5
             "
           >
 
-            JOGAR
+            <div>
 
-          </button>
+              <h2
+                className="
+                  text-2xl
+                  md:text-3xl
+
+                  font-black
+
+                  text-yellow-300
+                "
+              >
+
+                🎯 Seleção Estratégica
+
+              </h2>
+
+              <p
+                className="
+                  text-white/65
+
+                  mt-1
+                "
+              >
+
+                Escolha até 3 temas simultaneamente.
+
+              </p>
+
+            </div>
+
+          </div>
+
+          <div
+            className="
+              flex
+              flex-wrap
+
+              gap-3
+            "
+          >
+
+            {[
+              "Tema 1",
+              "Tema 2",
+              "Tema 3",
+              "Tema 4",
+              "Tema 5",
+              "Tema 6",
+            ].map((tema) => {
+
+              const ativo =
+                temasSelecionados.includes(tema);
+
+              return (
+
+                <button
+                  key={tema}
+
+                  onClick={() => {
+
+                    if (ativo) {
+
+                      setTemasSelecionados(
+                        temasSelecionados.filter(
+                          (t) => t !== tema
+                        )
+                      );
+
+                    } else {
+
+                      if (
+                        temasSelecionados.length >= 3
+                      ) return;
+
+                      setTemasSelecionados([
+                        ...temasSelecionados,
+                        tema,
+                      ]);
+                    }
+                  }}
+
+                  className={`
+                    px-5
+                    py-3
+
+                    rounded-2xl
+
+                    font-black
+
+                    transition-all
+                    duration-300
+
+                    border
+
+                    ${
+                      ativo
+
+                        ? "bg-yellow-400 text-black border-yellow-300"
+
+                        : "bg-black/25 text-white border-green-900/40 hover:bg-green-500/10"
+                    }
+                  `}
+                >
+
+                  {tema}
+
+                </button>
+
+              );
+            })}
+
+          </div>
 
         </div>
 
-        {/* GRID */}
-        <div className="grid grid-cols-3 gap-3">
+        {/* PROGRESSO */}
+        <div
+          className="
+            rounded-[30px]
 
-          {/* TOTAL */}
-          <div className="bg-black/30 rounded-xl p-3 text-center">
+            border
+            border-green-900/30
 
-            <p className="text-xs text-gray-400 mb-1">
-              TOTAL
-            </p>
+            bg-black/20
 
-            <h2 className="text-2xl font-black text-white">
+            p-5
+            md:p-7
 
-              {tema.total}
+            mb-6
+          "
+        >
 
-            </h2>
+          <h2
+            className="
+              text-2xl
+              md:text-3xl
 
-          </div>
+              font-black
 
-          {/* JOGADAS */}
-          <div className="bg-black/30 rounded-xl p-3 text-center">
+              text-yellow-300
 
-            <p className="text-xs text-gray-400 mb-1">
-              JOGADAS
-            </p>
+              mb-5
+            "
+          >
 
-            <h2 className="text-2xl font-black text-yellow-300">
+            📊 Domínio dos Temas
 
-              {tema.jogadas}
+          </h2>
 
-            </h2>
+          <div className="space-y-4">
 
-          </div>
+            {estatisticasTemas.map((tema) => (
 
-          {/* RESTANTES */}
-          <div className="bg-black/30 rounded-xl p-3 text-center">
+              <div
+                key={tema.tema}
 
-            <p className="text-xs text-gray-400 mb-1">
-              RESTANTES
-            </p>
+                className="
+                  rounded-[24px]
 
-            <h2 className="text-2xl font-black text-green-300">
+                  border
+                  border-white/5
 
-              {tema.restantes}
+                  bg-black/25
 
-            </h2>
+                  p-5
+                "
+              >
+
+                <div
+                  className="
+                    flex
+                    flex-col
+                    md:flex-row
+
+                    md:items-center
+                    md:justify-between
+
+                    gap-4
+
+                    mb-4
+                  "
+                >
+
+                  <h3
+                    className="
+                      text-xl
+
+                      font-black
+
+                      text-green-300
+                    "
+                  >
+
+                    {tema.tema}
+
+                  </h3>
+
+                  <button
+                    onClick={() => {
+
+                      localStorage.setItem(
+                        "temaSelecionado",
+                        tema.tema
+                      );
+
+                      iniciarNovaPartida();
+
+                    }}
+
+                    className="
+                      px-5
+                      py-2.5
+
+                      rounded-2xl
+
+                      bg-yellow-400
+
+                      text-black
+
+                      font-black
+
+                      transition-all
+                      duration-300
+
+                      hover:bg-yellow-300
+                    "
+                  >
+
+                    JOGAR TEMA
+
+                  </button>
+
+                </div>
+
+                {/* BARRA */}
+                <div
+                  className="
+                    h-4
+
+                    rounded-full
+
+                    bg-black/35
+
+                    overflow-hidden
+
+                    mb-5
+                  "
+                >
+
+                  <div
+                    className="
+                      h-full
+
+                      rounded-full
+
+                      bg-gradient-to-r
+                      from-green-400
+                      to-yellow-300
+                    "
+                    style={{
+                      width: `${(tema.jogadas / tema.total) * 100}%`
+                    }}
+                  />
+
+                </div>
+
+                {/* GRID */}
+                <div
+                  className="
+                    grid
+                    grid-cols-3
+
+                    gap-3
+                  "
+                >
+
+                  <div
+                    className="
+                      rounded-2xl
+
+                      bg-black/30
+
+                      p-3
+
+                      text-center
+                    "
+                  >
+
+                    <p className="text-xs text-gray-400 mb-1">
+                      TOTAL
+                    </p>
+
+                    <h2 className="text-2xl font-black">
+
+                      {tema.total}
+
+                    </h2>
+
+                  </div>
+
+                  <div
+                    className="
+                      rounded-2xl
+
+                      bg-black/30
+
+                      p-3
+
+                      text-center
+                    "
+                  >
+
+                    <p className="text-xs text-gray-400 mb-1">
+                      DOMINADAS
+                    </p>
+
+                    <h2 className="text-2xl font-black text-yellow-300">
+
+                      {tema.jogadas}
+
+                    </h2>
+
+                  </div>
+
+                  <div
+                    className="
+                      rounded-2xl
+
+                      bg-black/30
+
+                      p-3
+
+                      text-center
+                    "
+                  >
+
+                    <p className="text-xs text-gray-400 mb-1">
+                      RESTANTES
+                    </p>
+
+                    <h2 className="text-2xl font-black text-green-300">
+
+                      {tema.restantes}
+
+                    </h2>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            ))}
 
           </div>
 
         </div>
+
+        {/* CTA */}
+        <button
+          onClick={() => iniciarNovaPartida()}
+
+          className="
+            w-full
+
+            rounded-[30px]
+
+            py-5
+            md:py-6
+
+            text-[18px]
+            md:text-[24px]
+
+            font-black
+
+            text-black
+
+            bg-gradient-to-r
+            from-yellow-400
+            via-yellow-300
+            to-yellow-400
+
+            shadow-[0_0_35px_rgba(255,215,0,0.25)]
+
+            transition-all
+            duration-300
+
+            hover:scale-[1.01]
+          "
+        >
+
+          🌾 INICIAR NOVA SAFRA
+
+        </button>
 
       </div>
 
-    ))}
+      {/* FOOTER */}
+      <footer
+        className="
+          relative
+          z-10
 
-  </div>
+          mt-8
 
-</div>
+          border-t
+          border-green-900/30
 
-{/* BOTÃO */}
-<button
-  onClick={() => iniciarNovaPartida()}
-  className="
-    mt-8
-    bg-yellow-400
-    hover:bg-yellow-300
-    text-black
-    font-black
-    text-lg
-    px-10
-    py-5
-    rounded-2xl
-    transition-all
-    duration-300
-  "
->
-  JOGAR NOVAMENTE
-</button>
+          py-3
 
-          </div>
+          text-center
 
-        </div>
+          text-[11px]
+          md:text-sm
 
-        <footer
-  className="
-    relative
-    z-10
+          text-gray-400
 
-    mt-auto
+          bg-black/20
+        "
+      >
 
-    border-t
-    border-green-900/40
+        Desenvolvido pelo Tutor
+        <span className="text-yellow-400 font-bold">
+          {" "}Reginaldo V. Vantini
+        </span>
 
-    py-2
+        — professorvantini@gmail.com
 
-    text-center
+      </footer>
 
-    text-[11px]
-    md:text-sm
+    </main>
 
-    text-gray-400
-
-    bg-black/20
-  "
->
-
-  Desenvolvido pelo Tutor
-  <span className="text-yellow-400 font-bold">
-    {" "}Reginaldo V. Vantini
-  </span>
-
-  — professorvantini@gmail.com
-
-</footer>
-
-      </main>
-    );
-  }
+  );
+}
 
   return (
 
@@ -3800,7 +4274,7 @@ POPUP CARTAS DA FAZENDA
 
         </div>
 
-      </div>s
+      </div>
 
       {/* GRID */}
 

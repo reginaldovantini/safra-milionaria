@@ -6099,124 +6099,299 @@ POPUP PARAR JOGO
 )}
 
 
-{/* POPUP CONFIRMAÇÃO */}
+{/* =========================================
+CONFIRMAÇÃO AAA CINEMATOGRÁFICA
+========================================= */}
+
 {mostrarConfirmacao && (
 
   <GameModal
-  maxWidth="max-w-[560px]"
-  zIndex="z-[998]"
->
+    maxWidth="max-w-[540px]"
+    zIndex="z-[998]"
+  >
 
-    
-    {/* MODAL */}
     <div
       className="
-  relative
+        relative
 
-  border
-  border-green-400/30
+        overflow-hidden
 
-  bg-[#082b1d]/95
+        border
+        border-yellow-400/20
 
-  backdrop-blur-2xl
+        bg-[#161005]/96
 
-  p-5
-  md:p-8
-"
+        backdrop-blur-2xl
+
+        px-4
+        pt-4
+        pb-4
+
+        md:px-5
+        md:pt-5
+        md:pb-5
+      "
     >
 
       {/* GLOW */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,255,150,0.12),transparent_70%)]"></div>
+      <div
+        className="
+          absolute
+          inset-0
+
+          bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.10),transparent_72%)]
+        "
+      />
 
       <div className="relative z-10">
 
-        {/* TÍTULO */}
-        <h2 className="text-3xl font-black text-white text-center mb-4">
+        {/* HEADER */}
+        <div className="text-center mb-4">
 
-          Confirmar Resposta
+          <div
+            className="
+              text-[40px]
 
-        </h2>
+              mb-2
 
-        {/* TEXTO */}
-        <p className="text-center text-green-100/80 text-lg leading-relaxed mb-8">
+              animate-pulse
+            "
+          >
+            ⚠️
+          </div>
 
-          Você tem certeza dessa alternativa?
+          <h2
+            className="
+              text-[24px]
+              md:text-[30px]
 
-        </p>
+              leading-none
 
-        {/* RESPOSTA */}
+              font-extrabold
+
+              text-yellow-300
+
+              mb-2
+            "
+          >
+
+            CONFIRMAR RESPOSTA
+
+          </h2>
+
+          <p
+            className="
+              text-[13px]
+              md:text-[14px]
+
+              text-yellow-100/70
+
+              leading-[1.4]
+            "
+          >
+
+            Essa decisão não poderá ser alterada.
+
+          </p>
+
+        </div>
+
+        {/* ALTERNATIVA */}
         <div
           className="
-            rounded-2xl
+            rounded-[20px]
+
             border
-            border-yellow-400/20
-            bg-black/30
-            p-5
-            text-center
-            text-2xl
-            font-black
-            text-yellow-300
-            mb-8
+            border-yellow-400/15
+
+            bg-black/25
+
+            p-4
+
+            mb-4
           "
         >
 
-          {respostaSelecionada !== "" && (
-            <>
+          <p
+            className="
+              text-[10px]
+
+              uppercase
+
+              tracking-[0.18em]
+
+              text-yellow-200/50
+
+              font-extrabold
+
+              mb-2
+            "
+          >
+
+            ALTERNATIVA SELECIONADA
+
+          </p>
+
+          <div
+            className="
+              flex
+              items-start
+
+              gap-3
+            "
+          >
+
+            {/* LETRA */}
+            <div
+              className="
+                shrink-0
+
+                w-11
+                h-11
+
+                rounded-[14px]
+
+                bg-yellow-400
+
+                text-black
+
+                flex
+                items-center
+                justify-center
+
+                text-[22px]
+                font-black
+              "
+            >
+
               {String.fromCharCode(
                 65 + Number(respostaSelecionada)
-              )}){" "}
+              )}
+
+            </div>
+
+            {/* TEXTO */}
+            <div
+              className="
+                text-white/90
+
+                text-[15px]
+                md:text-[16px]
+
+                leading-[1.35]
+
+                font-semibold
+              "
+            >
 
               {
                 questaoAtual?.alternativas[
                   Number(respostaSelecionada)
                 ]
               }
-            </>
-          )}
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* ALERTA */}
+        <div
+          className="
+            rounded-[16px]
+
+            border
+            border-red-500/10
+
+            bg-red-500/5
+
+            px-3
+            py-2.5
+
+            mb-4
+          "
+        >
+
+          <p
+            className="
+              text-[11px]
+
+              text-red-200/80
+
+              leading-[1.4]
+
+              font-medium
+            "
+          >
+
+            Após confirmar, a resposta será validada imediatamente.
+
+          </p>
 
         </div>
 
         {/* BOTÕES */}
-        <div className="flex gap-4">
+        <div className="grid grid-cols-2 gap-3">
 
-          {/* CANCELAR */}
+          {/* VOLTAR */}
           <button
+            disabled={processandoResposta}
+
             onClick={() => {
 
-              if (processandoResposta) return;
+              if (processandoResposta)
+                return;
+
+              tocarSom(clickSound);
 
               setMostrarConfirmacao(false);
 
             }}
+
             className="
-              flex-1
-              rounded-2xl
+              rounded-[18px]
+
               border
               border-white/10
+
               bg-white/5
-              py-4
+
+              py-3
+
+              text-[14px]
+
               font-bold
+
               text-white
+
               transition-all
               duration-300
+
               hover:bg-white/10
             "
           >
 
-            Escolher Outra
+            Revisar
 
           </button>
 
           {/* CONFIRMAR */}
           <button
+            disabled={processandoResposta}
+
             onClick={async () => {
+
+              if (processandoResposta)
+                return;
 
               setProcessandoResposta(true);
 
-              // SOM SUSPENSE FUTURO
+              tocarSom(clickSound);
+
               await new Promise(
                 resolve =>
-                  setTimeout(resolve, 1800)
+                  setTimeout(resolve, 1100)
               );
 
               setMostrarConfirmacao(false);
@@ -6226,25 +6401,36 @@ POPUP PARAR JOGO
               setProcessandoResposta(false);
 
             }}
+
             className="
-              flex-1
-              rounded-2xl
+              rounded-[18px]
+
+              py-3
+
+              text-[14px]
+
+              font-extrabold
+
+              text-black
+
               bg-gradient-to-r
               from-yellow-400
               to-yellow-300
-              py-4
-              font-black
-              text-black
-              shadow-[0_0_25px_rgba(255,215,0,0.4)]
+
+              shadow-[0_0_22px_rgba(255,215,0,0.22)]
+
               transition-all
               duration-300
-              hover:scale-[1.03]
+
+              hover:scale-[1.02]
             "
           >
 
-            {processandoResposta
-              ? "Analisando..."
-              : "Confirmar"}
+            {
+              processandoResposta
+                ? "VALIDANDO..."
+                : "CONFIRMAR"
+            }
 
           </button>
 
