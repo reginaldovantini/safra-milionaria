@@ -77,6 +77,18 @@ export default function JogoPage() {
   const gameOverSound =
     useRef<HTMLAudioElement | null>(null);
 
+    const heartbeatSound =
+  useRef<HTMLAudioElement | null>(null);
+
+  const crowdSound =
+  useRef<HTMLAudioElement | null>(null);
+
+const suspenseSound =
+  useRef<HTMLAudioElement | null>(null);
+
+const applauseSound =
+  useRef<HTMLAudioElement | null>(null);
+
   const [audioLigado, setAudioLigado] =
     useState(true);
 
@@ -108,26 +120,50 @@ useState(100);
   // =========================
 
   const premiacao = [
-    1000,
-    2000,
-    3000,
-    4000,
-    5000,
+  1000,
+  2000,
+  3000,
+  5000,
 
-    10000,
-    20000,
-    30000,
-    40000,
-    50000,
+  10000,
+  20000,
+  35000,
+  50000,
 
-    100000,
-    200000,
-    300000,
-    400000,
-    500000,
+  75000,
+  100000,
+  150000,
+  250000,
 
-    1000000,
-  ];
+  350000,
+  500000,
+  750000,
+
+  1000000,
+];
+
+// =========================
+// CHECKPOINTS AAA
+// =========================
+
+const checkpoints = [
+
+  {
+    pergunta: 4,
+    valor: 5000,
+  },
+
+  {
+    pergunta: 8,
+    valor: 50000,
+  },
+
+  {
+    pergunta: 12,
+    valor: 250000,
+  },
+
+];
 
   // JOGADOR
   const [nome, setNome] = useState("");
@@ -171,6 +207,68 @@ useEffect(() => {
   const [quantidadeAcertos, setQuantidadeAcertos] =
   useState(0);
   
+// =========================
+// STREAK AAA
+// =========================
+
+const [streak, setStreak] =
+  useState(0);
+
+const [tituloStreak, setTituloStreak] =
+  useState("");
+
+  // =========================
+// PLATEIA AAA
+// =========================
+
+const [humorPlateia, setHumorPlateia] =
+  useState<
+    "neutra" |
+    "tensa" |
+    "empolgada" |
+    "explosao"
+  >("neutra");
+
+const [mensagemPlateia, setMensagemPlateia] =
+  useState("");
+
+  // =========================
+// TENSÃO AAA
+// =========================
+
+const [nivelTensao, setNivelTensao] =
+  useState(0);
+
+const [shakeTela, setShakeTela] =
+  useState(false);
+
+const [vinhetaAtiva, setVinhetaAtiva] =
+  useState(false);
+
+const [respiracaoTela, setRespiracaoTela] =
+  useState(false);
+
+const [vinhetaBatendo, setVinhetaBatendo] =
+  useState(false);
+
+// =========================
+// CÂMERA CINEMATOGRÁFICA AAA
+// =========================
+
+const [cameraModo, setCameraModo] =
+  useState<
+    "normal" |
+    "tensao" |
+    "dramatico" |
+    "milhao"
+  >("normal");
+
+  // =========================
+// MOMENTO DO MILHÃO AAA
+// =========================
+
+const [modoMilhaoAtivo, setModoMilhaoAtivo] =
+  useState(false);
 
   // QUESTÕES
   const [perguntasFiltradas, setPerguntasFiltradas] =
@@ -213,7 +311,21 @@ const [mostrarConfirmacao, setMostrarConfirmacao] =
 const [processandoResposta, setProcessandoResposta] =
   useState(false);
   
-   
+   // =========================
+// REVELAÇÃO CINEMATOGRÁFICA AAA
+// =========================
+
+const [revelandoResposta, setRevelandoResposta] =
+  useState(false);
+
+const [alternativaPiscando, setAlternativaPiscando] =
+  useState<number | null>(null);
+
+const [mostrarBlackout, setMostrarBlackout] =
+  useState(false);
+
+const [modoSuspense, setModoSuspense] =
+  useState(false);
 
   // =========================
   // AJUDAS
@@ -345,6 +457,18 @@ async function salvarRanking() {
 
     gameOverSound.current =
       new Audio("/sounds/gameover.mp3");
+
+      heartbeatSound.current =
+  new Audio("/sounds/heartbeat.mp3");
+
+  crowdSound.current =
+  new Audio("/sounds/crowd.mp3");
+
+suspenseSound.current =
+  new Audio("/sounds/suspense.mp3");
+
+applauseSound.current =
+  new Audio("/sounds/applause.mp3");
 
     if (backgroundMusic.current) {
 
@@ -839,19 +963,20 @@ setEstatisticasTemas(estatisticas);
   // TEMPO ESGOTADO
   // =========================
 
-  if (tempoRestante <= 0) {
+ if (tempoRestante <= 0) {
 
-    setTempoEsgotado(true);
+  setTempoEsgotado(true);
 
-    setRespostaConfirmada(true);
+  setRespostaConfirmada(true);
 
-    setAcertou(false);
+  setAcertou(false);
 
-    tocarSom(wrongSound);
+  tocarSom(wrongSound);
 
-    
-    return;
-  }
+  salvarRanking();
+
+  return;
+}
 
  
 
@@ -903,10 +1028,31 @@ const valorAtual =
 const valorParar =
   pontuacao;
 
+// =========================
+// ENGINE FINANCEIRA AAA
+// =========================
+
+// FINAL DO MILHÃO = PERDE TUDO
+
+const errouPerguntaFinal =
+  indiceQuestao === premiacao.length - 1;
+
+// CHECKPOINT ATUAL
+
+const checkpointAtual =
+  [...checkpoints]
+    .reverse()
+    .find(
+      (cp) =>
+        indiceQuestao + 1 > cp.pergunta
+    );
+
+// VALOR AO ERRAR
+
 const valorErrar =
-  indiceQuestao === premiacao.length - 1
+  errouPerguntaFinal
     ? 0
-    : Math.floor(pontuacao / 2);
+    : checkpointAtual?.valor || 0;
 
 // =========================
 // VALOR FINAL GAME OVER
@@ -984,14 +1130,66 @@ const historico =
 // TIMER CIRCULAR SVG
 // =========================
 
-const raioTimer = 18;
+const raioTimer = 26;
 
 const circunferenciaTimer =
   2 * Math.PI * raioTimer;
 
 const progressoTimer =
-  (tempoRestante / TEMPO_LIMITE) *
-  circunferenciaTimer;
+  circunferenciaTimer *
+  (1 - tempoRestante / TEMPO_LIMITE);
+
+// =========================
+// ENGINE TENSÃO TIMER AAA
+// =========================
+
+const timerCritico =
+  tempoRestante <= 10;
+
+const timerAlerta =
+  tempoRestante <= 20;
+
+const escalaTimer =
+
+  timerCritico
+
+    ? "scale-[1.12]"
+
+    : timerAlerta
+
+    ? "scale-[1.05]"
+
+    : "scale-100";
+
+const glowTimer =
+
+  timerCritico
+
+    ? `
+      drop-shadow-[0_0_18px_rgba(255,0,0,0.95)]
+    `
+
+    : timerAlerta
+
+    ? `
+      drop-shadow-[0_0_16px_rgba(255,200,0,0.75)]
+    `
+
+    : `
+      drop-shadow-[0_0_10px_rgba(0,255,120,0.45)]
+    `;
+
+const corTimer =
+
+  timerCritico
+
+    ? "#ef4444"
+
+    : timerAlerta
+
+    ? "#facc15"
+
+    : "#22c55e";
 
 // =========================
 // ENTRADA CINEMATOGRÁFICA
@@ -1087,7 +1285,7 @@ useEffect(() => {
 
   }, [indiceQuestao, perguntasFiltradas]);
 
-  function confirmarResposta() {
+ async function confirmarResposta() {
 
   if (respostaConfirmada) return;
 
@@ -1098,7 +1296,123 @@ useEffect(() => {
     return;
   }
 
-  tocarSom(clickSound);
+  // =========================
+  // INICIAR REVELAÇÃO AAA
+  // =========================
+
+  setRevelandoResposta(true);
+
+  setModoSuspense(true);
+
+  setMostrarBlackout(true);
+
+  setCameraModo("dramatico");
+
+  suspenseSound.current?.play()
+    .catch(() => {});
+
+  heartbeatSound.current?.play()
+    .catch(() => {});
+
+  // =========================
+  // PISCAR ALTERNATIVA
+  // =========================
+
+  const alternativa =
+    Number(respostaSelecionada);
+
+  for (let i = 0; i < 4; i++) {
+
+    setAlternativaPiscando(alternativa);
+
+    await new Promise(resolve =>
+      setTimeout(resolve, 260)
+    );
+
+    setAlternativaPiscando(null);
+
+    await new Promise(resolve =>
+      setTimeout(resolve, 180)
+    );
+  }
+
+  // =========================
+// DELAY PSICOLÓGICO AAA
+// =========================
+
+const delayBase =
+
+  indiceQuestao >= 15
+
+    ? 4800
+
+    : indiceQuestao >= 10
+
+    ? 3600
+
+    : indiceQuestao >= 5
+
+    ? 2600
+
+    : 1800;
+
+// =========================
+// MICRO PAUSAS
+// =========================
+
+const pausas = [
+
+  240,
+
+  180,
+
+  320,
+
+  220,
+];
+
+// =========================
+// RESPIRAÇÃO DE SUSPENSE
+// =========================
+
+for (const pausa of pausas) {
+
+  setMostrarBlackout(prev => !prev);
+
+  await new Promise(resolve =>
+    setTimeout(resolve, pausa)
+  );
+
+}
+
+// =========================
+// DELAY FINAL
+// =========================
+
+await new Promise(resolve =>
+  setTimeout(resolve, delayBase)
+);
+
+
+// =========================
+// SILÊNCIO ABSOLUTO AAA
+// =========================
+
+backgroundMusic.current?.pause();
+
+heartbeatSound.current?.pause();
+
+await new Promise(resolve =>
+  setTimeout(resolve, 320)
+);
+
+  // =========================
+  // FINALIZA SUSPENSE
+  // =========================
+
+  setModoSuspense(false);
+
+  setMostrarBlackout(false);
 
   setRespostaConfirmada(true);
 
@@ -1107,87 +1421,63 @@ useEffect(() => {
   // =========================
 
   if (
-
-    Number(respostaSelecionada) ===
-    questaoAtual.correta
-
+    alternativa === questaoAtual.correta
   ) {
 
     setAcertou(true);
 
     tocarSom(correctSound);
 
+    tocarSom(applauseSound);
+
+    setHumorPlateia("explosao");
+
+    setMensagemPlateia(
+      "🔥 A PLATEIA EXPLODIU"
+    );
+
     setPontuacao(
       valorQuestaoAtual
     );
 
     setQuantidadeAcertos(
-      (prev) => prev + 1
+      prev => prev + 1
     );
 
-    // =========================
-    // SALVAR HISTÓRICO
-    // SOMENTE ACERTOS
-    // =========================
+    // STREAK
 
-    const chaveHistorico =
-      "safra-history";
+    setStreak(prev => {
 
-    const historicoSalvo =
-      localStorage.getItem(
-        chaveHistorico
-      );
+      const novo = prev + 1;
 
-    const historico =
-      historicoSalvo
-        ? JSON.parse(historicoSalvo)
-        : {};
+      if (novo >= 12) {
 
-    // CRIAR TEMA
-    if (
-      !historico[
-        questaoAtual.tema
-      ]
-    ) {
+        setTituloStreak(
+          "👑 LENDA DO AGRO"
+        );
 
-      historico[
-        questaoAtual.tema
-      ] = [];
-    }
+      } else if (novo >= 8) {
 
-    // EVITAR DUPLICAÇÃO
-    if (
-      !historico[
-        questaoAtual.tema
-      ].includes(
-        questaoAtual.id
-      )
-    ) {
+        setTituloStreak(
+          "🔥 MESTRE RURAL"
+        );
 
-      historico[
-        questaoAtual.tema
-      ].push(
-        questaoAtual.id
-      );
-    }
+      } else if (novo >= 5) {
 
-    // SALVAR
-    localStorage.setItem(
+        setTituloStreak(
+          "⚡ ESPECIALISTA"
+        );
 
-      chaveHistorico,
+      } else if (novo >= 3) {
 
-      JSON.stringify(
-        historico
-      )
-    );
+        setTituloStreak(
+          "🌾 EMBALADO"
+        );
 
-    // =========================
-    // LIMPAR ÚLTIMA ERRADA
-    // =========================
+      }
 
-    localStorage.removeItem(
-      "ultima-questao-errada"
-    );
+      return novo;
+    });
 
   }
 
@@ -1199,23 +1489,40 @@ useEffect(() => {
 
     setAcertou(false);
 
+    setStreak(0);
+
+    setTituloStreak("");
+
     tocarSom(wrongSound);
 
-    // =========================
-    // SALVAR ÚLTIMA ERRADA
-    // =========================
+    setHumorPlateia("tensa");
+
+    setMensagemPlateia(
+      "💀 O ESTÚDIO FICOU EM SILÊNCIO"
+    );
 
     localStorage.setItem(
-
       "ultima-questao-errada",
-
-      JSON.stringify(
-        questaoAtual
-      )
+      JSON.stringify(questaoAtual)
     );
   }
-}
 
+  // =========================
+  // RESET FINAL
+  // =========================
+
+  setRevelandoResposta(false);
+
+  setAlternativaPiscando(null);
+
+  heartbeatSound.current?.pause();
+
+  heartbeatSound.current!.currentTime = 0;
+
+  suspenseSound.current?.pause();
+
+  suspenseSound.current!.currentTime = 0;
+}
 
   // PRÓXIMA QUESTÃO
   function proximaQuestao() {
@@ -1661,7 +1968,6 @@ async function confirmarPuloQuestao() {
 
   tocarSom(clickSound);
 
-  // DELAY CINEMATOGRÁFICO
   await new Promise(
     resolve =>
       setTimeout(resolve, 1400)
@@ -1673,10 +1979,401 @@ async function confirmarPuloQuestao() {
 
   setProcessandoPulo(false);
 
-  proximaQuestao();
+  // REMOVE QUESTÃO ATUAL
+  const novasPerguntas =
+    [...perguntasFiltradas];
+
+  novasPerguntas.splice(
+    indiceQuestao,
+    1
+  );
+
+  // NOVA QUESTÃO ALEATÓRIA
+  const restantes =
+    perguntasFiltradas.filter(
+      (q: any) =>
+        !novasPerguntas.includes(q)
+    );
+
+  if (restantes.length > 0) {
+
+    novasPerguntas.splice(
+
+      indiceQuestao,
+
+      0,
+
+      embaralharAlternativas(
+        restantes[
+          Math.floor(
+            Math.random() *
+            restantes.length
+          )
+        ]
+      )
+
+    );
+
+  }
+
+  setPerguntasFiltradas(
+    novasPerguntas
+  );
+
+  // RESET
+  setRespostaSelecionada("");
+
+  setRespostaConfirmada(false);
+
+  setAlternativasEliminadas([]);
+
+  setTempoRestante(
+    TEMPO_LIMITE
+  );
+
+  setTempoEsgotado(false);
+}
+
+// =========================
+// ENGINE DA PLATEIA
+// =========================
+
+useEffect(() => {
+
+// FINAL DO MILHÃO
+
+if (
+  indiceQuestao >= 15 &&
+  !respostaConfirmada
+) {
+
+  backgroundMusic.current?.pause();
+
+  suspenseSound.current!.volume =
+    0.75;
+
+  suspenseSound.current?.play()
+    .catch(() => {});
+
 }
 
 
+  // STREAK
+  if (streak >= 8) {
+
+    setHumorPlateia(
+      "empolgada"
+    );
+
+    setMensagemPlateia(
+      "🔥 A PLATEIA ESTÁ EM ÊXTASE"
+    );
+
+    return;
+  }
+
+  // TEMPO CRÍTICO
+  if (
+    tempoRestante <= 10 &&
+    !respostaConfirmada
+  ) {
+
+    setHumorPlateia(
+      "tensa"
+    );
+
+    setMensagemPlateia(
+      "😰 SILÊNCIO TOTAL NO ESTÚDIO"
+    );
+
+    return;
+  }
+
+  // NORMAL
+  setHumorPlateia(
+    "neutra"
+  );
+
+  setMensagemPlateia(
+    "🌾 ACOMPANHE A SAFRA"
+  );
+
+}, [
+
+  indiceQuestao,
+
+  streak,
+
+  tempoRestante,
+
+  respostaConfirmada,
+
+]);
+
+// =========================
+// ENGINE DE CÂMERA
+// =========================
+
+useEffect(() => {
+
+  // MILHÃO
+  if (
+    indiceQuestao >= 15
+  ) {
+
+    setCameraModo(
+      "milhao"
+    );
+
+    return;
+  }
+
+  // TEMPO CRÍTICO
+  if (
+    tempoRestante <= 10 &&
+    !respostaConfirmada
+  ) {
+
+    setCameraModo(
+      "tensao"
+    );
+
+    return;
+  }
+
+  // STREAK ABSURDO
+  if (
+    streak >= 8
+  ) {
+
+    setCameraModo(
+      "dramatico"
+    );
+
+    return;
+  }
+
+  // NORMAL
+  setCameraModo(
+    "normal"
+  );
+
+}, [
+
+  indiceQuestao,
+
+  tempoRestante,
+
+  respostaConfirmada,
+
+  streak,
+
+]);
+
+// =========================
+// MOMENTO DO MILHÃO
+// =========================
+
+useEffect(() => {
+
+  // FINAL DO MILHÃO
+  if (
+    indiceQuestao >= 15 &&
+    !respostaConfirmada
+  ) {
+
+    setModoMilhaoAtivo(true);
+
+    return;
+  }
+
+  setModoMilhaoAtivo(false);
+
+}, [
+
+  indiceQuestao,
+
+  respostaConfirmada,
+
+]);
+
+// =========================
+// HEARTBEAT CRÍTICO
+// =========================
+
+useEffect(() => {
+
+  if (!heartbeatSound.current)
+    return;
+
+  if (
+    tempoRestante <= 10 &&
+    !respostaConfirmada
+  ) {
+
+    heartbeatSound.current.loop =
+      true;
+
+    heartbeatSound.current.volume =
+      0.45;
+
+    heartbeatSound.current.play()
+      .catch(() => {});
+
+  } else {
+
+    heartbeatSound.current.pause();
+
+    heartbeatSound.current.currentTime =
+      0;
+  }
+
+}, [
+
+  tempoRestante,
+
+  respostaConfirmada,
+
+]);
+
+// =========================
+// ENGINE DE TENSÃO AAA
+// =========================
+
+useEffect(() => {
+
+  let tensao = 0;
+
+  // =========================
+  // TEMPO
+  // =========================
+
+  if (tempoRestante <= 30)
+    tensao += 1;
+
+  if (tempoRestante <= 15)
+    tensao += 2;
+
+  if (tempoRestante <= 10)
+    tensao += 3;
+
+  // =========================
+  // STREAK
+  // =========================
+
+  if (streak >= 5)
+    tensao += 1;
+
+  if (streak >= 8)
+    tensao += 2;
+
+  // =========================
+  // FINAL DO MILHÃO
+  // =========================
+
+  if (indiceQuestao >= 15)
+    tensao += 5;
+
+  // =========================
+  // DEFINE TENSÃO
+  // =========================
+
+  setNivelTensao(tensao);
+
+  // =========================
+  // SHAKE
+  // =========================
+
+  setShakeTela(
+    tensao >= 7
+  );
+
+  // =========================
+  // VINHETA
+  // =========================
+
+  setVinhetaAtiva(
+    tensao >= 4
+  );
+
+// =========================
+// RESPIRAÇÃO DA TELA
+// =========================
+
+setRespiracaoTela(
+  tensao >= 6
+);
+
+// =========================
+// VINHETA PULSANDO
+// =========================
+
+setVinhetaBatendo(
+  tensao >= 8
+);
+
+  // =========================
+// MÚSICA DINÂMICA AAA
+// =========================
+
+if (
+  backgroundMusic.current
+) {
+
+  const musica =
+    backgroundMusic.current;
+
+  // =========================
+  // VOLUME
+  // =========================
+
+  musica.volume =
+
+    tensao >= 9
+
+      ? 0.12
+
+      : tensao >= 7
+
+      ? 0.18
+
+      : tensao >= 4
+
+      ? 0.28
+
+      : 0.4;
+
+  // =========================
+  // VELOCIDADE PSICOLÓGICA
+  // =========================
+
+  musica.playbackRate =
+
+    tensao >= 10
+
+      ? 1.12
+
+      : tensao >= 8
+
+      ? 1.08
+
+      : tensao >= 5
+
+      ? 1.04
+
+      : 1;
+
+}
+
+}, [
+
+  tempoRestante,
+
+  streak,
+
+  indiceQuestao,
+
+]);
 
   // FINAL SOM
   useEffect(() => {
@@ -1768,6 +2465,40 @@ if (
           bg-[radial-gradient(circle_at_top,#0d4029_0%,#05140f_55%,#020303_100%)]
         "
       />
+
+     {/* VINHETA CINEMATOGRÁFICA */}
+
+{vinhetaAtiva && (
+
+  <div
+    className={`
+      absolute
+      inset-0
+
+      pointer-events-none
+
+      bg-black/30
+
+      z-[2]
+
+      ${
+        vinhetaBatendo
+
+          ? "animate-[heartbeatVinheta_0.9s_ease-in-out_infinite]"
+
+          : "animate-pulse"
+      }
+    `}
+
+    style={{
+
+      boxShadow:
+        "inset 0 0 220px rgba(0,0,0,0.95)"
+
+    }}
+  />
+
+)}
 
       {/* GLOW */}
       <div
@@ -2537,7 +3268,7 @@ if (
         "
       >
 
-        Desenvolvido pelo Tutor
+        Desenvolvido pelo Instrutor
 
         <span className="text-yellow-400 font-bold">
 
@@ -2558,9 +3289,99 @@ if (
 
     <LayoutMobile>
 
-    <main className="min-h-[100dvh] bg-[#061b11] text-white flex flex-col relative overflow-hidden">
+    <main
+  className={`
+    min-h-[100dvh]
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#0f5132_0%,#061b11_55%,#020303_100%)]"></div>
+    bg-[#061b11]
+
+    text-white
+
+    flex
+    flex-col
+
+    relative
+
+    overflow-x-hidden
+
+    transition-all
+    duration-500
+
+   ${
+  respiracaoTela
+
+    ? "animate-[breathing_4.5s_ease-in-out_infinite]"
+
+    : ""
+}
+
+    ${
+      cameraModo === "milhao"
+
+        ? `
+          scale-[1.01]
+
+          brightness-[1.08]
+
+          saturate-[1.15]
+        `
+
+        : cameraModo === "dramatico"
+
+? `
+    scale-[1.018]
+
+    brightness-[0.92]
+
+    saturate-[1.2]
+
+    transition-all
+    duration-[1800ms]
+  `
+
+        : cameraModo === "tensao"
+
+        ? `
+          animate-[cameraShake_.35s_infinite]
+
+          brightness-[0.92]
+        `
+
+        : ""
+     }
+
+    ${shakeTela
+
+      ? "animate-[shake_0.4s_infinite]"
+
+      : ""
+    }
+  `}
+>
+
+      <div
+  className={`
+    absolute
+    inset-0
+
+    transition-all
+    duration-[2200ms]
+
+    ${
+      modoMilhaoAtivo
+
+        ? `
+          bg-[radial-gradient(circle_at_center,#1a1202_0%,#050505_38%,#000000_100%)]
+
+          brightness-[0.45]
+        `
+
+        : `
+          bg-[radial-gradient(circle_at_top,#0f5132_0%,#061b11_55%,#020303_100%)]
+        `
+    }
+  `}
+/>
 
       <div
   className="
@@ -2818,7 +3639,7 @@ if (
         
       </div>
 
-      {/* TIMER HEADER */}
+     {/* TIMER HEADER */}
 <div
   className="
     shrink-0
@@ -2827,131 +3648,189 @@ if (
   "
 >
 
-  <div className="relative w-[54px] h-[54px]">
+  <div
+    className={`
+      relative
+
+      w-[68px]
+      h-[68px]
+
+      transition-all
+      duration-500
+
+      ${escalaTimer}
+
+      ${
+        timerCritico
+
+          ? "animate-[criticalPulse_.55s_infinite]"
+
+          : ""
+      }
+    `}
+  >
 
     {/* GLOW */}
     <div
       className={`
         absolute
-        inset-0
+        inset-[-6px]
+
         rounded-full
-        blur-[8px]
+
+        blur-[14px]
+
         transition-all
         duration-500
 
         ${
-          tempoRestante <= 10
-            ? "bg-red-500/25"
-            : tempoRestante <= 20
-            ? "bg-yellow-400/20"
+          timerCritico
+
+            ? "bg-red-500/35"
+
+            : timerAlerta
+
+            ? "bg-yellow-400/30"
+
             : "bg-green-400/20"
+        }
+      `}
+    />
+
+    {/* AURA */}
+    <div
+      className={`
+        absolute
+        inset-0
+
+        rounded-full
+
+        border
+
+        ${
+          timerCritico
+
+            ? "border-red-400/40"
+
+            : timerAlerta
+
+            ? "border-yellow-300/35"
+
+            : "border-green-400/25"
         }
       `}
     />
 
     {/* SVG */}
     <svg
-  className="
-    absolute
-    inset-0
-    -rotate-90
-  "
-  viewBox="0 0 64 64"
->
+      className={`
+        absolute
+        inset-0
 
-  {/* ANEL BASE */}
-  <circle
-    cx="32"
-    cy="32"
-    r="22"
+        -rotate-90
 
-    fill="none"
+        ${glowTimer}
+      `}
+      viewBox="0 0 64 64"
+    >
 
-    stroke="rgba(255,255,255,0.07)"
+      {/* BASE */}
+      <circle
+        cx="32"
+        cy="32"
+        r={raioTimer}
 
-    strokeWidth="3.5"
-  />
+        fill="none"
 
-  {/* ANEL ANIMADO */}
-  <circle
-    cx="32"
-    cy="32"
-    r="26"
+        stroke="rgba(255,255,255,0.07)"
 
-    fill="none"
+        strokeWidth="4"
+      />
 
-    strokeWidth="3.5"
+      {/* PROGRESSO */}
+      <circle
+        cx="32"
+        cy="32"
+        r={raioTimer}
 
-    strokeLinecap="round"
+        fill="none"
 
-    stroke={
-      tempoRestante <= 10
-        ? "#ef4444"
-        : tempoRestante <= 20
-        ? "#facc15"
-        : "#22c55e"
-    }
+        stroke={corTimer}
 
-    strokeDasharray={circunferenciaTimer}
+        strokeWidth="4.5"
 
-    strokeDashoffset={
-      circunferenciaTimer *
-      (1 - tempoRestante / TEMPO_LIMITE)
-    }
+        strokeLinecap="round"
 
-    style={{
-      transition:
-        "stroke-dashoffset 1s linear, stroke 0.4s ease",
-      transformOrigin: "50% 50%",
-    }}
+        strokeDasharray={circunferenciaTimer}
 
-    className="
-      drop-shadow-[0_0_3px_rgba(0,255,120,0.22)]
-    "
-  />
+        strokeDashoffset={progressoTimer}
 
-</svg>
+        style={{
+          transition:
+            "stroke-dashoffset 1s linear, stroke 0.35s ease",
+        }}
+      />
+
+    </svg>
 
     {/* CENTRO */}
     <div
       className="
         absolute
-        inset-[8px]
+        inset-[9px]
 
         rounded-full
-
-        bg-[radial-gradient(circle_at_top,#145236,#081710)]
 
         border
         border-white/10
 
+        bg-[radial-gradient(circle_at_top,#145236,#081710)]
+
         flex
         items-center
         justify-center
-
-        shadow-[0_0_8px_rgba(0,255,140,0.12)]
       "
     >
 
       <span
         className={`
-          text-[21px]
+          font-black
 
-          font-extrabold
+          leading-none
 
           transition-all
           duration-300
 
           ${
-            tempoRestante <= 10
-              ? "text-red-400 animate-pulse"
-              : tempoRestante <= 20
-              ? "text-yellow-300"
-              : "text-white"
+            timerCritico
+
+              ? `
+                text-[27px]
+
+                text-red-400
+
+                animate-pulse
+              `
+
+              : timerAlerta
+
+              ? `
+                text-[24px]
+
+                text-yellow-300
+              `
+
+              : `
+                text-[22px]
+
+                text-white
+              `
           }
         `}
       >
+
         {tempoRestante}
+
       </span>
 
     </div>
@@ -3055,6 +3934,351 @@ if (
     </div>
 
   </div>
+
+)}
+
+
+{/* =========================================
+MODO CRÍTICO
+========================================= */}
+
+{tempoRestante <= 10 && !respostaConfirmada && (
+
+  <div
+    className="
+      mb-2
+
+      relative
+
+      overflow-hidden
+
+      rounded-[18px]
+
+      border
+      border-red-500/30
+
+      bg-gradient-to-r
+      from-[#2a0808]
+      to-[#120303]
+
+      px-4
+      py-3
+
+      animate-pulse
+
+      shadow-[0_0_25px_rgba(255,0,0,0.18)]
+    "
+  >
+
+    <div
+      className="
+        absolute
+        inset-0
+
+        bg-[radial-gradient(circle_at_center,rgba(255,0,0,0.15),transparent_70%)]
+      "
+    />
+
+    <div
+      className="
+        relative
+        z-10
+
+        flex
+        items-center
+        justify-between
+      "
+    >
+
+      <div>
+
+        <p
+          className="
+            text-[9px]
+
+            uppercase
+
+            tracking-[0.22em]
+
+            text-red-300/70
+
+            font-black
+
+            mb-1
+          "
+        >
+
+          ALERTA MÁXIMO
+        </p>
+
+        <h2
+          className="
+            text-[18px]
+
+            font-black
+
+            text-red-300
+          "
+        >
+
+          TEMPO CRÍTICO
+
+        </h2>
+
+      </div>
+
+      <div
+        className="
+          text-[34px]
+
+          animate-bounce
+        "
+      >
+
+        🚨
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
+
+{
+  !modoMilhaoAtivo && (
+
+    <div className="mb-2">
+
+
+{/* =========================================
+PLATEIA AAA
+========================================= */}
+
+<div className="mb-2">
+
+  <div
+    className={`
+      relative
+
+      overflow-hidden
+
+      rounded-[18px]
+
+      border
+
+      px-4
+      py-3
+
+      transition-all
+      duration-500
+
+      ${
+        humorPlateia === "explosao"
+
+          ? `
+            border-yellow-400/35
+
+            bg-gradient-to-r
+            from-[#3a2605]
+            to-[#120902]
+
+            shadow-[0_0_35px_rgba(255,215,0,0.18)]
+
+            animate-pulse
+          `
+
+          : humorPlateia === "empolgada"
+
+          ? `
+            border-green-400/25
+
+            bg-gradient-to-r
+            from-[#0d2e21]
+            to-[#07140f]
+
+            shadow-[0_0_25px_rgba(0,255,140,0.12)]
+          `
+
+          : humorPlateia === "tensa"
+
+          ? `
+            border-red-500/25
+
+            bg-gradient-to-r
+            from-[#2a0808]
+            to-[#120303]
+
+            shadow-[0_0_25px_rgba(255,0,0,0.12)]
+
+            animate-pulse
+          `
+
+          : `
+            border-green-900/30
+
+            bg-black/20
+          `
+      }
+    `}
+  >
+
+    {/* GLOW */}
+    <div
+      className={`
+        absolute
+        inset-0
+
+        ${
+          humorPlateia === "explosao"
+
+            ? "bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.15),transparent_70%)]"
+
+            : humorPlateia === "empolgada"
+
+            ? "bg-[radial-gradient(circle_at_center,rgba(0,255,140,0.10),transparent_70%)]"
+
+            : humorPlateia === "tensa"
+
+            ? "bg-[radial-gradient(circle_at_center,rgba(255,0,0,0.12),transparent_70%)]"
+
+            : ""
+        }
+      `}
+    />
+
+    <div
+      className="
+        relative
+        z-10
+
+        flex
+        items-center
+        justify-between
+      "
+    >
+
+      {/* TEXTO */}
+      <div>
+
+        <p
+          className="
+            text-[9px]
+
+            uppercase
+
+            tracking-[0.22em]
+
+            text-white/45
+
+            font-black
+
+            mb-1
+          "
+        >
+
+          ESTÚDIO SAFRA MILIONÁRIA
+        </p>
+
+        <h2
+          className="
+            text-[16px]
+
+            font-black
+
+            text-white
+          "
+        >
+
+          {mensagemPlateia}
+
+        </h2>
+
+      </div>
+
+      {/* EMOJI */}
+      <div
+        className="
+          text-[34px]
+        "
+      >
+
+        {
+          humorPlateia === "explosao"
+
+            ? "👑"
+
+            : humorPlateia === "empolgada"
+
+            ? "🔥"
+
+            : humorPlateia === "tensa"
+
+            ? "😰"
+
+            : "🌾"
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+ </div>
+
+  )
+}
+
+{/* =========================
+SPOTLIGHT MILHÃO
+========================= */}
+
+{
+  modoMilhaoAtivo && (
+
+    <div
+      className="
+        pointer-events-none
+
+        absolute
+        inset-0
+
+        z-[5]
+
+        bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.05)_20%,rgba(0,0,0,0.82)_75%)]
+
+        animate-pulse
+      "
+    />
+
+  )
+}
+
+{/* =========================================
+BLACKOUT CINEMATOGRÁFICO AAA
+========================================= */}
+
+{mostrarBlackout && (
+
+  <div
+    className="
+      fixed
+      inset-0
+
+      z-[40]
+
+      pointer-events-none
+
+      bg-black/55
+
+      backdrop-blur-[2px]
+
+      animate-pulse
+    "
+  />
 
 )}
 
@@ -3173,7 +4397,11 @@ if (
     >
 
       {questaoAtual?.pergunta}
-
+${
+  modoMilhaoAtivo
+    ? "animate-pulse"
+    : ""
+}
       
 
     </h1>
@@ -3184,6 +4412,8 @@ if (
 
           {/* ALTERNATIVAS */}
 <div className="grid gap-[10px] mt-[2px]">
+
+
 
   {questaoAtual?.alternativas.map(
     (alternativa: string, index: number) => {
@@ -3197,9 +4427,10 @@ if (
           key={index}
 
           disabled={
-            respostaConfirmada ||
-            eliminada
-          }
+  respostaConfirmada ||
+  eliminada ||
+  revelandoResposta
+}
 
           onClick={() => {
 
@@ -3223,6 +4454,26 @@ if (
 
           
           className={`
+
+${
+  alternativaPiscando === index
+
+    ? `
+      scale-[1.03]
+
+      ring-2
+      ring-yellow-300
+
+      bg-yellow-300/20
+
+      shadow-[0_0_30px_rgba(255,215,0,0.45)]
+
+      animate-pulse
+    `
+
+    : ""
+}
+            
   ${
 alternativasVisiveis.includes(index)
   ? "opacity-100"
@@ -3669,11 +4920,129 @@ items-center
 
 
 {/* =========================================
+STREAK AAA
+========================================= */}
+
+{streak >= 3 && (
+
+  <div className="mb-2">
+
+    <div
+      className="
+        relative
+
+        overflow-hidden
+
+        rounded-[20px]
+
+        border
+        border-yellow-400/20
+
+        bg-gradient-to-r
+        from-[#2a1d05]
+        to-[#120b02]
+
+        px-4
+        py-3
+
+        shadow-[0_0_25px_rgba(255,200,0,0.10)]
+
+        animate-pulse
+      "
+    >
+
+      <div
+        className="
+          absolute
+          inset-0
+
+          bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.10),transparent_70%)]
+        "
+      />
+
+      <div
+        className="
+          relative
+          z-10
+
+          flex
+          items-center
+          justify-between
+        "
+      >
+
+        <div>
+
+          <p
+            className="
+              text-[9px]
+
+              uppercase
+
+              tracking-[0.18em]
+
+              text-yellow-300/60
+
+              font-black
+
+              mb-1
+            "
+          >
+
+            COMBO ATIVO
+          </p>
+
+          <h2
+            className="
+              text-[18px]
+
+              font-black
+
+              text-yellow-300
+            "
+          >
+
+            {tituloStreak}
+
+          </h2>
+
+        </div>
+
+        <div
+          className="
+            text-[38px]
+
+            font-black
+
+            text-white
+          "
+        >
+
+          x{streak}
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
+
+{
+  !modoMilhaoAtivo && (
+
+    <>
+
+{/* =========================================
 HUD FINANCEIRO PREMIUM
 ========================================= */}
 
+
 <div className="mt-2">
 
+  
     
     {/* =========================
           STATUS FINANCEIRO
@@ -3727,7 +5096,19 @@ HUD FINANCEIRO PREMIUM
 
         <h2 className="text-[12px] font-black text-red-300 mt-1 leading-none">
 
-          R$ {valorErrar.toLocaleString("pt-BR")}
+          <span
+  className={`
+    ${
+      tempoRestante <= 10
+        ? "animate-pulse"
+        : ""
+    }
+  `}
+>
+
+  R$ {valorErrar.toLocaleString("pt-BR")}
+
+</span>
 
         </h2>
 
@@ -3827,8 +5208,12 @@ HUD FINANCEIRO PREMIUM
 
   </div>
 
-</div>
+    </>
 
+  )
+}
+
+</div>
 </div>
 
 {/* =========================================
