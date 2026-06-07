@@ -172,8 +172,11 @@ const checkpoints = [
 
   // GAME
   const [pontuacao, setPontuacao] = useState(0);
-const [temasSelecionados, setTemasSelecionados] =
-  useState<string[]>(() => {
+  const [temasSelecionados, setTemasSelecionados] =
+useState<string[]>(() => {
+
+    const [temasAtivos, setTemasAtivos] =
+  useState<string[]>([]);
 
     if (
       typeof window === "undefined"
@@ -569,7 +572,9 @@ applauseSound.current =
   // =========================
 
   
-    async function iniciarNovaPartida() {
+    async function iniciarNovaPartida(
+  temasForcados = temasAtivos
+) {
 
       // =========================
 // RESETAR PARTIDA
@@ -743,9 +748,9 @@ const historico =
 const perguntasTema =
   perguntasConvertidas.filter(
     (q: any) =>
-      temasSelecionados.includes(
-        q.tema
-      )
+      temasForcados.includes(
+  q.tema
+)
   );
 
 // =========================
@@ -754,7 +759,7 @@ const perguntasTema =
 // =========================
 
 const idsJogadas =
-  temasSelecionados.flatMap(
+  temasForcados.flatMap(
     (tema) =>
       historico[tema] || []
   );
@@ -771,7 +776,7 @@ if (
   perguntasDisponiveis.length < 16
 ) {
 
-  temasSelecionados.forEach((tema) => {
+  temasForcados.forEach((tema) => {
 
   historico[tema] = [];
 
@@ -2904,39 +2909,52 @@ if (
                     </div>
 
                     <button
-                      onClick={() => {
+  onClick={() => {
 
-                        localStorage.setItem(
-                          "temaSelecionado",
-                          tema.tema
-                        );
+  const temaUnico = [
+    tema.tema
+  ];
 
-                        iniciarNovaPartida();
+  setTemasSelecionados(
+    temaUnico
+  );
 
-                      }}
+  setTemasAtivos(
+    temaUnico
+  );
 
-                      className="
-                        h-[40px]
+  setTimeout(() => {
 
-                        px-4
+    iniciarNovaPartida(
+      temaUnico
+    );
 
-                        rounded-[14px]
+  }, 50);
 
-                        bg-gradient-to-r
-                        from-yellow-400
-                        to-yellow-300
+}}
 
-                        text-black
+  className="
+    h-[40px]
 
-                        text-[12px]
+    px-4
 
-                        font-black
-                      "
-                    >
+    rounded-[14px]
 
-                      JOGAR
+    bg-gradient-to-r
+    from-yellow-400
+    to-yellow-300
 
-                    </button>
+    text-black
+
+    text-[12px]
+
+    font-black
+  "
+>
+
+  JOGAR
+
+</button>
 
                   </div>
 
@@ -3124,14 +3142,9 @@ if (
             "
           >
 
-            {[
-              "Tema 1",
-              "Tema 2",
-              "Tema 3",
-              "Tema 4",
-              "Tema 5",
-              "Tema 6",
-            ].map((tema) => {
+            {estatisticasTemas.map(
+  (temaObj) => temaObj.tema
+).map((tema) => {
 
               const ativo =
                 temasSelecionados.includes(tema);
@@ -3143,25 +3156,34 @@ if (
 
                   onClick={() => {
 
-                    if (ativo) {
+                    let novosTemas = [];
 
-                      setTemasSelecionados(
-                        temasSelecionados.filter(
-                          (t) => t !== tema
-                        )
-                      );
+if (ativo) {
 
-                    } else {
+  novosTemas =
+    temasSelecionados.filter(
+      (t) => t !== tema
+    );
 
-                      if (
-                        temasSelecionados.length >= 3
-                      ) return;
+} else {
 
-                      setTemasSelecionados([
-                        ...temasSelecionados,
-                        tema,
-                      ]);
-                    }
+  if (
+    temasSelecionados.length >= 3
+  ) return;
+
+  novosTemas = [
+    ...temasSelecionados,
+    tema,
+  ];
+}
+
+setTemasSelecionados(
+  novosTemas
+);
+
+setTemasAtivos(
+  novosTemas
+);
                   }}
 
                   className={`

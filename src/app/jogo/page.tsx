@@ -170,8 +170,10 @@ const checkpoints = [
   const [polo, setPolo] = useState("");
   const [curso, setCurso] = useState("");
 
-  // GAME
-  const [pontuacao, setPontuacao] = useState(0);
+ // GAME
+const [pontuacao, setPontuacao] =
+  useState(0);
+
 const [temasSelecionados, setTemasSelecionados] =
   useState<string[]>(() => {
 
@@ -191,17 +193,8 @@ const [temasSelecionados, setTemasSelecionados] =
       : ["Tema 1"];
   });
 
-
-useEffect(() => {
-
-  localStorage.setItem(
-    "safra-temas",
-    JSON.stringify(
-      temasSelecionados
-    )
-  );
-
-}, [temasSelecionados]);
+const [temasAtivos, setTemasAtivos] =
+  useState<string[]>(["Tema 1"]);
 
 
   const [quantidadeAcertos, setQuantidadeAcertos] =
@@ -569,7 +562,10 @@ applauseSound.current =
   // =========================
 
   
-    async function iniciarNovaPartida() {
+    async function iniciarNovaPartida(
+  temasForcados: string[] =
+    temasAtivos
+) {
 
       // =========================
 // RESETAR PARTIDA
@@ -743,9 +739,9 @@ const historico =
 const perguntasTema =
   perguntasConvertidas.filter(
     (q: any) =>
-      temasSelecionados.includes(
-        q.tema
-      )
+      temasForcados.includes(
+  q.tema
+)
   );
 
 // =========================
@@ -754,8 +750,8 @@ const perguntasTema =
 // =========================
 
 const idsJogadas =
-  temasSelecionados.flatMap(
-    (tema) =>
+  temasForcados.flatMap(
+    (tema: string) =>
       historico[tema] || []
   );
 
@@ -771,7 +767,8 @@ if (
   perguntasDisponiveis.length < 16
 ) {
 
-  temasSelecionados.forEach((tema) => {
+  temasForcados.forEach(
+  (tema: string) => {
 
   historico[tema] = [];
 
@@ -2906,17 +2903,27 @@ if (
                     <button
   onClick={() => {
 
-    setTemasSelecionados([
-      tema.tema
-    ]);
+  const temaUnico = [
+    tema.tema
+  ];
 
-    setTimeout(() => {
+  setTemasSelecionados(
+    temaUnico
+  );
 
-      iniciarNovaPartida();
+  setTemasAtivos(
+    temaUnico
+  );
 
-    }, 50);
+  setTimeout(() => {
 
-  }}
+    iniciarNovaPartida(
+      temaUnico
+    );
+
+  }, 50);
+
+}}
 
   className="
     h-[40px]
@@ -3127,14 +3134,9 @@ if (
             "
           >
 
-            {[
-              "Tema 1",
-              "Tema 2",
-              "Tema 3",
-              "Tema 4",
-              "Tema 5",
-              "Tema 6",
-            ].map((tema) => {
+            {estatisticasTemas.map(
+  (temaObj) => temaObj.tema
+).map((tema) => {
 
               const ativo =
                 temasSelecionados.includes(tema);
@@ -3146,25 +3148,34 @@ if (
 
                   onClick={() => {
 
-                    if (ativo) {
+                    let novosTemas: string[] = [];
 
-                      setTemasSelecionados(
-                        temasSelecionados.filter(
-                          (t) => t !== tema
-                        )
-                      );
+if (ativo) {
 
-                    } else {
+  novosTemas =
+    temasSelecionados.filter(
+      (t) => t !== tema
+    );
 
-                      if (
-                        temasSelecionados.length >= 3
-                      ) return;
+} else {
 
-                      setTemasSelecionados([
-                        ...temasSelecionados,
-                        tema,
-                      ]);
-                    }
+  if (
+    temasSelecionados.length >= 3
+  ) return;
+
+  novosTemas = [
+    ...temasSelecionados,
+    tema,
+  ];
+}
+
+setTemasSelecionados(
+  novosTemas
+);
+
+setTemasAtivos(
+  novosTemas
+);
                   }}
 
                   className={`
