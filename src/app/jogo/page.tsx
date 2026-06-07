@@ -170,7 +170,7 @@ useEffect(() => {
 
   const [quantidadeAcertos, setQuantidadeAcertos] =
   useState(0);
-  const [gameOver, setGameOver] = useState(false);
+  
 
   // QUESTÕES
   const [perguntasFiltradas, setPerguntasFiltradas] =
@@ -451,7 +451,7 @@ async function salvarRanking() {
 // RESETAR PARTIDA
 // =========================
 
-setGameOver(false);
+
 
 setIndiceQuestao(0);
 
@@ -1272,7 +1272,12 @@ async function sairDoJogo() {
 
   await salvarRanking();
 
-  setGameOver(true);
+  // FINALIZA JOGO
+  setIndiceQuestao(
+    perguntasFiltradas.length
+  );
+
+  setRespostaConfirmada(false);
 }
 
 // =========================
