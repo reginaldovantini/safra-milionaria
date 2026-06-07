@@ -2904,39 +2904,42 @@ if (
                     </div>
 
                     <button
-                      onClick={() => {
+  onClick={() => {
 
-                        localStorage.setItem(
-                          "temaSelecionado",
-                          tema.tema
-                        );
+    setTemasSelecionados([
+      tema.tema
+    ]);
 
-                        iniciarNovaPartida();
+    setTimeout(() => {
 
-                      }}
+      iniciarNovaPartida();
 
-                      className="
-                        h-[40px]
+    }, 50);
 
-                        px-4
+  }}
 
-                        rounded-[14px]
+  className="
+    h-[40px]
 
-                        bg-gradient-to-r
-                        from-yellow-400
-                        to-yellow-300
+    px-4
 
-                        text-black
+    rounded-[14px]
 
-                        text-[12px]
+    bg-gradient-to-r
+    from-yellow-400
+    to-yellow-300
 
-                        font-black
-                      "
-                    >
+    text-black
 
-                      JOGAR
+    text-[12px]
 
-                    </button>
+    font-black
+  "
+>
+
+  JOGAR
+
+</button>
 
                   </div>
 
@@ -4397,7 +4400,7 @@ BLACKOUT CINEMATOGRÁFICO AAA
     >
 
       {questaoAtual?.pergunta}
-${
+{
   modoMilhaoAtivo
     ? "animate-pulse"
     : ""
