@@ -602,10 +602,25 @@ const temasComPrioridadeOuro = [
   // =========================
 
   
-    async function iniciarNovaPartida(
-  temasForcados: string[] =
-    temasAtivos
+ async function iniciarNovaPartida(
+  temasForcados?: string[]
 ) {
+
+  const temasJogo =
+
+    temasForcados ??
+
+    (
+      typeof window !== "undefined"
+
+        ? JSON.parse(
+            localStorage.getItem(
+              "temasAtivos"
+            ) || '["Tema 1"]'
+          )
+
+        : ["Tema 1"]
+    );
 
       // =========================
 // RESETAR PARTIDA
@@ -777,12 +792,26 @@ const historico =
 
     
 // FILTRAR QUESTÕES DOS TEMAS
+const temasNormalizados =
+  temasJogo.map(
+    (tema: string) =>
+      tema.trim().toLowerCase()
+  );
+
 const perguntasTema =
   perguntasConvertidas.filter(
-    (q: any) =>
-      temasForcados.includes(
-  q.tema
-)
+    (q: any) => {
+
+      const temaQuestao =
+        String(q.tema)
+          .trim()
+          .toLowerCase();
+
+      return temasNormalizados.includes(
+        temaQuestao
+      );
+
+    }
   );
 
 // =========================
@@ -791,7 +820,7 @@ const perguntasTema =
 // =========================
 
 const idsJogadas =
-  temasForcados.flatMap(
+  temasJogo.flatMap(
     (tema: string) =>
       historico[tema] || []
   );
@@ -805,10 +834,10 @@ let perguntasDisponiveis =
 
 // REINICIAR CICLO
 if (
-  perguntasDisponiveis.length < 16
+  perguntasDisponiveis.length === 0
 ) {
 
-  temasForcados.forEach(
+  temasJogo.forEach(
   (tema: string) => {
 
   historico[tema] = [];
@@ -848,50 +877,111 @@ if (ultimaErradaSalva) {
     JSON.parse(ultimaErradaSalva);
 }
 
-const usarPrioridadeOuro =
-  temasForcados.some(
-    (tema: string) =>
-      temasComPrioridadeOuro.includes(
-        tema
-      )
-  );
-
 let perguntasSelecionadas: any[] = [];
 
-if (usarPrioridadeOuro) {
+// =========================
+// TEMA ÚNICO
+// =========================
 
-  const perguntasOuro =
-    perguntasDisponiveis.filter(
-      (q: any) =>
-        q.nivel?.toLowerCase() ===
-        "ouro"
+if (temasJogo.length === 1) {
+
+  const usarPrioridadeOuro =
+    temasComPrioridadeOuro.includes(
+      temasJogo[0]
     );
 
-  const perguntasNormais =
-    perguntasDisponiveis.filter(
-      (q: any) =>
-        q.nivel?.toLowerCase() !==
-        "ouro"
+  if (usarPrioridadeOuro) {
+
+    const perguntasOuro =
+      perguntasDisponiveis.filter(
+        (q: any) =>
+          q.nivel?.toLowerCase() ===
+          "ouro"
+      );
+
+    const perguntasNormais =
+      perguntasDisponiveis.filter(
+        (q: any) =>
+          q.nivel?.toLowerCase() !==
+          "ouro"
+      );
+
+    perguntasSelecionadas = [
+
+      ...shuffleArray(
+        perguntasOuro
+      ),
+
+      ...shuffleArray(
+        perguntasNormais
+      ),
+
+    ];
+
+  } else {
+
+    perguntasSelecionadas =
+      shuffleArray(
+        perguntasDisponiveis
+      );
+
+  }
+
+}
+
+// =========================
+// MULTITEMAS
+// =========================
+
+else {
+
+  const gruposPorTema =
+    temasJogo.map(
+      (tema: string) => {
+
+        const lista =
+          perguntasDisponiveis.filter(
+            (q: any) =>
+              String(q.tema)
+                .trim()
+                .toLowerCase() ===
+              tema
+                .trim()
+                .toLowerCase()
+          );
+
+        return shuffleArray(lista);
+
+      }
     );
 
-  perguntasSelecionadas = [
+  // GARANTE 2 DE CADA TEMA
 
-    ...shuffleArray(
-      perguntasOuro
-    ),
+  gruposPorTema.forEach(
+    (grupo: any[]) => {
 
-    ...shuffleArray(
-      perguntasNormais
-    ),
+      perguntasSelecionadas.push(
+        ...grupo.splice(0, 2)
+      );
 
-  ];
+    }
+  );
 
-} else {
+  // COMPLETA ATÉ 16
 
-  perguntasSelecionadas =
+  const restantes =
     shuffleArray(
-      perguntasDisponiveis
+      gruposPorTema.flat()
     );
+
+  perguntasSelecionadas.push(
+
+    ...restantes.slice(
+      0,
+      16 - perguntasSelecionadas.length
+    )
+
+  );
 
 }
 
@@ -910,13 +1000,26 @@ if (ultimaErrada) {
   perguntasSelecionadas.unshift(
     ultimaErrada
   );
+
 }
 
-const perguntasJogo =
+perguntasSelecionadas =
   perguntasSelecionadas.slice(0, 16);
 
+const perguntasJogo =
+  perguntasSelecionadas;
+
 const reservas =
-  perguntasSelecionadas.slice(16);
+  perguntasDisponiveis.filter(
+    (q: any) =>
+
+      !perguntasJogo.some(
+        (p: any) =>
+          p.id === q.id
+      )
+  );
+
+
 
 setPerguntasReserva(
   reservas
@@ -986,7 +1089,21 @@ setEstatisticasTemas(estatisticas);
 
    useEffect(() => {
 
-  iniciarNovaPartida();
+  const temasSalvos =
+
+    typeof window !== "undefined"
+
+      ? JSON.parse(
+          localStorage.getItem(
+            "temasAtivos"
+          ) || '["Tema 1"]'
+        )
+
+      : ["Tema 1"];
+
+  iniciarNovaPartida(
+    temasSalvos
+  );
 
 }, []);
 

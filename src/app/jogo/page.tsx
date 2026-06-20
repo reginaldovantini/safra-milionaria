@@ -602,10 +602,25 @@ const temasComPrioridadeOuro = [
   // =========================
 
   
-    async function iniciarNovaPartida(
-  temasForcados: string[] =
-    temasAtivos
+ async function iniciarNovaPartida(
+  temasForcados?: string[]
 ) {
+
+  const temasJogo =
+
+    temasForcados ??
+
+    (
+      typeof window !== "undefined"
+
+        ? JSON.parse(
+            localStorage.getItem(
+              "temasAtivos"
+            ) || '["Tema 1"]'
+          )
+
+        : ["Tema 1"]
+    );
 
       // =========================
 // RESETAR PARTIDA
@@ -778,7 +793,7 @@ const historico =
     
 // FILTRAR QUESTÕES DOS TEMAS
 const temasNormalizados =
-  temasForcados.map(
+  temasJogo.map(
     (tema: string) =>
       tema.trim().toLowerCase()
   );
@@ -805,7 +820,7 @@ const perguntasTema =
 // =========================
 
 const idsJogadas =
-  temasForcados.flatMap(
+  temasJogo.flatMap(
     (tema: string) =>
       historico[tema] || []
   );
@@ -822,7 +837,7 @@ if (
   perguntasDisponiveis.length === 0
 ) {
 
-  temasForcados.forEach(
+  temasJogo.forEach(
   (tema: string) => {
 
   historico[tema] = [];
@@ -868,11 +883,11 @@ let perguntasSelecionadas: any[] = [];
 // TEMA ÚNICO
 // =========================
 
-if (temasForcados.length === 1) {
+if (temasJogo.length === 1) {
 
   const usarPrioridadeOuro =
     temasComPrioridadeOuro.includes(
-      temasForcados[0]
+      temasJogo[0]
     );
 
   if (usarPrioridadeOuro) {
@@ -921,7 +936,7 @@ if (temasForcados.length === 1) {
 else {
 
   const gruposPorTema =
-    temasForcados.map(
+    temasJogo.map(
       (tema: string) => {
 
         const lista =
@@ -1074,7 +1089,21 @@ setEstatisticasTemas(estatisticas);
 
    useEffect(() => {
 
-  iniciarNovaPartida();
+  const temasSalvos =
+
+    typeof window !== "undefined"
+
+      ? JSON.parse(
+          localStorage.getItem(
+            "temasAtivos"
+          ) || '["Tema 1"]'
+        )
+
+      : ["Tema 1"];
+
+  iniciarNovaPartida(
+    temasSalvos
+  );
 
 }, []);
 
