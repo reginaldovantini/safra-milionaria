@@ -2505,7 +2505,6 @@ if (
 
   tempoRestante,
 
-
   indiceQuestao,
 
 ]);
@@ -5082,27 +5081,24 @@ POPUP CARTAS DA FAZENDA
 
 {mostrarCartasPopup && (
 
- <div
-  className="
-    relative
-    z-10
+  <div
+    className="
+      fixed
+      inset-0
+      z-[997]
 
-    w-full
+      flex
+      items-start
+      justify-center
 
-    max-w-[420px]
-    md:max-w-[760px]
+      pt-[95px]
+      md:pt-[110px]
 
-    max-h-[calc(100dvh-68px)]
+      pb-[95px]
 
-    rounded-[20px]
-    md:rounded-[30px]
-
-    ...
-
-    overflow-y-auto
-    overflow-x-hidden
-  "
->
+      px-4
+    "
+  >
 
     {/* BACKDROP */}
 
@@ -5654,26 +5650,23 @@ POPUP CONSULTORIA TÉCNICA
 {mostrarConsultoria && (
 
   <div
-  className="
-    relative
-    z-10
+    className="
+      fixed
+      inset-0
+      z-[996]
 
-    w-full
+      flex
+      items-start
+      justify-center
 
-    max-w-[420px]
-    md:max-w-[760px]
+      pt-[95px]
+      md:pt-[110px]
 
-    max-h-[calc(100dvh-68px)]
+      pb-[95px]
 
-    rounded-[20px]
-    md:rounded-[30px]
-
-    ...
-
-    overflow-y-auto
-    overflow-x-hidden
-  "
->
+      px-4
+    "
+  >
 
     {/* BACKDROP */}
 
@@ -6144,26 +6137,23 @@ POPUP IA AGRO
 {mostrarIAAgro && (
 
   <div
-  className="
-    relative
-    z-10
+    className="
+      fixed
+      inset-0
+      z-[995]
 
-    w-full
+      flex
+      items-start
+      justify-center
 
-    max-w-[420px]
-    md:max-w-[760px]
+      pt-[95px]
+      md:pt-[110px]
 
-    max-h-[calc(100dvh-68px)]
+      pb-[95px]
 
-    rounded-[20px]
-    md:rounded-[30px]
-
-    ...
-
-    overflow-y-auto
-    overflow-x-hidden
-  "
->
+      px-4
+    "
+  >
 
     {/* BACKDROP */}
 
@@ -6697,26 +6687,23 @@ POPUP PULAR QUESTÃO
 {mostrarPularPopup && (
 
   <div
-  className="
-    relative
-    z-10
+    className="
+      fixed
+      inset-0
+      z-[997]
 
-    w-full
+      flex
+      items-start
+      justify-center
 
-    max-w-[420px]
-    md:max-w-[760px]
+      pt-[95px]
+      md:pt-[110px]
 
-    max-h-[calc(100dvh-68px)]
+      pb-[95px]
 
-    rounded-[20px]
-    md:rounded-[30px]
-
-    ...
-
-    overflow-y-auto
-    overflow-x-hidden
-  "
->
+      px-4
+    "
+  >
 
     {/* BACKDROP */}
 
@@ -7095,26 +7082,23 @@ POPUP PARAR JOGO
 {mostrarPararPopup && (
 
   <div
-  className="
-    relative
-    z-10
+    className="
+      fixed
+      inset-0
+      z-[998]
 
-    w-full
+      flex
+      items-start
+      justify-center
 
-    max-w-[420px]
-    md:max-w-[760px]
+      pt-[95px]
+      md:pt-[110px]
 
-    max-h-[calc(100dvh-68px)]
+      pb-[95px]
 
-    rounded-[20px]
-    md:rounded-[30px]
-
-    ...
-
-    overflow-y-auto
-    overflow-x-hidden
-  "
->
+      px-4
+    "
+  >
 
     {/* BACKDROP */}
 
