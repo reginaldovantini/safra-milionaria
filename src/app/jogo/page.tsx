@@ -194,8 +194,40 @@ const [temasSelecionados, setTemasSelecionados] =
   });
 
 const [temasAtivos, setTemasAtivos] =
-  useState<string[]>(["Tema 1"]);
+  useState<string[]>(() => {
 
+    if (typeof window === "undefined") {
+      return ["Tema 1"];
+    }
+
+    const temasSalvos =
+      localStorage.getItem("temasAtivos");
+
+    if (!temasSalvos) {
+      return ["Tema 1"];
+    }
+
+    return JSON.parse(temasSalvos);
+  });
+
+useEffect(() => {
+
+  localStorage.setItem(
+    "safra-temas",
+    JSON.stringify(temasSelecionados)
+  );
+
+}, [temasSelecionados]);
+
+useEffect(() => {
+
+  localStorage.setItem(
+    "temasAtivos",
+    JSON.stringify(temasAtivos)
+  );
+
+}, [temasAtivos]);
+  
 
   const [quantidadeAcertos, setQuantidadeAcertos] =
   useState(0);
@@ -266,6 +298,9 @@ const [modoMilhaoAtivo, setModoMilhaoAtivo] =
   // QUESTÕES
   const [perguntasFiltradas, setPerguntasFiltradas] =
     useState<any[]>([]);
+
+    const [perguntasReserva, setPerguntasReserva] =
+  useState<any[]>([]);
 
     const [estatisticasTemas, setEstatisticasTemas] =
   useState<any[]>([]);
@@ -557,6 +592,11 @@ applauseSound.current =
     }
   }
 
+
+const temasComPrioridadeOuro = [
+  "Tema 1",
+];
+
    // =========================
   // CARREGAR EXCEL
   // =========================
@@ -735,6 +775,7 @@ const historico =
     : {};
 
 
+    
 // FILTRAR QUESTÕES DOS TEMAS
 const perguntasTema =
   perguntasConvertidas.filter(
@@ -783,31 +824,7 @@ if (
     perguntasTema;
 }
 
-// =========================
-// QUESTÕES OURO
-// PRIORIDADE MÁXIMA
-// =========================
 
-const perguntasOuro =
-  perguntasDisponiveis.filter(
-    (q: any) =>
-      q.nivel?.toLowerCase() ===
-      "ouro"
-  );
-
-const perguntasNormais =
-  perguntasDisponiveis.filter(
-    (q: any) =>
-      q.nivel?.toLowerCase() !==
-      "ouro"
-  );
-
-// EMBARALHAR
-const ouroEmbaralhadas =
-  shuffleArray(perguntasOuro);
-
-const normaisEmbaralhadas =
-  shuffleArray(perguntasNormais);
 
   // =========================
 // ÚLTIMA QUESTÃO ERRADA
@@ -831,17 +848,52 @@ if (ultimaErradaSalva) {
     JSON.parse(ultimaErradaSalva);
 }
 
-// =========================
-// PRIORIDADE OURO
-// =========================
+const usarPrioridadeOuro =
+  temasForcados.some(
+    (tema: string) =>
+      temasComPrioridadeOuro.includes(
+        tema
+      )
+  );
 
-let perguntasSelecionadas = [
+let perguntasSelecionadas: any[] = [];
 
-  ...ouroEmbaralhadas,
+if (usarPrioridadeOuro) {
 
-  ...normaisEmbaralhadas,
+  const perguntasOuro =
+    perguntasDisponiveis.filter(
+      (q: any) =>
+        q.nivel?.toLowerCase() ===
+        "ouro"
+    );
 
-];
+  const perguntasNormais =
+    perguntasDisponiveis.filter(
+      (q: any) =>
+        q.nivel?.toLowerCase() !==
+        "ouro"
+    );
+
+  perguntasSelecionadas = [
+
+    ...shuffleArray(
+      perguntasOuro
+    ),
+
+    ...shuffleArray(
+      perguntasNormais
+    ),
+
+  ];
+
+} else {
+
+  perguntasSelecionadas =
+    shuffleArray(
+      perguntasDisponiveis
+    );
+
+}
 
 // =========================
 // ÚLTIMA ERRADA PRIMEIRO
@@ -860,25 +912,29 @@ if (ultimaErrada) {
   );
 }
 
-// PEGAR 16
-perguntasSelecionadas =
+const perguntasJogo =
   perguntasSelecionadas.slice(0, 16);
 
+const reservas =
+  perguntasSelecionadas.slice(16);
 
-  
+setPerguntasReserva(
+  reservas
+);
 
-        const perguntasComAlternativas =
-          perguntasSelecionadas.map(
-            (pergunta: any) =>
-              embaralharAlternativas(
-                pergunta
-              )
-          );
+const perguntasComAlternativas =
+  perguntasJogo.map(
+    (pergunta: any) =>
+      embaralharAlternativas(
+        pergunta
+      )
+  );
 
-        setPerguntasFiltradas(
-          perguntasComAlternativas
-        );
+setPerguntasFiltradas(
+  perguntasComAlternativas
+);
 
+          
         // =========================
 // ESTATÍSTICAS AUTOMÁTICAS
 // =========================
@@ -1504,6 +1560,41 @@ await new Promise(resolve =>
     );
   }
 
+
+// =========================
+// SALVAR HISTÓRICO DA QUESTÃO
+// =========================
+
+const historicoSalvo =
+  localStorage.getItem(chaveHistorico);
+
+const historicoAtual =
+  historicoSalvo
+    ? JSON.parse(historicoSalvo)
+    : {};
+
+if (!historicoAtual[questaoAtual.tema]) {
+
+  historicoAtual[questaoAtual.tema] = [];
+
+}
+
+if (
+  !historicoAtual[questaoAtual.tema]
+    .includes(questaoAtual.id)
+) {
+
+  historicoAtual[questaoAtual.tema]
+    .push(questaoAtual.id);
+
+}
+
+localStorage.setItem(
+  chaveHistorico,
+  JSON.stringify(historicoAtual)
+);
+
+
   // =========================
   // RESET FINAL
   // =========================
@@ -1541,11 +1632,15 @@ await new Promise(resolve =>
   setTimeout(async () => {
 
     // SALVAR RANKING
-    if (ultimaQuestao) {
+   if (ultimaQuestao) {
 
-      await salvarRanking();
+  setIndiceQuestao(
+    perguntasFiltradas.length
+  );
 
-    }
+  return;
+
+}
 
     setRespostaSelecionada("");
 
@@ -1985,37 +2080,40 @@ async function confirmarPuloQuestao() {
     1
   );
 
-  // NOVA QUESTÃO ALEATÓRIA
-  const restantes =
-    perguntasFiltradas.filter(
-      (q: any) =>
-        !novasPerguntas.includes(q)
-    );
+  if (perguntasReserva.length > 0) {
 
-  if (restantes.length > 0) {
+  const novaQuestao =
+    perguntasReserva[0];
 
-    novasPerguntas.splice(
+  novasPerguntas.splice(
 
-      indiceQuestao,
+    indiceQuestao,
 
-      0,
+    0,
 
-      embaralharAlternativas(
-        restantes[
-          Math.floor(
-            Math.random() *
-            restantes.length
-          )
-        ]
-      )
+    embaralharAlternativas(
+      novaQuestao
+    )
 
-    );
-
-  }
-
-  setPerguntasFiltradas(
-    novasPerguntas
   );
+
+  setPerguntasReserva(
+    prev => prev.slice(1)
+  );
+
+} else {
+
+  novasPerguntas.splice(
+    indiceQuestao,
+    0,
+    questaoAtual
+  );
+
+}
+
+setPerguntasFiltradas(
+  novasPerguntas
+);
 
   // RESET
   setRespostaSelecionada("");
