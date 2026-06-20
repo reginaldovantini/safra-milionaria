@@ -241,11 +241,9 @@ useEffect(() => {
 // STREAK AAA
 // =========================
 
-const [streak, setStreak] =
-  useState(0);
 
-const [tituloStreak, setTituloStreak] =
-  useState("");
+
+
 
   // =========================
 // PLATEIA AAA
@@ -1609,40 +1607,7 @@ await new Promise(resolve =>
       prev => prev + 1
     );
 
-    // STREAK
-
-    setStreak(prev => {
-
-      const novo = prev + 1;
-
-      if (novo >= 12) {
-
-        setTituloStreak(
-          "👑 LENDA DO AGRO"
-        );
-
-      } else if (novo >= 8) {
-
-        setTituloStreak(
-          "🔥 MESTRE RURAL"
-        );
-
-      } else if (novo >= 5) {
-
-        setTituloStreak(
-          "⚡ ESPECIALISTA"
-        );
-
-      } else if (novo >= 3) {
-
-        setTituloStreak(
-          "🌾 EMBALADO"
-        );
-
-      }
-
-      return novo;
-    });
+    
 
   }
 
@@ -1654,10 +1619,7 @@ await new Promise(resolve =>
 
     setAcertou(false);
 
-    setStreak(0);
-
-    setTituloStreak("");
-
+        
     tocarSom(wrongSound);
 
     setHumorPlateia("tensa");
@@ -2265,19 +2227,7 @@ if (
 }
 
 
-  // STREAK
-  if (streak >= 8) {
-
-    setHumorPlateia(
-      "empolgada"
-    );
-
-    setMensagemPlateia(
-      "🔥 A PLATEIA ESTÁ EM ÊXTASE"
-    );
-
-    return;
-  }
+  
 
   // TEMPO CRÍTICO
   if (
@@ -2308,8 +2258,6 @@ if (
 }, [
 
   indiceQuestao,
-
-  streak,
 
   tempoRestante,
 
@@ -2348,17 +2296,7 @@ useEffect(() => {
     return;
   }
 
-  // STREAK ABSURDO
-  if (
-    streak >= 8
-  ) {
-
-    setCameraModo(
-      "dramatico"
-    );
-
-    return;
-  }
+  
 
   // NORMAL
   setCameraModo(
@@ -2373,8 +2311,7 @@ useEffect(() => {
 
   respostaConfirmada,
 
-  streak,
-
+  
 ]);
 
 // =========================
@@ -2464,15 +2401,7 @@ useEffect(() => {
   if (tempoRestante <= 10)
     tensao += 3;
 
-  // =========================
-  // STREAK
-  // =========================
-
-  if (streak >= 5)
-    tensao += 1;
-
-  if (streak >= 8)
-    tensao += 2;
+  
 
   // =========================
   // FINAL DO MILHÃO
@@ -2576,8 +2505,7 @@ if (
 
   tempoRestante,
 
-  streak,
-
+  
   indiceQuestao,
 
 ]);
@@ -4270,190 +4198,7 @@ MODO CRÍTICO
 )}
 
 {
-  !modoMilhaoAtivo && (
-
-    <div className="mb-2">
-
-
-{/* =========================================
-PLATEIA AAA
-========================================= */}
-
-<div className="mb-2">
-
-  <div
-    className={`
-      relative
-
-      overflow-hidden
-
-      rounded-[18px]
-
-      border
-
-      px-4
-      py-3
-
-      transition-all
-      duration-500
-
-      ${
-        humorPlateia === "explosao"
-
-          ? `
-            border-yellow-400/35
-
-            bg-gradient-to-r
-            from-[#3a2605]
-            to-[#120902]
-
-            shadow-[0_0_35px_rgba(255,215,0,0.18)]
-
-            animate-pulse
-          `
-
-          : humorPlateia === "empolgada"
-
-          ? `
-            border-green-400/25
-
-            bg-gradient-to-r
-            from-[#0d2e21]
-            to-[#07140f]
-
-            shadow-[0_0_25px_rgba(0,255,140,0.12)]
-          `
-
-          : humorPlateia === "tensa"
-
-          ? `
-            border-red-500/25
-
-            bg-gradient-to-r
-            from-[#2a0808]
-            to-[#120303]
-
-            shadow-[0_0_25px_rgba(255,0,0,0.12)]
-
-            animate-pulse
-          `
-
-          : `
-            border-green-900/30
-
-            bg-black/20
-          `
-      }
-    `}
-  >
-
-    {/* GLOW */}
-    <div
-      className={`
-        absolute
-        inset-0
-
-        ${
-          humorPlateia === "explosao"
-
-            ? "bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.15),transparent_70%)]"
-
-            : humorPlateia === "empolgada"
-
-            ? "bg-[radial-gradient(circle_at_center,rgba(0,255,140,0.10),transparent_70%)]"
-
-            : humorPlateia === "tensa"
-
-            ? "bg-[radial-gradient(circle_at_center,rgba(255,0,0,0.12),transparent_70%)]"
-
-            : ""
-        }
-      `}
-    />
-
-    <div
-      className="
-        relative
-        z-10
-
-        flex
-        items-center
-        justify-between
-      "
-    >
-
-      {/* TEXTO */}
-      <div>
-
-        <p
-          className="
-            text-[9px]
-
-            uppercase
-
-            tracking-[0.22em]
-
-            text-white/45
-
-            font-black
-
-            mb-1
-          "
-        >
-
-          ESTÚDIO SAFRA MILIONÁRIA
-        </p>
-
-        <h2
-          className="
-            text-[16px]
-
-            font-black
-
-            text-white
-          "
-        >
-
-          {mensagemPlateia}
-
-        </h2>
-
-      </div>
-
-      {/* EMOJI */}
-      <div
-        className="
-          text-[34px]
-        "
-      >
-
-        {
-          humorPlateia === "explosao"
-
-            ? "👑"
-
-            : humorPlateia === "empolgada"
-
-            ? "🔥"
-
-            : humorPlateia === "tensa"
-
-            ? "😰"
-
-            : "🌾"
-        }
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
- </div>
-
-  )
+  !modoMilhaoAtivo && null
 }
 
 {/* =========================
@@ -5143,116 +4888,7 @@ items-center
 </div>
 
 
-{/* =========================================
-STREAK AAA
-========================================= */}
 
-{streak >= 3 && (
-
-  <div className="mb-2">
-
-    <div
-      className="
-        relative
-
-        overflow-hidden
-
-        rounded-[20px]
-
-        border
-        border-yellow-400/20
-
-        bg-gradient-to-r
-        from-[#2a1d05]
-        to-[#120b02]
-
-        px-4
-        py-3
-
-        shadow-[0_0_25px_rgba(255,200,0,0.10)]
-
-        animate-pulse
-      "
-    >
-
-      <div
-        className="
-          absolute
-          inset-0
-
-          bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.10),transparent_70%)]
-        "
-      />
-
-      <div
-        className="
-          relative
-          z-10
-
-          flex
-          items-center
-          justify-between
-        "
-      >
-
-        <div>
-
-          <p
-            className="
-              text-[9px]
-
-              uppercase
-
-              tracking-[0.18em]
-
-              text-yellow-300/60
-
-              font-black
-
-              mb-1
-            "
-          >
-
-            COMBO ATIVO
-          </p>
-
-          <h2
-            className="
-              text-[18px]
-
-              font-black
-
-              text-yellow-300
-            "
-          >
-
-            {tituloStreak}
-
-          </h2>
-
-        </div>
-
-        <div
-          className="
-            text-[38px]
-
-            font-black
-
-            text-white
-          "
-        >
-
-          x{streak}
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-)}
 
 {
   !modoMilhaoAtivo && (
