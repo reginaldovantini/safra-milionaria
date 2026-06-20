@@ -194,21 +194,24 @@ const [temasSelecionados, setTemasSelecionados] =
   });
 
 const [temasAtivos, setTemasAtivos] =
-  useState<string[]>(() => {
+  useState<string[]>([]);
 
-    if (typeof window === "undefined") {
-      return ["Tema 1"];
-    }
+  useEffect(() => {
 
-    const temasSalvos =
-      localStorage.getItem("temasAtivos");
+  if (typeof window === "undefined") return;
 
-    if (!temasSalvos) {
-      return ["Tema 1"];
-    }
+  const temasSalvos =
+    localStorage.getItem("temasAtivos");
 
-    return JSON.parse(temasSalvos);
-  });
+  setTemasAtivos(
+
+    temasSalvos
+      ? JSON.parse(temasSalvos)
+      : ["Tema 1"]
+
+  );
+
+}, []);
 
 useEffect(() => {
 
@@ -220,6 +223,8 @@ useEffect(() => {
 }, [temasSelecionados]);
 
 useEffect(() => {
+
+  if (temasAtivos.length === 0) return;
 
   localStorage.setItem(
     "temasAtivos",
@@ -1089,23 +1094,13 @@ setEstatisticasTemas(estatisticas);
 
    useEffect(() => {
 
-  const temasSalvos =
-
-    typeof window !== "undefined"
-
-      ? JSON.parse(
-          localStorage.getItem(
-            "temasAtivos"
-          ) || '["Tema 1"]'
-        )
-
-      : ["Tema 1"];
+  if (temasAtivos.length === 0) return;
 
   iniciarNovaPartida(
-    temasSalvos
+    temasAtivos
   );
 
-}, []);
+}, [temasAtivos]);
 
   // =========================
   // TIMER
