@@ -2322,12 +2322,10 @@ useEffect(() => {
   setNivelTensao(tensao);
 
   // =========================
-  // SHAKE
+  // SHAKE (DESATIVADO)
   // =========================
 
-  setShakeTela(
-    tensao >= 7
-  );
+  setShakeTela(false);
 
   // =========================
   // VINHETA
@@ -3403,9 +3401,7 @@ setTemasSelecionados(
         : cameraModo === "tensao"
 
         ? `
-          animate-[cameraShake_.35s_infinite]
-
-          brightness-[0.92]
+          brightness-[0.96]
         `
 
         : ""
@@ -3999,117 +3995,6 @@ setTemasSelecionados(
 
 )}
 
-
-{/* =========================================
-MODO CRÍTICO
-========================================= */}
-
-{tempoRestante <= 10 && !respostaConfirmada && (
-
-  <div
-    className="
-      mb-2
-
-      relative
-
-      overflow-hidden
-
-      rounded-[18px]
-
-      border
-      border-red-500/30
-
-      bg-gradient-to-r
-      from-[#2a0808]
-      to-[#120303]
-
-      px-4
-      py-3
-
-      animate-pulse
-
-      shadow-[0_0_25px_rgba(255,0,0,0.18)]
-    "
-  >
-
-    <div
-      className="
-        absolute
-        inset-0
-
-        bg-[radial-gradient(circle_at_center,rgba(255,0,0,0.15),transparent_70%)]
-      "
-    />
-
-    <div
-      className="
-        relative
-        z-10
-
-        flex
-        items-center
-        justify-between
-      "
-    >
-
-      <div>
-
-        <p
-          className="
-            text-[9px]
-
-            uppercase
-
-            tracking-[0.22em]
-
-            text-red-300/70
-
-            font-black
-
-            mb-1
-          "
-        >
-
-          ALERTA MÁXIMO
-        </p>
-
-        <h2
-          className="
-            text-[18px]
-
-            font-black
-
-            text-red-300
-          "
-        >
-
-          TEMPO CRÍTICO
-
-        </h2>
-
-      </div>
-
-      <div
-        className="
-          text-[34px]
-
-          animate-bounce
-        "
-      >
-
-        🚨
-
-      </div>
-
-    </div>
-
-  </div>
-
-)}
-
-{
-  !modoMilhaoAtivo && null
-}
 
 {/* =========================
 SPOTLIGHT MILHÃO
