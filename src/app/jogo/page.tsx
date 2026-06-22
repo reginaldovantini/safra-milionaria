@@ -4359,38 +4359,111 @@ BLACKOUT CINEMATOGRÁFICO AAA
 
     
     {/* ENUNCIADO */}
-    <h1
-      className="
-  question-clamp
+    <div className="relative">
 
-  text-[clamp(1rem,2.1vw,1.4rem)]
-  md:text-[clamp(1rem,1.6vw,1.6rem)]
+      <div
+        className="
+          max-h-[120px]
+          md:max-h-[170px]
 
-  font-semibold
+          overflow-y-auto
 
-  leading-[1.18]
+          pr-1
 
-  tracking-[0em]
+          custom-scroll
+        "
+      >
 
-  text-white
+        <h1
+          className={`
+        text-[clamp(1rem,2.1vw,1.4rem)]
+        md:text-[clamp(1rem,1.6vw,1.6rem)]
 
-  text-left
+        font-semibold
 
-  antialiased
+        leading-[1.18]
 
-  drop-shadow-[0_0_4px_rgba(255,255,255,0.03)]
-"
-    >
+        tracking-[0em]
 
-      {questaoAtual?.pergunta}
-{
-  modoMilhaoAtivo
-    ? "animate-pulse"
-    : ""
-}
-      
+        text-white
 
-    </h1>
+        text-left
+
+        antialiased
+
+        drop-shadow-[0_0_4px_rgba(255,255,255,0.03)]
+
+        ${modoMilhaoAtivo ? "animate-pulse" : ""}
+      `}
+        >
+
+          {questaoAtual?.pergunta}
+
+        </h1>
+
+      </div>
+
+      {/* FADE SUAVE */}
+      {(questaoAtual?.pergunta?.length || 0) > 140 && (
+
+        <div
+          className="
+            pointer-events-none
+
+            absolute
+            bottom-0
+            left-0
+            right-0
+
+            h-6
+
+            bg-gradient-to-t
+            from-[#0d2e21]/90
+            to-transparent
+          "
+        />
+
+      )}
+
+    </div>
+
+    {/* HINT FORA DA CAIXA */}
+    {(questaoAtual?.pergunta?.length || 0) > 140 && (
+
+      <div
+        className="
+          flex
+          justify-end
+
+          mt-1
+        "
+      >
+
+        <span
+          className="
+            text-[8px]
+
+            uppercase
+
+            tracking-[0.14em]
+
+            text-green-300/55
+
+            font-bold
+
+            animate-pulse
+
+            whitespace-nowrap
+          "
+        >
+
+          Arraste ↑
+
+        </span>
+
+      </div>
+
+    )}
 
   </div>
 
@@ -5109,12 +5182,14 @@ POPUP CARTAS DA FAZENDA
       items-start
       justify-center
 
-      pt-[95px]
+      pt-[40px]
       md:pt-[110px]
 
-      pb-[95px]
+      pb-[40px]
+      md:pb-[95px]
 
-      px-4
+      px-3
+      md:px-4
     "
   >
 
@@ -5140,7 +5215,14 @@ POPUP CARTAS DA FAZENDA
         w-full
         max-w-[760px]
 
-        rounded-[30px]
+        max-h-full
+
+        overflow-y-auto
+
+        custom-scroll
+
+        rounded-[22px]
+        md:rounded-[30px]
 
         border
         border-green-400/20
@@ -5150,8 +5232,6 @@ POPUP CARTAS DA FAZENDA
         to-[#05150f]
 
         shadow-[0_0_45px_rgba(0,255,140,0.15)]
-
-        overflow-hidden
 
         animate-[popup_.35s_ease]
       "
@@ -5205,7 +5285,7 @@ POPUP CARTAS DA FAZENDA
 
           <h2
             className="
-              text-2xl
+              text-base
               md:text-3xl
 
               font-black
@@ -5237,8 +5317,12 @@ POPUP CARTAS DA FAZENDA
           }}
 
           className="
-            w-10
-            h-10
+            w-7
+            h-7
+            md:w-10
+            md:h-10
+
+            shrink-0
 
             rounded-full
 
@@ -5247,7 +5331,8 @@ POPUP CARTAS DA FAZENDA
 
             bg-white/5
 
-            text-xl
+            text-sm
+            md:text-xl
             text-white
 
             transition-all
@@ -5358,7 +5443,7 @@ POPUP CARTAS DA FAZENDA
                 className="
                   group
 
-                  h-[150px]
+                  h-[100px]
                   md:h-[170px]
                 "
               >
@@ -5440,8 +5525,10 @@ POPUP CARTAS DA FAZENDA
 
                       <div
                         className="
-                          text-4xl
-                          mb-2
+                          text-xl
+                          md:text-4xl
+                          mb-1
+                          md:mb-2
                         "
                       >
 
@@ -5451,7 +5538,7 @@ POPUP CARTAS DA FAZENDA
 
                       <h2
                         className="
-                          text-lg
+                          text-[11px]
                           md:text-xl
 
                           font-black
@@ -5468,7 +5555,7 @@ POPUP CARTAS DA FAZENDA
 
                       <h3
                         className="
-                          text-sm
+                          text-[9px]
                           md:text-base
 
                           font-black
@@ -5543,8 +5630,10 @@ POPUP CARTAS DA FAZENDA
 
                       <div
                         className="
-                          text-4xl
-                          mb-2
+                          text-xl
+                          md:text-4xl
+                          mb-1
+                          md:mb-2
                         "
                       >
 
@@ -5554,14 +5643,15 @@ POPUP CARTAS DA FAZENDA
 
                       <h2
                         className="
-                          text-lg
+                          text-[11px]
                           md:text-xl
 
                           font-black
 
                           text-white
 
-                          mb-1
+                          mb-0.5
+                          md:mb-1
                         "
                       >
 
@@ -5571,7 +5661,7 @@ POPUP CARTAS DA FAZENDA
 
                       <p
                         className="
-                          text-[11px]
+                          text-[8px]
                           md:text-xs
 
                           font-bold
@@ -5625,7 +5715,8 @@ POPUP CARTAS DA FAZENDA
             className="
               w-full
 
-              py-3
+              py-2.5
+              md:py-3
 
               rounded-2xl
 
@@ -5635,7 +5726,8 @@ POPUP CARTAS DA FAZENDA
 
               text-black
               font-black
-              text-base
+              text-sm
+              md:text-base
 
               transition-all
               duration-300
@@ -5677,12 +5769,14 @@ POPUP CONSULTORIA TÉCNICA
       items-start
       justify-center
 
-      pt-[95px]
+      pt-[40px]
       md:pt-[110px]
 
-      pb-[95px]
+      pb-[40px]
+      md:pb-[95px]
 
-      px-4
+      px-3
+      md:px-4
     "
   >
 
@@ -5708,7 +5802,14 @@ POPUP CONSULTORIA TÉCNICA
         w-full
         max-w-[760px]
 
-        rounded-[30px]
+        max-h-full
+
+        overflow-y-auto
+
+        custom-scroll
+
+        rounded-[22px]
+        md:rounded-[30px]
 
         border
         border-green-400/20
@@ -5718,8 +5819,6 @@ POPUP CONSULTORIA TÉCNICA
         to-[#05150f]
 
         shadow-[0_0_45px_rgba(0,255,140,0.15)]
-
-        overflow-hidden
 
         animate-[popup_.35s_ease]
       "
@@ -5773,7 +5872,7 @@ POPUP CONSULTORIA TÉCNICA
 
           <h2
             className="
-              text-2xl
+              text-base
               md:text-3xl
 
               font-black
@@ -5806,8 +5905,12 @@ POPUP CONSULTORIA TÉCNICA
           }}
 
           className="
-            w-10
-            h-10
+            w-7
+            h-7
+            md:w-10
+            md:h-10
+
+            shrink-0
 
             rounded-full
 
@@ -5816,7 +5919,8 @@ POPUP CONSULTORIA TÉCNICA
 
             bg-white/5
 
-            text-xl
+            text-sm
+            md:text-xl
             text-white
 
             transition-all
@@ -5939,10 +6043,13 @@ POPUP CONSULTORIA TÉCNICA
             grid
             md:grid-cols-3
 
-            gap-4
+            gap-2
+            md:gap-4
 
-            px-5
-            py-5
+            px-3
+            py-3
+            md:px-5
+            md:py-5
           "
         >
 
@@ -5969,7 +6076,8 @@ POPUP CONSULTORIA TÉCNICA
 
                   overflow-hidden
 
-                  p-5
+                  p-3
+                  md:p-5
 
                   animate-[popup_.35s_ease]
                 `}
@@ -5999,8 +6107,10 @@ POPUP CONSULTORIA TÉCNICA
 
                   <div
                     className="
-                      text-5xl
-                      mb-3
+                      text-2xl
+                      md:text-5xl
+                      mb-1.5
+                      md:mb-3
                     "
                   >
 
@@ -6010,13 +6120,15 @@ POPUP CONSULTORIA TÉCNICA
 
                   <h2
                     className="
-                      text-xl
+                      text-[12px]
+                      md:text-xl
 
                       font-black
 
                       text-white
 
-                      mb-4
+                      mb-2
+                      md:mb-4
                     "
                   >
 
@@ -6033,16 +6145,20 @@ POPUP CONSULTORIA TÉCNICA
                       border
                       border-white/10
 
-                      px-4
-                      py-3
+                      px-3
+                      py-2
+                      md:px-4
+                      md:py-3
                     "
                   >
 
                     <p
                       className="
-                        text-sm
+                        text-[10px]
+                        md:text-sm
                         text-white/70
-                        mb-2
+                        mb-1
+                        md:mb-2
                       "
                     >
 
@@ -6052,7 +6168,8 @@ POPUP CONSULTORIA TÉCNICA
 
                     <h3
                       className="
-                        text-3xl
+                        text-lg
+                        md:text-3xl
 
                         font-black
 
@@ -6112,7 +6229,8 @@ POPUP CONSULTORIA TÉCNICA
               className="
                 w-full
 
-                py-3
+                py-2.5
+                md:py-3
 
                 rounded-2xl
 
@@ -6122,7 +6240,8 @@ POPUP CONSULTORIA TÉCNICA
 
                 text-black
                 font-black
-                text-base
+                text-sm
+                md:text-base
 
                 transition-all
                 duration-300
@@ -6164,12 +6283,14 @@ POPUP IA AGRO
       items-start
       justify-center
 
-      pt-[95px]
+      pt-[40px]
       md:pt-[110px]
 
-      pb-[95px]
+      pb-[40px]
+      md:pb-[95px]
 
-      px-4
+      px-3
+      md:px-4
     "
   >
 
@@ -6195,7 +6316,14 @@ POPUP IA AGRO
         w-full
         max-w-[760px]
 
-        rounded-[30px]
+        max-h-full
+
+        overflow-y-auto
+
+        custom-scroll
+
+        rounded-[22px]
+        md:rounded-[30px]
 
         border
         border-cyan-400/20
@@ -6205,8 +6333,6 @@ POPUP IA AGRO
         to-[#040b11]
 
         shadow-[0_0_45px_rgba(0,180,255,0.15)]
-
-        overflow-hidden
 
         animate-[popup_.35s_ease]
       "
@@ -6260,7 +6386,7 @@ POPUP IA AGRO
 
           <h2
             className="
-              text-2xl
+              text-base
               md:text-3xl
 
               font-black
@@ -6293,8 +6419,12 @@ POPUP IA AGRO
           }}
 
           className="
-            w-10
-            h-10
+            w-7
+            h-7
+            md:w-10
+            md:h-10
+
+            shrink-0
 
             rounded-full
 
@@ -6303,7 +6433,8 @@ POPUP IA AGRO
 
             bg-white/5
 
-            text-xl
+            text-sm
+            md:text-xl
             text-white
 
             transition-all
@@ -6375,8 +6506,10 @@ POPUP IA AGRO
             relative
             z-10
 
-            px-5
-            py-5
+            px-3
+            py-3
+            md:px-5
+            md:py-5
           "
         >
 
@@ -6384,9 +6517,11 @@ POPUP IA AGRO
             className="
               relative
 
-              h-[180px]
+              h-[120px]
+              md:h-[180px]
 
-              rounded-[24px]
+              rounded-[18px]
+              md:rounded-[24px]
 
               border
               border-cyan-400/20
@@ -6395,7 +6530,8 @@ POPUP IA AGRO
 
               overflow-hidden
 
-              mb-5
+              mb-3
+              md:mb-5
             "
           >
 
@@ -6451,8 +6587,10 @@ POPUP IA AGRO
 
               <div
                 className="
-                  text-5xl
-                  mb-4
+                  text-2xl
+                  md:text-5xl
+                  mb-2
+                  md:mb-4
 
                   animate-pulse
                 "
@@ -6466,8 +6604,10 @@ POPUP IA AGRO
                 className="
                   text-cyan-300
                   font-black
-                  text-lg
-                  mb-4
+                  text-[12px]
+                  md:text-lg
+                  mb-2
+                  md:mb-4
                 "
               >
 
@@ -6482,7 +6622,8 @@ POPUP IA AGRO
                   w-full
                   max-w-[320px]
 
-                  h-3
+                  h-2
+                  md:h-3
 
                   rounded-full
 
@@ -6527,14 +6668,17 @@ POPUP IA AGRO
               relative
               z-10
 
-              px-5
-              py-5
+              px-3
+              py-3
+              md:px-5
+              md:py-5
             "
           >
 
             <div
               className="
-                rounded-[26px]
+                rounded-[20px]
+                md:rounded-[26px]
 
                 border
                 border-cyan-400/20
@@ -6543,7 +6687,8 @@ POPUP IA AGRO
                 from-[#0a2030]
                 to-[#07131d]
 
-                p-5
+                p-3
+                md:p-5
 
                 text-center
 
@@ -6553,8 +6698,10 @@ POPUP IA AGRO
 
               <div
                 className="
-                  text-5xl
-                  mb-4
+                  text-2xl
+                  md:text-5xl
+                  mb-2
+                  md:mb-4
                 "
               >
 
@@ -6565,11 +6712,14 @@ POPUP IA AGRO
               <p
                 className="
                   text-cyan-300/70
-                  text-sm
+                  text-[10px]
+                  md:text-sm
                   uppercase
-                  tracking-[0.25em]
+                  tracking-[0.2em]
+                  md:tracking-[0.25em]
                   font-bold
-                  mb-3
+                  mb-1.5
+                  md:mb-3
                 "
               >
 
@@ -6579,13 +6729,15 @@ POPUP IA AGRO
 
               <h2
                 className="
-                  text-6xl
+                  text-3xl
+                  md:text-6xl
 
                   font-black
 
                   text-white
 
-                  mb-4
+                  mb-2
+                  md:mb-4
 
                   drop-shadow-[0_0_15px_rgba(0,255,255,0.5)]
                 "
@@ -6662,7 +6814,8 @@ POPUP IA AGRO
               className="
                 w-full
 
-                py-3
+                py-2.5
+                md:py-3
 
                 rounded-2xl
 
@@ -6672,7 +6825,8 @@ POPUP IA AGRO
 
                 text-black
                 font-black
-                text-base
+                text-sm
+                md:text-base
 
                 transition-all
                 duration-300
@@ -6714,12 +6868,14 @@ POPUP PULAR QUESTÃO
       items-start
       justify-center
 
-      pt-[95px]
+      pt-[40px]
       md:pt-[110px]
 
-      pb-[95px]
+      pb-[40px]
+      md:pb-[95px]
 
-      px-4
+      px-3
+      md:px-4
     "
   >
 
@@ -6745,7 +6901,14 @@ POPUP PULAR QUESTÃO
         w-full
         max-w-[760px]
 
-        rounded-[30px]
+        max-h-full
+
+        overflow-y-auto
+
+        custom-scroll
+
+        rounded-[22px]
+        md:rounded-[30px]
 
         border
         border-green-400/20
@@ -6755,8 +6918,6 @@ POPUP PULAR QUESTÃO
         to-[#05150f]
 
         shadow-[0_0_45px_rgba(0,255,140,0.15)]
-
-        overflow-hidden
 
         animate-[popup_.35s_ease]
       "
@@ -6810,7 +6971,7 @@ POPUP PULAR QUESTÃO
 
           <h2
             className="
-              text-2xl
+              text-base
               md:text-3xl
 
               font-black
@@ -6843,8 +7004,12 @@ POPUP PULAR QUESTÃO
           }}
 
           className="
-            w-10
-            h-10
+            w-7
+            h-7
+            md:w-10
+            md:h-10
+
+            shrink-0
 
             rounded-full
 
@@ -6853,7 +7018,8 @@ POPUP PULAR QUESTÃO
 
             bg-white/5
 
-            text-xl
+            text-sm
+            md:text-xl
             text-white
 
             transition-all
@@ -6876,21 +7042,25 @@ POPUP PULAR QUESTÃO
           relative
           z-10
 
-          px-5
-          py-5
+          px-3
+          py-3
+          md:px-5
+          md:py-5
         "
       >
 
         <div
           className="
-            rounded-[28px]
+            rounded-[22px]
+            md:rounded-[28px]
 
             border
             border-green-400/10
 
             bg-black/20
 
-            p-6
+            p-3
+            md:p-6
 
             text-center
           "
@@ -6900,8 +7070,11 @@ POPUP PULAR QUESTÃO
 
           <div
             className="
-              text-6xl
-              mb-5
+              text-3xl
+              md:text-6xl
+
+              mb-2
+              md:mb-5
 
               animate-pulse
             "
@@ -6915,14 +7088,15 @@ POPUP PULAR QUESTÃO
 
           <h2
             className="
-              text-2xl
+              text-base
               md:text-3xl
 
               font-black
 
               text-yellow-300
 
-              mb-4
+              mb-2
+              md:mb-4
             "
           >
 
@@ -6934,10 +7108,11 @@ POPUP PULAR QUESTÃO
             className="
               text-white/75
 
-              text-base
+              text-[12px]
               md:text-lg
 
-              leading-relaxed
+              leading-snug
+              md:leading-relaxed
 
               max-w-[520px]
 
@@ -6953,7 +7128,8 @@ POPUP PULAR QUESTÃO
 
           <div
             className="
-              mt-5
+              mt-3
+              md:mt-5
 
               rounded-2xl
 
@@ -6962,15 +7138,18 @@ POPUP PULAR QUESTÃO
 
               bg-yellow-400/10
 
-              px-4
-              py-3
+              px-3
+              py-2
+              md:px-4
+              md:py-3
             "
           >
 
             <p
               className="
                 text-yellow-200
-                text-sm
+                text-[11px]
+                md:text-sm
                 font-bold
               "
             >
@@ -6995,10 +7174,13 @@ POPUP PULAR QUESTÃO
           grid
           grid-cols-2
 
-          gap-4
+          gap-2
+          md:gap-4
 
-          px-5
-          pb-5
+          px-3
+          pb-3
+          md:px-5
+          md:pb-5
         "
       >
 
@@ -7021,7 +7203,8 @@ POPUP PULAR QUESTÃO
           }}
 
           className="
-            py-4
+            py-2.5
+            md:py-4
 
             rounded-2xl
 
@@ -7031,6 +7214,8 @@ POPUP PULAR QUESTÃO
             bg-white/5
 
             text-white
+            text-[13px]
+            md:text-base
             font-bold
 
             transition-all
@@ -7055,7 +7240,8 @@ POPUP PULAR QUESTÃO
           }
 
           className="
-            py-4
+            py-2.5
+            md:py-4
 
             rounded-2xl
 
@@ -7064,6 +7250,8 @@ POPUP PULAR QUESTÃO
             to-yellow-300
 
             text-black
+            text-[13px]
+            md:text-base
             font-black
 
             transition-all
@@ -7109,12 +7297,14 @@ POPUP PARAR JOGO
       items-start
       justify-center
 
-      pt-[95px]
+      pt-[40px]
       md:pt-[110px]
 
-      pb-[95px]
+      pb-[40px]
+      md:pb-[95px]
 
-      px-4
+      px-3
+      md:px-4
     "
   >
 
@@ -7140,7 +7330,14 @@ POPUP PARAR JOGO
         w-full
         max-w-[760px]
 
-        rounded-[30px]
+        max-h-full
+
+        overflow-y-auto
+
+        custom-scroll
+
+        rounded-[22px]
+        md:rounded-[30px]
 
         border
         border-yellow-400/20
@@ -7150,8 +7347,6 @@ POPUP PARAR JOGO
         to-[#120b02]
 
         shadow-[0_0_45px_rgba(255,200,0,0.15)]
-
-        overflow-hidden
 
         animate-[popup_.35s_ease]
       "
@@ -7205,7 +7400,7 @@ POPUP PARAR JOGO
 
           <h2
             className="
-              text-2xl
+              text-base
               md:text-3xl
 
               font-black
@@ -7238,8 +7433,12 @@ POPUP PARAR JOGO
           }}
 
           className="
-            w-10
-            h-10
+            w-7
+            h-7
+            md:w-10
+            md:h-10
+
+            shrink-0
 
             rounded-full
 
@@ -7248,7 +7447,8 @@ POPUP PARAR JOGO
 
             bg-white/5
 
-            text-xl
+            text-sm
+            md:text-xl
             text-white
 
             transition-all
@@ -7271,8 +7471,10 @@ POPUP PARAR JOGO
           relative
           z-10
 
-          px-5
-          py-5
+          px-3
+          py-3
+          md:px-5
+          md:py-5
         "
       >
 
@@ -7280,25 +7482,31 @@ POPUP PARAR JOGO
 
         <div
           className="
-            rounded-[28px]
+            rounded-[22px]
+            md:rounded-[28px]
 
             border
             border-yellow-400/15
 
             bg-black/20
 
-            p-5
+            p-3
+            md:p-5
 
             text-center
 
-            mb-5
+            mb-3
+            md:mb-5
           "
         >
 
           <div
             className="
-              text-5xl
-              mb-4
+              text-3xl
+              md:text-5xl
+
+              mb-2
+              md:mb-4
             "
           >
 
@@ -7310,14 +7518,17 @@ POPUP PARAR JOGO
             className="
               text-yellow-300/70
 
-              text-sm
+              text-[10px]
+              md:text-sm
               uppercase
 
-              tracking-[0.25em]
+              tracking-[0.2em]
+              md:tracking-[0.25em]
 
               font-bold
 
-              mb-2
+              mb-1
+              md:mb-2
             "
           >
 
@@ -7327,14 +7538,15 @@ POPUP PARAR JOGO
 
           <h2
             className="
-              text-4xl
+              text-2xl
               md:text-5xl
 
               font-black
 
               text-white
 
-              mb-3
+              mb-1
+              md:mb-3
             "
           >
 
@@ -7345,7 +7557,8 @@ POPUP PARAR JOGO
           <p
             className="
               text-white/70
-              text-sm
+              text-[11px]
+              md:text-sm
             "
           >
 
@@ -7359,14 +7572,16 @@ POPUP PARAR JOGO
 
         <div
           className="
-            rounded-[24px]
+            rounded-[18px]
+            md:rounded-[24px]
 
             border
             border-green-400/10
 
             bg-green-400/5
 
-            p-5
+            p-3
+            md:p-5
           "
         >
 
@@ -7384,9 +7599,11 @@ POPUP PARAR JOGO
 
                       font-black
 
-                      text-lg
+                      text-[12px]
+                      md:text-lg
 
-                      mb-3
+                      mb-1.5
+                      md:mb-3
                     "
                   >
 
@@ -7398,11 +7615,14 @@ POPUP PARAR JOGO
                     className="
                       text-white/75
 
-                      text-sm
+                      text-[11px]
+                      md:text-sm
 
-                      leading-relaxed
+                      leading-snug
+                      md:leading-relaxed
 
-                      mb-4
+                      mb-2
+                      md:mb-4
                     "
                   >
 
@@ -7415,7 +7635,8 @@ POPUP PARAR JOGO
                       flex
                       flex-wrap
 
-                      gap-2
+                      gap-1.5
+                      md:gap-2
                     "
                   >
 
@@ -7430,8 +7651,10 @@ POPUP PARAR JOGO
                             key={index}
 
                             className="
-                              px-3
-                              py-2
+                              px-2
+                              py-1
+                              md:px-3
+                              md:py-2
 
                               rounded-xl
 
@@ -7440,7 +7663,8 @@ POPUP PARAR JOGO
                               border
                               border-white/10
 
-                              text-sm
+                              text-[10px]
+                              md:text-sm
                               font-bold
 
                               text-green-200
@@ -7516,10 +7740,13 @@ POPUP PARAR JOGO
           grid
           grid-cols-2
 
-          gap-4
+          gap-2
+          md:gap-4
 
-          px-5
-          pb-5
+          px-3
+          pb-3
+          md:px-5
+          md:pb-5
         "
       >
 
@@ -7542,7 +7769,8 @@ POPUP PARAR JOGO
           }}
 
           className="
-            py-4
+            py-2.5
+            md:py-4
 
             rounded-2xl
 
@@ -7552,6 +7780,8 @@ POPUP PARAR JOGO
             bg-white/5
 
             text-white
+            text-[12px]
+            md:text-base
             font-bold
 
             transition-all
@@ -7574,7 +7804,8 @@ POPUP PARAR JOGO
           onClick={confirmarParada}
 
           className="
-            py-4
+            py-2.5
+            md:py-4
 
             rounded-2xl
 
@@ -7583,6 +7814,8 @@ POPUP PARAR JOGO
             to-yellow-300
 
             text-black
+            text-[12px]
+            md:text-base
             font-black
 
             transition-all
