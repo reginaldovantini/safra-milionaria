@@ -53,6 +53,188 @@ function embaralharAlternativas(pergunta: any) {
   };
 }
 
+// SELECIONA "quota" QUESTÕES DE UM TEMA,
+// PRIORIZANDO AS AINDA NÃO DOMINADAS E
+// REPONDO COM DOMINADAS QUANDO FALTAREM
+function selecionarComReposicao(
+  poolTema: any[],
+  dominadasIds: any[],
+  quota: number
+) {
+  const naoDominadas = shuffleArray(
+    poolTema.filter(
+      (q: any) => !dominadasIds.includes(q.id)
+    )
+  );
+
+  if (naoDominadas.length >= quota) {
+    return naoDominadas.slice(0, quota);
+  }
+
+  const dominadas = shuffleArray(
+    poolTema.filter(
+      (q: any) => dominadasIds.includes(q.id)
+    )
+  );
+
+  const faltam = quota - naoDominadas.length;
+
+  return [
+    ...naoDominadas,
+    ...dominadas.slice(0, faltam),
+  ];
+}
+
+// MONTA AS QUESTÕES DA PARTIDA RESPEITANDO
+// A REGRA DE DISTRIBUIÇÃO POR QUANTIDADE DE TEMAS
+function montarSelecaoQuestoes(
+  temasJogo: string[],
+  poolPorTema: Record<string, any[]>,
+  historico: Record<string, any[]>,
+  temasComPrioridadeOuro: string[]
+) {
+  const totalDesejado = 16;
+
+  // TEMA ÚNICO
+  if (temasJogo.length === 1) {
+
+    const tema = temasJogo[0];
+
+    const pool = poolPorTema[tema] || [];
+
+    const dominadasIds = historico[tema] || [];
+
+    const quota = Math.min(
+      totalDesejado,
+      pool.length
+    );
+
+    const selecionadas = selecionarComReposicao(
+      pool,
+      dominadasIds,
+      quota
+    );
+
+    if (
+      temasComPrioridadeOuro.includes(tema)
+    ) {
+
+      const ouro = selecionadas.filter(
+        (q: any) =>
+          q.nivel?.toLowerCase() === "ouro"
+      );
+
+      const normais = selecionadas.filter(
+        (q: any) =>
+          q.nivel?.toLowerCase() !== "ouro"
+      );
+
+      return [...ouro, ...normais];
+    }
+
+    return selecionadas;
+  }
+
+  // SELEÇÃO ESTRATÉGICA — 2 TEMAS (8 + 8)
+  if (temasJogo.length === 2) {
+
+    return temasJogo.flatMap((tema) =>
+      selecionarComReposicao(
+        poolPorTema[tema] || [],
+        historico[tema] || [],
+        8
+      )
+    );
+  }
+
+  // SELEÇÃO ESTRATÉGICA — 3 TEMAS (5 + 5 + 6)
+  if (temasJogo.length === 3) {
+
+    const temaComSeis =
+      temasJogo[
+        Math.floor(
+          Math.random() * temasJogo.length
+        )
+      ];
+
+    return temasJogo.flatMap((tema) =>
+      selecionarComReposicao(
+        poolPorTema[tema] || [],
+        historico[tema] || [],
+        tema === temaComSeis ? 6 : 5
+      )
+    );
+  }
+
+  // TODOS OS TEMAS (6) — 2 DE CADA (12) +
+  // 1 ALEATÓRIO EM 4 TEMAS DISTINTOS (4) = 16
+  if (temasJogo.length === 6) {
+
+    const temasComExtra = shuffleArray(
+      [...temasJogo]
+    ).slice(0, 4);
+
+    return temasJogo.flatMap((tema) =>
+      selecionarComReposicao(
+        poolPorTema[tema] || [],
+        historico[tema] || [],
+        temasComExtra.includes(tema) ? 3 : 2
+      )
+    );
+  }
+
+  // FALLBACK GENÉRICO PARA OUTRAS QUANTIDADES
+  const cotaBase = Math.floor(
+    totalDesejado / temasJogo.length
+  );
+
+  let resto =
+    totalDesejado - cotaBase * temasJogo.length;
+
+  const temasComBonus = shuffleArray(
+    [...temasJogo]
+  ).slice(0, resto);
+
+  return temasJogo.flatMap((tema) =>
+    selecionarComReposicao(
+      poolPorTema[tema] || [],
+      historico[tema] || [],
+      cotaBase +
+        (temasComBonus.includes(tema) ? 1 : 0)
+    )
+  );
+}
+
+// CALCULA TOTAL / DOMINADAS / RESTANTES POR TEMA
+function calcularEstatisticasTemas(
+  perguntasConvertidas: any[],
+  historico: Record<string, any[]>
+) {
+  const temasMap = new Map();
+
+  perguntasConvertidas.forEach((q: any) => {
+
+    if (!temasMap.has(q.tema)) {
+
+      temasMap.set(q.tema, {
+        tema: q.tema,
+        total: 0,
+        jogadas:
+          historico[q.tema]?.length || 0,
+      });
+    }
+
+    temasMap.get(q.tema).total++;
+  });
+
+  return Array.from(temasMap.values()).map(
+    (tema: any) => ({
+      ...tema,
+      restantes: tema.total - tema.jogadas,
+    })
+  );
+}
+
 export default function JogoPage() {
 
     // =========================
@@ -307,6 +489,9 @@ const [modoMilhaoAtivo, setModoMilhaoAtivo] =
 
     const [estatisticasTemas, setEstatisticasTemas] =
   useState<any[]>([]);
+
+  const perguntasConvertidasRef =
+    useRef<any[]>([]);
 
   const [indiceQuestao, setIndiceQuestao] =
     useState(0);
@@ -730,7 +915,9 @@ const dadosLimpos =
   dados.filter(
     (linha: any) =>
       linha.ENUNCIADO &&
-      linha.GABARITO
+      linha.GABARITO !== undefined &&
+      linha.GABARITO !== null &&
+      linha.GABARITO !== ""
   );
 
         // CONVERTER
@@ -775,7 +962,12 @@ nivel:
 // QUESTÕES NÃO REPETIDAS
 // =========================
 
+perguntasConvertidasRef.current =
+  perguntasConvertidas;
+
 // LER HISTÓRICO
+// (chaves = temas, valores = IDs DOMINADOS,
+// ou seja, respondidos corretamente)
 
 const historicoSalvo =
 
@@ -792,9 +984,7 @@ const historico =
     ? JSON.parse(historicoSalvo)
     : {};
 
-
-    
-// FILTRAR QUESTÕES DOS TEMAS
+// AGRUPAR QUESTÕES POR TEMA
 const temasNormalizados =
   temasJogo.map(
     (tema: string) =>
@@ -817,203 +1007,34 @@ const perguntasTema =
     }
   );
 
-// =========================
-// IDs JÁ JOGADOS
-// MULTITEMAS
-// =========================
+const poolPorTema: Record<string, any[]> = {};
 
-const idsJogadas =
-  temasJogo.flatMap(
-    (tema: string) =>
-      historico[tema] || []
-  );
+temasJogo.forEach((tema: string) => {
 
-// REMOVER REPETIDAS
-let perguntasDisponiveis =
-  perguntasTema.filter(
-    (q: any) =>
-      !idsJogadas.includes(q.id)
-  );
-
-// REINICIAR CICLO
-if (
-  perguntasDisponiveis.length === 0
-) {
-
-  temasJogo.forEach(
-  (tema: string) => {
-
-  historico[tema] = [];
+  poolPorTema[tema] =
+    perguntasTema.filter(
+      (q: any) =>
+        String(q.tema)
+          .trim()
+          .toLowerCase() ===
+        tema.trim().toLowerCase()
+    );
 
 });
 
-  localStorage.setItem(
-    chaveHistorico,
-    JSON.stringify(historico)
-  );
-
-  perguntasDisponiveis =
-    perguntasTema;
-}
-
-
-
-  // =========================
-// ÚLTIMA QUESTÃO ERRADA
+// =========================
+// SELECIONA AS QUESTÕES DA PARTIDA
 // =========================
 
-const ultimaErradaSalva =
-
-  typeof window !== "undefined"
-
-    ? localStorage.getItem(
-        "ultima-questao-errada"
-      )
-
-    : null;
-
-let ultimaErrada: any = null;
-
-if (ultimaErradaSalva) {
-
-  ultimaErrada =
-    JSON.parse(ultimaErradaSalva);
-}
-
-let perguntasSelecionadas: any[] = [];
-
-// =========================
-// TEMA ÚNICO
-// =========================
-
-if (temasJogo.length === 1) {
-
-  const usarPrioridadeOuro =
-    temasComPrioridadeOuro.includes(
-      temasJogo[0]
-    );
-
-  if (usarPrioridadeOuro) {
-
-    const perguntasOuro =
-      perguntasDisponiveis.filter(
-        (q: any) =>
-          q.nivel?.toLowerCase() ===
-          "ouro"
-      );
-
-    const perguntasNormais =
-      perguntasDisponiveis.filter(
-        (q: any) =>
-          q.nivel?.toLowerCase() !==
-          "ouro"
-      );
-
-    perguntasSelecionadas = [
-
-      ...shuffleArray(
-        perguntasOuro
-      ),
-
-      ...shuffleArray(
-        perguntasNormais
-      ),
-
-    ];
-
-  } else {
-
-    perguntasSelecionadas =
-      shuffleArray(
-        perguntasDisponiveis
-      );
-
-  }
-
-}
-
-// =========================
-// MULTITEMAS
-// =========================
-
-else {
-
-  const gruposPorTema =
-    temasJogo.map(
-      (tema: string) => {
-
-        const lista =
-          perguntasDisponiveis.filter(
-            (q: any) =>
-              String(q.tema)
-                .trim()
-                .toLowerCase() ===
-              tema
-                .trim()
-                .toLowerCase()
-          );
-
-        return shuffleArray(lista);
-
-      }
-    );
-
-  // GARANTE 2 DE CADA TEMA
-
-  gruposPorTema.forEach(
-    (grupo: any[]) => {
-
-      perguntasSelecionadas.push(
-        ...grupo.splice(0, 2)
-      );
-
-    }
-  );
-
-  // COMPLETA ATÉ 16
-
-  const restantes =
-    shuffleArray(
-      gruposPorTema.flat()
-    );
-
-  perguntasSelecionadas.push(
-
-    ...restantes.slice(
-      0,
-      16 - perguntasSelecionadas.length
-    )
-
-  );
-
-}
-
-// =========================
-// ÚLTIMA ERRADA PRIMEIRO
-// =========================
-
-if (ultimaErrada) {
-
-  perguntasSelecionadas =
-    perguntasSelecionadas.filter(
-      (q: any) =>
-        q.id !== ultimaErrada.id
-    );
-
-  perguntasSelecionadas.unshift(
-    ultimaErrada
-  );
-
-}
-
-perguntasSelecionadas =
-  perguntasSelecionadas.slice(0, 16);
-
-const perguntasJogo =
-  perguntasSelecionadas;
+const perguntasJogo = montarSelecaoQuestoes(
+  temasJogo,
+  poolPorTema,
+  historico,
+  temasComPrioridadeOuro
+);
 
 const reservas =
-  perguntasDisponiveis.filter(
+  perguntasTema.filter(
     (q: any) =>
 
       !perguntasJogo.some(
@@ -1021,8 +1042,6 @@ const reservas =
           p.id === q.id
       )
   );
-
-
 
 setPerguntasReserva(
   reservas
@@ -1040,40 +1059,16 @@ setPerguntasFiltradas(
   perguntasComAlternativas
 );
 
-          
-        // =========================
+// =========================
 // ESTATÍSTICAS AUTOMÁTICAS
 // =========================
 
-const temasMap = new Map();
-
-perguntasConvertidas.forEach((q: any) => {
-
-  if (!temasMap.has(q.tema)) {
-
-    temasMap.set(q.tema, {
-      tema: q.tema,
-      total: 0,
-      jogadas:
-        historico[q.tema]?.length || 0,
-    });
-  }
-
-  temasMap.get(q.tema).total++;
-});
-
-const estatisticas =
-  Array.from(temasMap.values())
-    .map((tema: any) => ({
-
-      ...tema,
-
-      restantes:
-        tema.total - tema.jogadas,
-
-    }));
-
-setEstatisticasTemas(estatisticas);
+setEstatisticasTemas(
+  calcularEstatisticasTemas(
+    perguntasConvertidas,
+    historico
+  )
+);
 
         setCarregandoPergunta(false);
 
@@ -1273,20 +1268,33 @@ if (!trocaUsada) {
 const chaveHistorico =
   "safra-history";
 
-const historicoSalvo =
+// RECALCULA "DOMÍNIO DOS TEMAS" A PARTIR
+// DO HISTÓRICO ATUAL EM LOCALSTORAGE.
+// USADO AO INICIAR E AO FINALIZAR A PARTIDA.
+function atualizarEstatisticasTemas() {
 
-  typeof window !== "undefined"
+  const historicoSalvo =
 
-    ? localStorage.getItem(
-        chaveHistorico
-      )
+    typeof window !== "undefined"
 
-    : null;
+      ? localStorage.getItem(
+          chaveHistorico
+        )
 
-const historico =
-  historicoSalvo
-    ? JSON.parse(historicoSalvo)
-    : {};
+      : null;
+
+  const historicoAtual =
+    historicoSalvo
+      ? JSON.parse(historicoSalvo)
+      : {};
+
+  setEstatisticasTemas(
+    calcularEstatisticasTemas(
+      perguntasConvertidasRef.current,
+      historicoAtual
+    )
+  );
+}
 
 
     // =========================
@@ -1619,7 +1627,7 @@ await new Promise(resolve =>
 
     setAcertou(false);
 
-        
+
     tocarSom(wrongSound);
 
     setHumorPlateia("tensa");
@@ -1627,46 +1635,46 @@ await new Promise(resolve =>
     setMensagemPlateia(
       "💀 O ESTÚDIO FICOU EM SILÊNCIO"
     );
-
-    localStorage.setItem(
-      "ultima-questao-errada",
-      JSON.stringify(questaoAtual)
-    );
   }
 
 
 // =========================
 // SALVAR HISTÓRICO DA QUESTÃO
+// (SÓ CONTA COMO "DOMINADA" SE
+// FOI RESPONDIDA CORRETAMENTE)
 // =========================
 
-const historicoSalvo =
-  localStorage.getItem(chaveHistorico);
+if (alternativa === questaoAtual.correta) {
 
-const historicoAtual =
-  historicoSalvo
-    ? JSON.parse(historicoSalvo)
-    : {};
+  const historicoSalvo =
+    localStorage.getItem(chaveHistorico);
 
-if (!historicoAtual[questaoAtual.tema]) {
+  const historicoAtual =
+    historicoSalvo
+      ? JSON.parse(historicoSalvo)
+      : {};
 
-  historicoAtual[questaoAtual.tema] = [];
+  if (!historicoAtual[questaoAtual.tema]) {
 
+    historicoAtual[questaoAtual.tema] = [];
+
+  }
+
+  if (
+    !historicoAtual[questaoAtual.tema]
+      .includes(questaoAtual.id)
+  ) {
+
+    historicoAtual[questaoAtual.tema]
+      .push(questaoAtual.id);
+
+  }
+
+  localStorage.setItem(
+    chaveHistorico,
+    JSON.stringify(historicoAtual)
+  );
 }
-
-if (
-  !historicoAtual[questaoAtual.tema]
-    .includes(questaoAtual.id)
-) {
-
-  historicoAtual[questaoAtual.tema]
-    .push(questaoAtual.id);
-
-}
-
-localStorage.setItem(
-  chaveHistorico,
-  JSON.stringify(historicoAtual)
-);
 
 
   // =========================
@@ -1708,6 +1716,8 @@ localStorage.setItem(
     // SALVAR RANKING
    if (ultimaQuestao) {
 
+  atualizarEstatisticasTemas();
+
   setIndiceQuestao(
     perguntasFiltradas.length
   );
@@ -1744,6 +1754,8 @@ async function sairDoJogo() {
   tocarSom(clickSound);
 
   await salvarRanking();
+
+  atualizarEstatisticasTemas();
 
   // FINALIZA JOGO
   setIndiceQuestao(
@@ -2666,8 +2678,8 @@ if (
           px-3
           md:px-5
 
-          py-4
-          md:py-6
+          py-3
+          md:py-4
         "
       >
 
@@ -2687,10 +2699,10 @@ if (
             from-[#0c2b20]
             to-[#06140f]
 
-            p-4
-            md:p-5
+            p-3
+            md:p-4
 
-            mb-4
+            mb-3
 
             shadow-[0_0_30px_rgba(0,255,140,0.05)]
           "
@@ -2716,7 +2728,7 @@ if (
 
                 gap-3
 
-                mb-4
+                mb-3
               "
             >
 
@@ -2725,10 +2737,10 @@ if (
                 className="
                   shrink-0
 
-                  w-[68px]
-                  h-[68px]
+                  w-[52px]
+                  h-[52px]
 
-                  rounded-[20px]
+                  rounded-[16px]
 
                   border
                   border-yellow-300/10
@@ -2741,7 +2753,7 @@ if (
                   items-center
                   justify-center
 
-                  text-[34px]
+                  text-[26px]
                 "
               >
 
@@ -2782,7 +2794,7 @@ if (
 
                 <h1
                   className="
-                    text-[clamp(1.7rem,5vw,3rem)]
+                    text-[clamp(1.3rem,4vw,2.1rem)]
 
                     leading-[0.95]
 
@@ -2856,20 +2868,20 @@ if (
                   key={item.label}
 
                   className="
-                    rounded-[18px]
+                    rounded-[16px]
 
                     border
                     border-white/5
 
                     bg-black/20
 
-                    p-3
+                    p-2
                   "
                 >
 
                   <p
                     className="
-                      text-[8px]
+                      text-[7px]
 
                       uppercase
 
@@ -2879,7 +2891,7 @@ if (
 
                       font-black
 
-                      mb-2
+                      mb-1
                     "
                   >
 
@@ -2889,8 +2901,8 @@ if (
 
                   <h2
                     className={`
-                      text-[15px]
-                      md:text-[24px]
+                      text-[13px]
+                      md:text-[18px]
 
                       leading-none
 
@@ -2917,23 +2929,23 @@ if (
         {/* DOMÍNIO DOS TEMAS */}
         <div
           className="
-            rounded-[26px]
+            rounded-[20px]
 
             border
             border-green-900/25
 
             bg-black/20
 
-            p-4
+            p-3
 
-            mb-4
+            mb-3
           "
         >
 
           <h2
             className="
-              text-[22px]
-              md:text-[28px]
+              text-[16px]
+              md:text-[20px]
 
               font-black
 
@@ -2949,11 +2961,11 @@ if (
 
           <p
             className="
-              text-[12px]
+              text-[11px]
 
               text-white/55
 
-              mb-4
+              mb-2
             "
           >
 
@@ -2961,7 +2973,7 @@ if (
 
           </p>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
 
             {estatisticasTemas.map((tema) => {
 
@@ -2976,14 +2988,14 @@ if (
                   key={tema.tema}
 
                   className="
-                    rounded-[20px]
+                    rounded-[16px]
 
                     border
                     border-white/5
 
                     bg-black/25
 
-                    p-4
+                    p-2.5
                   "
                 >
 
@@ -2996,7 +3008,7 @@ if (
 
                       gap-3
 
-                      mb-3
+                      mb-2
                     "
                   >
 
@@ -3004,14 +3016,14 @@ if (
 
                       <h3
                         className="
-                          text-[16px]
-                          md:text-[18px]
+                          text-[13px]
+                          md:text-[15px]
 
                           font-black
 
                           text-green-300
 
-                          mb-1
+                          mb-0.5
                         "
                       >
 
@@ -3021,7 +3033,7 @@ if (
 
                       <p
                         className="
-                          text-[12px]
+                          text-[10px]
 
                           text-white/65
                         "
@@ -3052,22 +3064,14 @@ if (
     temaUnico
   );
 
-  setTimeout(() => {
-
-    iniciarNovaPartida(
-      temaUnico
-    );
-
-  }, 50);
-
 }}
 
   className="
-    h-[40px]
+    h-[30px]
 
-    px-4
+    px-3
 
-    rounded-[14px]
+    rounded-[10px]
 
     bg-gradient-to-r
     from-yellow-400
@@ -3075,7 +3079,7 @@ if (
 
     text-black
 
-    text-[12px]
+    text-[11px]
 
     font-black
   "
@@ -3090,7 +3094,7 @@ if (
                   {/* BARRA */}
                   <div
                     className="
-                      h-[9px]
+                      h-[6px]
 
                       rounded-full
 
@@ -3098,7 +3102,7 @@ if (
 
                       overflow-hidden
 
-                      mb-3
+                      mb-2
                     "
                   >
 
@@ -3155,10 +3159,10 @@ if (
                         key={stat.label}
 
                         className="
-                          px-3
-                          py-2
+                          px-2
+                          py-1.5
 
-                          rounded-[14px]
+                          rounded-[10px]
 
                           bg-black/30
 
@@ -3169,7 +3173,7 @@ if (
 
                         <p
                           className="
-                            text-[8px]
+                            text-[7px]
 
                             uppercase
 
@@ -3177,7 +3181,7 @@ if (
 
                             font-black
 
-                            mb-1
+                            mb-0.5
                           "
                         >
 
@@ -3187,7 +3191,7 @@ if (
 
                         <h2
                           className={`
-                            text-[17px]
+                            text-[14px]
 
                             font-black
 
@@ -3218,23 +3222,23 @@ if (
         {/* SELEÇÃO ESTRATÉGICA */}
         <div
           className="
-            rounded-[26px]
+            rounded-[20px]
 
             border
             border-green-900/25
 
             bg-black/20
 
-            p-4
+            p-3
 
-            mb-4
+            mb-3
           "
         >
 
           <h2
             className="
-              text-[20px]
-              md:text-[24px]
+              text-[15px]
+              md:text-[18px]
 
               font-black
 
@@ -3250,11 +3254,11 @@ if (
 
           <p
             className="
-              text-[12px]
+              text-[11px]
 
               text-white/55
 
-              mb-4
+              mb-2
             "
           >
 
@@ -3267,7 +3271,7 @@ if (
               flex
               flex-wrap
 
-              gap-2
+              gap-1.5
             "
           >
 
@@ -3309,23 +3313,19 @@ if (ativo) {
 setTemasSelecionados(
   novosTemas
 );
-
-setTemasAtivos(
-  novosTemas
-);
                   }}
 
                   className={`
-                    h-[40px]
+                    h-[30px]
 
-                    px-4
+                    px-3
 
-                    rounded-[14px]
+                    rounded-[10px]
 
                     border
 
-                    text-[11px]
-                    md:text-[12px]
+                    text-[10px]
+                    md:text-[11px]
 
                     font-black
 
@@ -3364,17 +3364,28 @@ setTemasAtivos(
 
         {/* CTA */}
         <button
-          onClick={() => iniciarNovaPartida()}
+          disabled={temasSelecionados.length === 0}
 
-          className="
+          onClick={() => {
+
+            if (temasSelecionados.length === 0)
+              return;
+
+            setTemasAtivos(
+              temasSelecionados
+            );
+
+          }}
+
+          className={`
             w-full
 
-            h-[60px]
+            h-[46px]
 
-            rounded-[22px]
+            rounded-[16px]
 
-            text-[17px]
-            md:text-[19px]
+            text-[14px]
+            md:text-[16px]
 
             font-black
 
@@ -3386,7 +3397,13 @@ setTemasAtivos(
             to-yellow-400
 
             shadow-[0_0_24px_rgba(255,215,0,0.16)]
-          "
+
+            ${
+              temasSelecionados.length === 0
+                ? "opacity-40 cursor-not-allowed"
+                : ""
+            }
+          `}
         >
 
           🌾 INICIAR NOVA SAFRA
@@ -3442,7 +3459,7 @@ setTemasAtivos(
 
     <main
   className={`
-    min-h-[100dvh]
+    h-[100dvh]
 
     bg-[#061b11]
 
@@ -3453,7 +3470,7 @@ setTemasAtivos(
 
     relative
 
-    overflow-x-hidden
+    overflow-hidden
 
     transition-all
     duration-500
@@ -3540,6 +3557,7 @@ setTemasAtivos(
     z-10
 
     flex-1
+    min-h-0
 
     w-full
 
@@ -3552,7 +3570,7 @@ setTemasAtivos(
     flex
     flex-col
 
-    overflow-visible
+    overflow-hidden
   "
 >
   
@@ -4379,7 +4397,7 @@ BLACKOUT CINEMATOGRÁFICO AAA
 </div>
 
           {/* ALTERNATIVAS */}
-<div className="grid gap-[10px] mt-[2px]">
+<div className="answers-grid mt-[2px] min-h-0">
 
 
 

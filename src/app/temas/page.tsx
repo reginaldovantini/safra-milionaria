@@ -41,17 +41,25 @@ export default function TemasPage() {
 
   function selecionarTema(tema: string) {
 
-    localStorage.setItem("temaSelecionado", tema);
+  localStorage.setItem(
+    "temasAtivos",
+    JSON.stringify([tema])
+  );
 
-    router.push("/jogo");
-  }
+  router.push("/jogo");
+}
 
-  function jogarTodos() {
+function jogarTodos() {
 
-    localStorage.setItem("temaSelecionado", "TODOS");
+  localStorage.setItem(
+    "temasAtivos",
+    JSON.stringify(
+      temas.map((t) => t.id)
+    )
+  );
 
-    router.push("/jogo");
-  }
+  router.push("/jogo");
+}
 
   return (
 
