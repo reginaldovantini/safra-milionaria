@@ -5846,8 +5846,10 @@ POPUP CONSULTORIA TÉCNICA
           items-center
           justify-between
 
-          px-5
-          pt-5
+          px-4
+          pt-4
+          md:px-5
+          md:pt-5
         "
       >
 
@@ -5855,14 +5857,16 @@ POPUP CONSULTORIA TÉCNICA
 
           <p
             className="
-              text-[10px]
+              text-[9px]
               uppercase
-              tracking-[0.28em]
+              tracking-[0.22em]
+              md:tracking-[0.28em]
 
               text-green-300/60
               font-bold
 
-              mb-1
+              mb-0.5
+              md:mb-1
             "
           >
 
@@ -5872,7 +5876,7 @@ POPUP CONSULTORIA TÉCNICA
 
           <h2
             className="
-              text-base
+              text-lg
               md:text-3xl
 
               font-black
@@ -5943,8 +5947,10 @@ POPUP CONSULTORIA TÉCNICA
           relative
           z-10
 
-          px-5
-          pt-3
+          px-4
+          pt-2
+          md:px-5
+          md:pt-3
         "
       >
 
@@ -5957,8 +5963,10 @@ POPUP CONSULTORIA TÉCNICA
 
             bg-black/20
 
-            px-4
-            py-3
+            px-3
+            py-2
+            md:px-4
+            md:py-3
           "
         >
 
@@ -5966,7 +5974,7 @@ POPUP CONSULTORIA TÉCNICA
             className="
               text-center
 
-              text-lg
+              text-[13px]
               md:text-xl
 
               font-black
@@ -5994,14 +6002,17 @@ POPUP CONSULTORIA TÉCNICA
             items-center
             justify-center
 
-            py-14
+            py-8
+            md:py-14
           "
         >
 
           <div
             className="
-              w-20
-              h-20
+              w-12
+              h-12
+              md:w-20
+              md:h-20
 
               rounded-full
 
@@ -6011,7 +6022,8 @@ POPUP CONSULTORIA TÉCNICA
 
               animate-spin
 
-              mb-6
+              mb-3
+              md:mb-6
             "
           />
 
@@ -6019,7 +6031,8 @@ POPUP CONSULTORIA TÉCNICA
             className="
               text-green-300
               font-black
-              text-lg
+              text-sm
+              md:text-lg
             "
           >
 
@@ -6041,13 +6054,13 @@ POPUP CONSULTORIA TÉCNICA
             z-10
 
             grid
-            md:grid-cols-3
+            grid-cols-3
 
-            gap-2
+            gap-1.5
             md:gap-4
 
             px-3
-            py-3
+            py-2
             md:px-5
             md:py-5
           "
@@ -6065,7 +6078,8 @@ POPUP CONSULTORIA TÉCNICA
                 className={`
                   relative
 
-                  rounded-[24px]
+                  rounded-[14px]
+                  md:rounded-[24px]
 
                   border
 
@@ -6076,7 +6090,7 @@ POPUP CONSULTORIA TÉCNICA
 
                   overflow-hidden
 
-                  p-3
+                  p-2
                   md:p-5
 
                   animate-[popup_.35s_ease]
@@ -6107,9 +6121,9 @@ POPUP CONSULTORIA TÉCNICA
 
                   <div
                     className="
-                      text-2xl
+                      text-xl
                       md:text-5xl
-                      mb-1.5
+                      mb-1
                       md:mb-3
                     "
                   >
@@ -6120,14 +6134,16 @@ POPUP CONSULTORIA TÉCNICA
 
                   <h2
                     className="
-                      text-[12px]
+                      text-[9px]
                       md:text-xl
 
                       font-black
 
                       text-white
 
-                      mb-2
+                      leading-tight
+
+                      mb-1.5
                       md:mb-4
                     "
                   >
@@ -6138,15 +6154,16 @@ POPUP CONSULTORIA TÉCNICA
 
                   <div
                     className="
-                      rounded-2xl
+                      rounded-lg
+                      md:rounded-2xl
 
                       bg-black/25
 
                       border
                       border-white/10
 
-                      px-3
-                      py-2
+                      px-1
+                      py-1.5
                       md:px-4
                       md:py-3
                     "
@@ -6154,11 +6171,12 @@ POPUP CONSULTORIA TÉCNICA
 
                     <p
                       className="
-                        text-[10px]
-                        md:text-sm
+                        hidden
+                        md:block
+
+                        text-sm
                         text-white/70
-                        mb-1
-                        md:mb-2
+                        mb-2
                       "
                     >
 
@@ -6168,7 +6186,7 @@ POPUP CONSULTORIA TÉCNICA
 
                     <h3
                       className="
-                        text-lg
+                        text-xl
                         md:text-3xl
 
                         font-black
@@ -6211,8 +6229,10 @@ POPUP CONSULTORIA TÉCNICA
               relative
               z-10
 
-              px-5
-              pb-5
+              px-4
+              pb-4
+              md:px-5
+              md:pb-5
             "
           >
 
@@ -6232,7 +6252,8 @@ POPUP CONSULTORIA TÉCNICA
                 py-2.5
                 md:py-3
 
-                rounded-2xl
+                rounded-xl
+                md:rounded-2xl
 
                 bg-gradient-to-r
                 from-yellow-400
@@ -6240,7 +6261,8 @@ POPUP CONSULTORIA TÉCNICA
 
                 text-black
                 font-black
-                text-sm
+                tracking-wide
+                text-base
                 md:text-base
 
                 transition-all
