@@ -118,16 +118,16 @@ export default function Home() {
         {/* CENTRO */}
         <div className="flex-1 flex items-center justify-center px-6">
 
-          <div className="w-full max-w-5xl flex flex-col items-center text-center -mt-6">
+          <div className="w-full max-w-5xl flex flex-col items-center text-center">
 
 {/* LOGO SENAR CENTRAL */}
-<div className="mb-5 opacity-90">
+<div className="mb-3 opacity-90">
 
   <Image
     src="/logo-senar.png"
     alt="Logo SENAR"
-    width={190}
-    height={70}
+    width={140}
+    height={52}
     priority
     className="
       object-contain
@@ -140,18 +140,18 @@ export default function Home() {
 
             {/* BADGE */}
             <div className="
-              mb-7
-              px-5
-              py-2
+              mb-3
+              px-4
+              py-1.5
               rounded-full
               border
               border-yellow-400/15
               bg-yellow-400/10
               text-yellow-300
-              text-xs
+              text-[10px]
               md:text-sm
               font-semibold
-              tracking-[0.25em]
+              tracking-[0.2em]
               uppercase
               backdrop-blur-sm
             ">
@@ -170,7 +170,7 @@ export default function Home() {
 
               <span className="
                 block
-                text-5xl
+                text-3xl
                 md:text-7xl
                 text-yellow-400
                 drop-shadow-[0_0_25px_rgba(255,215,0,0.25)]
@@ -182,7 +182,7 @@ export default function Home() {
 
               <span className="
                 block
-                text-6xl
+                text-4xl
                 md:text-8xl
                 text-white
                 mt-1
@@ -197,23 +197,24 @@ export default function Home() {
 
             {/* LINHA */}
             <div className="
-              w-28
-              h-1
+              w-16
+              h-[3px]
               bg-yellow-400
               rounded-full
-              mt-7
-              mb-8
+              mt-3
+              mb-3
               shadow-[0_0_15px_rgba(255,215,0,0.30)]
             " />
 
             {/* DESCRIÇÃO */}
             <p className="
               text-center
-              text-lg
+              text-[12px]
               md:text-2xl
               text-gray-200
               max-w-3xl
-              leading-relaxed
+              leading-snug
+              md:leading-relaxed
             ">
 
               Aprenda{" "}
@@ -243,7 +244,7 @@ export default function Home() {
             <Link
               href="/cadastro"
               className="
-                mt-12
+                mt-5
                 group
                 relative
                 overflow-hidden
@@ -251,10 +252,12 @@ export default function Home() {
                 hover:bg-yellow-300
                 text-black
                 font-black
-                text-xl
+                text-sm
                 md:text-2xl
-                px-14
-                py-5
+                px-8
+                py-3
+                md:px-14
+                md:py-5
                 rounded-2xl
                 shadow-[0_0_35px_rgba(255,215,0,0.30)]
                 transition-all
@@ -296,7 +299,7 @@ export default function Home() {
 <button
   onClick={handleInstall}
   className="
-    mt-5
+    mt-3
     group
     relative
     overflow-hidden
@@ -306,10 +309,12 @@ export default function Home() {
     hover:bg-black/50
     text-yellow-300
     font-bold
-    text-sm
+    text-[11px]
     md:text-base
-    px-8
-    py-4
+    px-5
+    py-2.5
+    md:px-8
+    md:py-4
     rounded-2xl
     backdrop-blur-md
     transition-all
@@ -360,13 +365,15 @@ export default function Home() {
           border-green-900/50
           bg-black/20
           backdrop-blur-md
-          py-3
+          py-1.5
+          md:py-3
         ">
 
           <div className="text-center">
 
             <p className="
-              text-sm
+              text-[9px]
+              md:text-sm
               text-gray-400
               tracking-wide
             ">

@@ -66,9 +66,11 @@ export default function CadastroPage() {
           border
           border-green-900/40
           backdrop-blur-xl
-          rounded-[32px]
-          px-10
-          py-8
+          rounded-[28px]
+          px-6
+          py-5
+          md:px-10
+          md:py-8
           shadow-[0_0_60px_rgba(0,0,0,0.35)]
           relative
           overflow-hidden
@@ -78,27 +80,27 @@ export default function CadastroPage() {
           <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.08),transparent_65%)]"></div>
 
           {/* HEADER */}
-          <div className="relative z-10 text-center mb-8">
+          <div className="relative z-10 text-center mb-4">
 
             {/* BADGE */}
-            <div className="inline-block mb-4 px-5 py-2 rounded-full border border-yellow-400/20 bg-yellow-400/10 text-yellow-300 text-sm font-semibold tracking-wide uppercase backdrop-blur-sm shadow-lg">
+            <div className="inline-block mb-2 px-4 py-1.5 rounded-full border border-yellow-400/20 bg-yellow-400/10 text-yellow-300 text-[10px] md:text-sm font-semibold tracking-wide uppercase backdrop-blur-sm shadow-lg">
 
               Safra Milionária
 
             </div>
 
             {/* TÍTULO */}
-            <h1 className="text-4xl md:text-5xl font-black uppercase text-yellow-400 tracking-tight drop-shadow-[0_0_20px_rgba(255,215,0,0.25)]">
+            <h1 className="text-2xl md:text-5xl font-black uppercase text-yellow-400 tracking-tight drop-shadow-[0_0_20px_rgba(255,215,0,0.25)]">
 
               Identificação
 
             </h1>
 
             {/* LINHA */}
-            <div className="w-24 h-1 bg-yellow-400 rounded-full mx-auto mt-4 mb-4 shadow-[0_0_15px_rgba(255,215,0,0.4)]"></div>
+            <div className="w-14 h-[3px] bg-yellow-400 rounded-full mx-auto mt-2 mb-2 shadow-[0_0_15px_rgba(255,215,0,0.4)]"></div>
 
             {/* TEXTO */}
-            <p className="text-gray-300 text-base md:text-lg leading-relaxed max-w-md mx-auto">
+            <p className="text-gray-300 text-[12px] md:text-lg leading-snug md:leading-relaxed max-w-md mx-auto">
 
               Informe seus dados para iniciar sua jornada
               rumo à safra do milhão.
@@ -108,12 +110,12 @@ export default function CadastroPage() {
           </div>
 
           {/* FORMULÁRIO */}
-          <div className="relative z-10 space-y-5">
+          <div className="relative z-10 space-y-3 md:space-y-5">
 
             {/* NOME */}
             <div>
 
-              <label className="block mb-2 text-sm font-semibold text-gray-300">
+              <label className="block mb-1 text-[12px] md:text-sm font-semibold text-gray-300">
 
                 Nome Completo
 
@@ -130,8 +132,12 @@ export default function CadastroPage() {
                   bg-black/30
                   border
                   border-green-900/40
-                  px-5
-                  py-4
+                  px-4
+                  py-2.5
+                  md:px-5
+                  md:py-3.5
+                  text-[13px]
+                  md:text-base
                   text-white
                   placeholder:text-gray-500
                   focus:outline-none
@@ -147,7 +153,7 @@ export default function CadastroPage() {
             {/* POLO */}
             <div>
 
-              <label className="block mb-2 text-sm font-semibold text-gray-300">
+              <label className="block mb-1 text-[12px] md:text-sm font-semibold text-gray-300">
 
                 Polo
 
@@ -162,8 +168,12 @@ export default function CadastroPage() {
                   bg-black/30
                   border
                   border-green-900/40
-                  px-5
-                  py-4
+                  px-4
+                  py-2.5
+                  md:px-5
+                  md:py-3.5
+                  text-[13px]
+                  md:text-base
                   text-white
                   focus:outline-none
                   focus:ring-2
@@ -181,7 +191,7 @@ export default function CadastroPage() {
             {/* CURSO */}
             <div>
 
-              <label className="block mb-2 text-sm font-semibold text-gray-300">
+              <label className="block mb-1 text-[12px] md:text-sm font-semibold text-gray-300">
 
                 Curso
 
@@ -196,8 +206,12 @@ export default function CadastroPage() {
                   bg-black/30
                   border
                   border-green-900/40
-                  px-5
-                  py-4
+                  px-4
+                  py-2.5
+                  md:px-5
+                  md:py-3.5
+                  text-[13px]
+                  md:text-base
                   text-white
                   focus:outline-none
                   focus:ring-2
@@ -225,8 +239,10 @@ export default function CadastroPage() {
                 hover:bg-yellow-300
                 text-black
                 font-black
-                text-xl
-                py-4
+                text-sm
+                md:text-xl
+                py-3
+                md:py-4
                 rounded-2xl
                 shadow-[0_0_35px_rgba(255,215,0,0.35)]
                 transition-all
@@ -253,11 +269,11 @@ export default function CadastroPage() {
       </div>
 
       {/* RODAPÉ PREMIUM */}
-      <footer className="relative z-10 border-t border-green-900/50 bg-black/20 backdrop-blur-md py-3">
+      <footer className="relative z-10 border-t border-green-900/50 bg-black/20 backdrop-blur-md py-1.5 md:py-3">
 
         <div className="text-center">
 
-          <p className="text-sm text-gray-400 tracking-wide">
+          <p className="text-[9px] md:text-sm text-gray-400 tracking-wide">
 
             Desenvolvido pelo Tutor
 
