@@ -1468,122 +1468,15 @@ useEffect(() => {
   }
 
   // =========================
-  // INICIAR REVELAÇÃO AAA
-  // =========================
-
-  setRevelandoResposta(true);
-
-  setModoSuspense(true);
-
-  setMostrarBlackout(true);
-
-  setCameraModo("dramatico");
-
-  suspenseSound.current?.play()
-    .catch(() => {});
-
-  heartbeatSound.current?.play()
-    .catch(() => {});
-
-  // =========================
-  // PISCAR ALTERNATIVA
+  // VALIDAÇÃO IMEDIATA
+  // (sem blackout/suspense — a única
+  // animação de espera é o botão "VALIDANDO...")
   // =========================
 
   const alternativa =
     Number(respostaSelecionada);
 
-  for (let i = 0; i < 4; i++) {
-
-    setAlternativaPiscando(alternativa);
-
-    await new Promise(resolve =>
-      setTimeout(resolve, 260)
-    );
-
-    setAlternativaPiscando(null);
-
-    await new Promise(resolve =>
-      setTimeout(resolve, 180)
-    );
-  }
-
-  // =========================
-// DELAY PSICOLÓGICO AAA
-// =========================
-
-const delayBase =
-
-  indiceQuestao >= 15
-
-    ? 4800
-
-    : indiceQuestao >= 10
-
-    ? 3600
-
-    : indiceQuestao >= 5
-
-    ? 2600
-
-    : 1800;
-
-// =========================
-// MICRO PAUSAS
-// =========================
-
-const pausas = [
-
-  240,
-
-  180,
-
-  320,
-
-  220,
-];
-
-// =========================
-// RESPIRAÇÃO DE SUSPENSE
-// =========================
-
-for (const pausa of pausas) {
-
-  setMostrarBlackout(prev => !prev);
-
-  await new Promise(resolve =>
-    setTimeout(resolve, pausa)
-  );
-
-}
-
-// =========================
-// DELAY FINAL
-// =========================
-
-await new Promise(resolve =>
-  setTimeout(resolve, delayBase)
-);
-
-
-// =========================
-// SILÊNCIO ABSOLUTO AAA
-// =========================
-
-backgroundMusic.current?.pause();
-
-heartbeatSound.current?.pause();
-
-await new Promise(resolve =>
-  setTimeout(resolve, 320)
-);
-
-  // =========================
-  // FINALIZA SUSPENSE
-  // =========================
-
-  setModoSuspense(false);
-
-  setMostrarBlackout(false);
+  backgroundMusic.current?.pause();
 
   setRespostaConfirmada(true);
 
